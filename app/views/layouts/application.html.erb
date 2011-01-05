@@ -6,9 +6,9 @@
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 <% if @account %>
-<%=render :partial => "Layouts/account", :object => @account%>
+<%=render :partial => "layouts/account", :object => @account%>
 <% elsif current_account %>
-<%=render :partial => "Layouts/account", :object => current_account%>
+<%=render :partial => "layouts/account", :object => current_account%>
 <% end %>
 </head>
 <body>
