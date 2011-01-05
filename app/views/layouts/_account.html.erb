@@ -1,9 +1,16 @@
 <style type="text/css">
   body{
-    <% unless account.profile_background_color.blank?%>background-color: #<%=account.profile_background_color%>;<%end%>
+    <% unless account.profile_background_color.blank?%>
+      background-color: #<%=account.profile_background_color%>;
+       <% if account.profile_background_color == "ffffff" %>
+       #footer{color: #000;}
+       <% end%>
+    <%end%>
     <% if account.profile_use_background_image %>
         <% unless account.profile_background_image_url.blank?%>background-image: url(<%=account.profile_background_image_url%>);<% end %>
         <% unless account.profile_background_tile%>background-repeat: no-repeat;<% end %>
+    <% else %>
+    background-image: none;
     <% end %>
     <% unless account.profile_text_color.blank?%>color: #<%=account.profile_text_color%>;<% end %>
   }
