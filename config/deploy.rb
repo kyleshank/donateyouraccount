@@ -21,6 +21,13 @@ role :app, "donateyouraccount.com"
 role :web, "donateyouraccount.com"
 role :db,  "donateyouraccount.com", :primary => true
 
+after "deploy:update_code", "delayed_job:stop", "deploy:symlink_config"
+after "deploy:update", "deploy:cleanup"
+
+["deploy", "deploy:migrations"].each do |task|
+  after task, "delayed_job:start"
+end
+
 namespace :deploy do
   desc "Restart Unicorn"
   task :restart do
@@ -32,6 +39,23 @@ namespace :deploy do
     run "ln -sf #{deploy_to}/shared/production.rb #{release_path}/config/environments/production.rb"
   end
 
+end
+
+namespace :delayed_job do
+  desc "Start delayed_job process"
+  task :start, :roles => :app do
+      run("cd #{release_path}; RAILS_ENV=production script/delayed_job start")
+  end
+
+  desc "Stop delayed_job process"
+  task :stop, :roles => :app do
+    run("cd #{release_path}; RAILS_ENV=production script/delayed_job stop")
+  end
+
+  desc "Restart delayed_job process"
+  task :restart, :roles => :app do
+    run("cd #{release_path}; RAILS_ENV=production script/delayed_job restart")
+  end
 end
 
 namespace :bundler do
