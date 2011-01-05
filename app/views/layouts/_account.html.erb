@@ -2,9 +2,6 @@
   body{
     <% unless account.profile_background_color.blank?%>
       background-color: #<%=account.profile_background_color%>;
-       <% if account.profile_background_color == "ffffff" %>
-       #footer{color: #000;}
-       <% end%>
     <%end%>
     <% if account.profile_use_background_image %>
         <% unless account.profile_background_image_url.blank?%>background-image: url(<%=account.profile_background_image_url%>);<% end %>
@@ -23,4 +20,7 @@
       color: #<%=account.profile_text_color%>;
   }
   <% end %>
+        <% if !account.profile_background_color.blank? and account.profile_background_color == "ffffff" %>
+       #footer{color: #000;}
+       <% end%>
 </style>
