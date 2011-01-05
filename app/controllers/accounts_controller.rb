@@ -10,8 +10,8 @@ class AccountsController < ApplicationController
   def show
     @account = Account.first(:conditions => {:screen_name => params[:id]})
     render_not_found and return unless @account
-    @donation = current_account.donations.for_campaign(@account.id).first
     @statuses = @account.statuses.desc.paginate(:page => params[:page], :per_page=>10)
+    @donation = current_account.donations.for_campaign(@account.id).first if current_account
   end
 
   def new
@@ -60,11 +60,19 @@ class AccountsController < ApplicationController
             self.current_account=@account
           end
 
-          redirect_to dashboard_path
+          redirect_back_or_default dashboard_path
       end
     rescue OAuth::Unauthorized
       request.flash.now["notice"] = "Oops! OAuth Unauthorized error."
       redirect_to "/"
     end
+  end
+
+  def donate
+    @account = Account.first(:conditions => {:screen_name => params[:id]})
+    redirect_to :back and return unless @account
+
+    session[:return_to] = account_permalink_path(@account)
+    redirect_to get_twitter_request_token.authorize_url.gsub("authorize","authenticate")
   end
 end

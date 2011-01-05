@@ -96,6 +96,10 @@ p{
     margin-right:0;
 }
 
+#container #nav li img{
+    margin-top: 4px;
+}
+
 #container #content{
     background: #fff;
     clear: both;
@@ -168,11 +172,39 @@ ul.statuses li .time{
     font-size: medium;
 }
 
-#account h1{
-    line-height: 48px;
+#account .info{
+    padding-left: 56px;
+    position: relative;
 }
 
-#account h1 img{
-    vertical-align: middle;
-    margin-right: 6px;
+#account .info img{
+    position: absolute;
+    top:0;left:0;
+}
+
+#account .info .name{
+    font-weight:bold;
+    font-size: x-large;
+}
+
+#account .info .screen_name{
+    font-weight:bold;
+    font-size: medium;
+}
+
+#account .info .location{
+    font-weight:normal;
+    font-size: small;
+    margin-left: 6px;
+    color: #999;
+}
+
+#account .info .description{
+    font-style: italic;
+    font-size: small;
+    font-family:Georgia;
+}
+
+#account .info .url{
+    font-size:small;
 }

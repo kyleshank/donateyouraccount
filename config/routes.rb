@@ -3,6 +3,9 @@ Dya::Application.routes.draw do
     collection do
       match 'oauth_create' => "accounts#create", :as => :oauth_create, :via => :get
     end
+    member do
+      get :donate
+    end
   end
   resources :donations
   resources :statuses
