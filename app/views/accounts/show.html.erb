@@ -1,0 +1,22 @@
+<div id="account">
+<h1><% unless @account.profile_image_url.blank?%><img src="<%=@account.profile_image_url%>"/><% end %><%=@account.name%></h1>
+<h2>@<%=@account.screen_name%></h2>
+
+<% if current_account.id == @account.id %>
+<% form_for @status || Status.new, :url => statuses_path do |f| %>
+<div><%=f.text_area :body, :maxlength => 140%></div>
+<div><%=f.submit "Publish", :class => "button", :confirm => "Are you sure you *really* want to publish this update?"%> through <%=pluralize(@account.donors.count, "donation")%> reaching ~<%=pluralize @account.donors.sum("accounts.followers").to_i, "followers"%></div>
+<% end %>
+<% else %>
+    <% if @donation %>
+    <%= button_to "Un-Donate", donation_path(@donation), :confirm => "Are you sure?", :method => :delete %>
+    <% else %>
+    <%form_for Donation.new(:campaign_id => @account.id) do |f|%>
+        <%=f.hidden_field :campaign_id%>
+        <%=f.submit "Donate"%>
+    <%end%>
+    <% end %>
+<% end %>
+
+<%=render :partial => "statuses", :object => @statuses%>
+</div>

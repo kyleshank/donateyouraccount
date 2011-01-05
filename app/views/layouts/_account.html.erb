@@ -1,0 +1,19 @@
+<style type="text/css">
+  body{
+    <% unless account.profile_background_color.blank?%>background-color: #<%=account.profile_background_color%>;<%end%>
+    <% if account.profile_use_background_image %>
+        <% unless account.profile_background_image_url.blank?%>background-image: url(<%=account.profile_background_image_url%>);<% end %>
+        <% unless account.profile_background_tile%>background-repeat: no-repeat;<% end %>
+    <% end %>
+    <% unless account.profile_text_color.blank?%>color: #<%=account.profile_text_color%>;<% end %>
+  }
+  <% unless account.profile_link_color.blank? %>
+  a{color: #<%=account.profile_link_color%>}
+  a:hover{color: #<%=account.profile_link_color%>}
+  <% end %>
+  <% unless account.profile_text_color.blank? %>
+  #container #content{
+      color: #<%=account.profile_text_color%>;
+  }
+  <% end %>
+</style>

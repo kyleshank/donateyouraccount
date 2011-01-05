@@ -1,0 +1,5 @@
+<ul class="statuses">
+  <% statuses.each do |status| %>
+  <li><%=image_tag(status.account.profile_image_url || "https://s3.amazonaws.com/twitter_production/a/1294097328/images/default_profile_3_normal.png")%><div><span class="screen_name"><%=status.account.screen_name%></span><span class="name"><%=status.account.name%></span></div><div class="body"><%=auto_link status.body%></div><div class="time"><%=link_to "#{time_ago_in_words(status.created_at)} ago",status.twitter_permalink, :target=>"_blank"%></div></li>
+  <% end %>
+</ul>
