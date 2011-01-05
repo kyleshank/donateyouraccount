@@ -29,6 +29,7 @@ namespace :deploy do
 
   task :symlink_config, :roles => :app do
     run "ln -sf #{deploy_to}/shared/database.yml #{release_path}/config/database.yml"
+    run "ln -sf #{deploy_to}/shared/production.rb #{release_path}/config/environments/production.rb"
   end
 
 end
