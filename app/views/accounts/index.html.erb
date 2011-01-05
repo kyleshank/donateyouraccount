@@ -1,7 +1,7 @@
 <h2>Donation Timeline</h2>
 <% if @donated_statuses.empty? %>
     <p>No donations made yet!  Donate to some accounts!</p>
-    <p></p>
+    <p>Invite Twitterers to donate to your profile at: <a href="http://donateyouraccount.com<%=account_permalink_path(current_account)%>">http://donateyouraccount.com<%=account_permalink_path(current_account)%></a></p>
 <%else%>
 <%=render :partial => "statuses", :object => @donated_statuses%>
 <%=will_paginate @donated_statuses%>
