@@ -61,12 +61,4 @@ class AccountsController < ApplicationController
       redirect_to "/"
     end
   end
-
-  def donate
-    @account = Account.first(:conditions => {:screen_name => params[:id]})
-    redirect_to :back and return unless @account
-
-    session[:return_to] = account_permalink_path(@account)
-    redirect_to get_twitter_request_token.authorize_url.gsub("authorize","authenticate")
-  end
 end

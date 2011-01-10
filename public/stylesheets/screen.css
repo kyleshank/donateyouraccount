@@ -240,7 +240,11 @@ ul.statuses li .time{
     list-style-type: none;
 }
 
+#content .side .donations li{
+    float:left;
+}
+
 #content .side .donations img{
     width: 24px;
-    margin-right: 6px;
+    margin-right: 4px;
 }

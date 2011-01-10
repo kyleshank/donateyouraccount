@@ -12,7 +12,7 @@
 <% end %>
 <% else %>
 <p>
-<%=link_to image_tag("sign-in-with-twitter-d.png", :style=>"vertical-align:middle;margin-top:-3px;"), donate_account_path(@account) %> to donate.
+<%=link_to image_tag("sign-in-with-twitter-d.png", :style=>"vertical-align:middle;margin-top:-3px;"), campaign_donate_path(@campaign) %> to donate.
 </p>
 <% end %>
 <%=render :partial => "statuses/statuses", :object => @statuses, :locals => {:no_icon => true}%>
@@ -23,5 +23,9 @@
 <div class="url"><%=link_to @account.url, @account.url unless @account.url.blank?%></div>
 
 <h2>Donors (<%=@campaign.donations.count%>)</h2>
-<%=render :partial => "donations/donations", :object => @campaign.donations  %>
+<ul class="donations">
+  <% @campaign.donations.each do |donation| %>
+  <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.twitter_url, :target=>"_blank"%></li>
+  <% end %>
+</ul>
 <% end %>

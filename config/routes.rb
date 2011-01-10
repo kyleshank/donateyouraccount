@@ -13,5 +13,6 @@ Dya::Application.routes.draw do
 
   root :to => "dya#index"
 
+  match ':id/donate' => "campaigns#donate", :as => :campaign_donate
   match ':id(.:format)' => "campaigns#show", :as => :campaign_permalink
 end

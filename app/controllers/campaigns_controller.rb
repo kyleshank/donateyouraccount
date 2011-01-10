@@ -1,5 +1,7 @@
 class CampaignsController < ApplicationController
-  before_filter :login_required, :except => [:show]
+  include AccountsHelper
+  
+  before_filter :login_required, :except => [:show,:donate]
   before_filter :new_campaign, :only =>[:new,:create]
   before_filter :load_campaign, :only =>[:edit,:update]
 
@@ -37,6 +39,15 @@ class CampaignsController < ApplicationController
       format.html{}
       format.js {@donors = @campaign.donations.desc.limit(12).all}
     end
+  end
+
+  def donate
+    @account = Account.first(:conditions => {:screen_name => params[:id]})
+
+    render_not_found and return unless @account and @account.campaign
+
+    session[:return_to] = campaign_permalink_path(@account.campaign)
+    redirect_to get_twitter_request_token.authorize_url.gsub("authorize","authenticate")
   end
 
   private
