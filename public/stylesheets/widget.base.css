@@ -1,0 +1,46 @@
+#dya_box{
+    width: 280px;
+    background: #8ec8dc;
+    padding: 5px 1px 0 1px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+#dya_box_title{
+    font-size: 14px;
+}
+
+#dya_box_name{
+    font-size:16px;
+    font-weight: bold;
+}
+
+#dya_box_title a, #dya_box_name a, #dya_box_footer a{
+    display:block;
+    color:#fff;
+    text-decoration: none;
+}
+
+#dya_box_donors{
+    background: #fff;
+    padding: 5px;
+    line-height: 32px;
+    color: #333;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    height: 72px;
+}
+
+#dya_box_donors img{
+    width: 32px;
+    margin-right: 4px;
+}
+
+#dya_box_footer{
+    text-align: center;
+    padding: 2px 0;
+    height: 20px;
+}

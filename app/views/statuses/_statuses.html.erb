@@ -1,0 +1,5 @@
+<ul class="statuses <%unless defined?(no_icon)%>icon<%end%>">
+  <% statuses.each do |status| %>
+  <li><%=image_tag(status.campaign.account.profile_image_url) unless defined?(no_icon)%><div><span class="screen_name"><%=status.campaign.account.screen_name%></span><span class="name"><%=status.campaign.account.name%></span></div><div class="body"><%=auto_link status.body%></div><div class="time"><%=link_to "#{time_ago_in_words(status.created_at)} ago",status.twitter_permalink, :target=>"_blank"%></div></li>
+  <% end %>
+</ul>

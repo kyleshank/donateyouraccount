@@ -1,0 +1,8 @@
+<% form_for @campaign, :url => campaign_path, :method => :put do |f|%>
+<%=render :partial => "fields", :locals => {:f => f}%>
+<%=f.submit "Update Campaign"%>
+<% end %>
+
+<p>
+  <%=link_to "Delete Campaign", campaign_path, :method => :delete, :confirm => "Are you really sure?"%>
+</p>

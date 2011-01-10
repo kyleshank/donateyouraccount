@@ -1,0 +1,11 @@
+document.write('<%=raw stylesheet_link_tag("http://#{request.host_with_port}/stylesheets/widget.base.css")%>');
+document.write('<div id="dya_box">');
+document.write('<div id="dya_box_title"><a href="<%=raw "http://#{request.host_with_port}#{account_permalink_path(@account)}"%>">Donate Your Twitter Account</a></div>');
+document.write('<div id="dya_box_name"><a href="<%=raw "http://#{request.host_with_port}#{account_permalink_path(@account)}"%>">@<%=raw @account.screen_name%></a></div>');
+document.write('<div id="dya_box_donors">');
+<% @donors.each do |donor|%>
+document.write('<%=raw link_to(image_tag(donor.account.profile_image_url), "http://#{request.host_with_port}#{account_permalink_path(donor.account)}", :target=>"_blank", :title => donor.account.screen_name)%>');
+<% end %>
+document.write('</div>');
+document.write('<div id="dya_box_footer"><a href="<%=raw "http://#{request.host_with_port}#{account_permalink_path(@account)}"%>"><img src="<%=raw "http://#{request.host_with_port}/images/logo_widget.png"%>"/></a></div>');
+document.write('</div>');

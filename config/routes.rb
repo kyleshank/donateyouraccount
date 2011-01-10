@@ -3,10 +3,8 @@ Dya::Application.routes.draw do
     collection do
       match 'oauth_create' => "accounts#create", :as => :oauth_create, :via => :get
     end
-    member do
-      get :donate
-    end
   end
+  resource :campaign
   resources :donations
   resources :statuses
 
@@ -15,5 +13,5 @@ Dya::Application.routes.draw do
 
   root :to => "dya#index"
 
-  match ':id' => "accounts#show", :as => :account_permalink
+  match ':id(.:format)' => "campaigns#show", :as => :campaign_permalink
 end

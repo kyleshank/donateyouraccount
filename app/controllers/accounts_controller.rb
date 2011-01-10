@@ -5,13 +5,7 @@ class AccountsController < ApplicationController
 
   def index
     @donated_statuses = Status.donated_through_account(current_account).desc.paginate(:page => params[:page], :per_page=>10)
-  end
-
-  def show
-    @account = Account.first(:conditions => {:screen_name => params[:id]})
-    render_not_found and return unless @account
-    @statuses = @account.statuses.desc.paginate(:page => params[:page], :per_page=>10)
-    @donation = current_account.donations.for_campaign(@account.id).first if current_account
+    @campaign = current_account.campaign
   end
 
   def new

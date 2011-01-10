@@ -1,0 +1,27 @@
+<h1><%=image_tag(@account.profile_image_url)%><%=@account.screen_name%></h1>
+<div><%=simple_format @campaign.description%></div>
+<% if current_account %>
+<% if current_account.id == @account.id %>
+<% elsif @donation %>
+    <%= button_to "Un-Donate", donation_path(@donation), :confirm => "Are you sure?", :method => :delete %>
+    <% else %>
+    <%form_for Donation.new(:campaign_id => @campaign.id) do |f|%>
+        <%=f.hidden_field :campaign_id%>
+        <%=f.submit "Donate"%>
+    <%end%>
+<% end %>
+<% else %>
+<p>
+<%=link_to image_tag("sign-in-with-twitter-d.png", :style=>"vertical-align:middle;margin-top:-3px;"), donate_account_path(@account) %> to donate.
+</p>
+<% end %>
+<%=render :partial => "statuses/statuses", :object => @statuses, :locals => {:no_icon => true}%>
+<% content_for :side do %>
+<div class="name"><%=@account.name%></div>
+<div class="location"><%=@account.location%></div>
+<div class="description"><%=@account.description%></div>
+<div class="url"><%=link_to @account.url, @account.url unless @account.url.blank?%></div>
+
+<h2>Donors (<%=@campaign.donations.count%>)</h2>
+<%=render :partial => "donations/donations", :object => @campaign.donations  %>
+<% end %>

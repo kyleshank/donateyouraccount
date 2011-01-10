@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110105132446) do
+ActiveRecord::Schema.define(:version => 20110110041532) do
 
   create_table "accounts", :force => true do |t|
     t.string   "uid"
@@ -33,6 +33,13 @@ ActiveRecord::Schema.define(:version => 20110105132446) do
     t.string   "profile_text_color"
     t.boolean  "profile_background_tile"
     t.boolean  "profile_use_background_image"
+  end
+
+  create_table "campaigns", :force => true do |t|
+    t.integer  "account_id"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -60,10 +67,11 @@ ActiveRecord::Schema.define(:version => 20110105132446) do
     t.integer  "account_id"
     t.integer  "campaign_id"
     t.datetime "created_at"
+    t.integer  "level"
   end
 
   create_table "statuses", :force => true do |t|
-    t.integer  "account_id"
+    t.integer  "campaign_id"
     t.string   "body"
     t.string   "twitter_status_id"
     t.datetime "created_at"

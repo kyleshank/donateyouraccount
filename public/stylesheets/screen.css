@@ -101,15 +101,39 @@ p{
 }
 
 #container #content{
-    background: #fff;
     clear: both;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    min-height: 300px;
-    padding: 10px;
-    font-size: medium;
     margin: 1em 0;
+}
+
+#container #content #columns{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+#container #content #columns .main{
+    background: #fff;
+    font-size: medium;
+    min-height: 300px;
+    -webkit-border-radius: 10px 0 0 10px;
+    -moz-border-radius: 10px 0 0 10px;
+    border-radius: 10px 0 0 10px;
+    padding: 10px;
+    width: 580px;
+    vertical-align: top;
+}
+
+#container #content #columns .side{
+    width: 200px;
+    background: #ccc;
+    vertical-align: top;
+    -webkit-border-radius:  0 10px 10px 0;
+    -moz-border-radius:  0 10px 10px 0;
+    border-radius:  0 10px 10px 0;
+    padding: 10px;
+    color: #333;
+    font-size: small;
 }
 
 #container #footer{
@@ -124,12 +148,15 @@ ul.statuses{
 }
 
 ul.statuses li{
-    padding-left: 56px;
     min-height: 48px;
     position: relative;
     margin: 1em 0;
     border-bottom: 1px solid #eee;
     padding-bottom: 6px;
+}
+
+ul.statuses.icon li{
+   padding-left: 56px;
 }
 
 ul.statuses li div{
@@ -141,10 +168,15 @@ ul.statuses li div.body{
 }
 
 ul.statuses li img{
+    display: none;
+}
+
+ul.statuses.icon li img{
     position: absolute;
     top: 0;
     left: 0;
     width: 48px;
+    display: block;
 }
 
 ul.statuses li .screen_name{
@@ -172,39 +204,43 @@ ul.statuses li .time{
     font-size: medium;
 }
 
-#account .info{
-    padding-left: 56px;
+#content .main h1 img{
+    vertical-align:middle;
+    margin-right: 6px;
+}
+
+#content .side{
     position: relative;
+
 }
 
-#account .info img{
-    position: absolute;
-    top:0;left:0;
-}
-
-#account .info .name{
+#content .side .name{
     font-weight:bold;
     font-size: x-large;
 }
 
-#account .info .screen_name{
-    font-weight:bold;
+#content .side .location{
+}
+
+#content .side .description{
+
+}
+
+#content .side .url{
+}
+
+#content .side h2{
     font-size: medium;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid #ddd;
 }
 
-#account .info .location{
-    font-weight:normal;
-    font-size: small;
-    margin-left: 6px;
-    color: #999;
+#content .side .donations{
+    list-style-type: none;
 }
 
-#account .info .description{
-    font-style: italic;
-    font-size: small;
-    font-family:Georgia;
-}
-
-#account .info .url{
-    font-size:small;
+#content .side .donations img{
+    width: 24px;
+    margin-right: 6px;
 }

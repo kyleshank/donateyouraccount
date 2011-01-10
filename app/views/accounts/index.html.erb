@@ -1,8 +1,15 @@
-<h2>Donation Timeline</h2>
+<% if current_account.campaign %>
+<% form_for @status || Status.new, :url => statuses_path do |f| %>
+<div><%=f.text_area :body, :maxlength => 140%></div>
+<div><%=f.submit "Publish", :class => "button", :confirm => "Are you sure you *really* want to publish this update?"%> through <%=pluralize(@campaign.donations.count, "donation")%> reaching ~<%=pluralize @campaign.donations.sum("accounts.followers").to_i, "followers"%></div>
+<% end %>
+<% else  %>
+<%=link_to "Create Campaign", new_campaign_path%>
+<% end %>
+<h2>Timeline</h2>
 <% if @donated_statuses.empty? %>
     <p>No donations made yet!  Donate to some accounts!</p>
-    <p>Invite Twitterers to donate to your profile at: <a href="http://donateyouraccount.com<%=account_permalink_path(current_account)%>">http://donateyouraccount.com<%=account_permalink_path(current_account)%></a></p>
 <%else%>
-<%=render :partial => "statuses", :object => @donated_statuses%>
+<%=render :partial => "statuses/statuses", :object => @donated_statuses%>
 <%=will_paginate @donated_statuses%>
 <% end %>
