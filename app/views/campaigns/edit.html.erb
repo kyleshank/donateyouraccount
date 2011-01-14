@@ -1,8 +1,10 @@
+<h1>Edit Campaign</h1>
+
 <% form_for @campaign, :url => campaign_path, :method => :put do |f|%>
 <%=render :partial => "fields", :locals => {:f => f}%>
-<%=f.submit "Update Campaign"%>
+<%=f.submit "Update Campaign",:class=>"button", %>
 <% end %>
 
 <p>
-  <%=link_to "Delete Campaign", campaign_path, :method => :delete, :confirm => "Are you really sure?"%>
+  <%=link_to raw("<span>Delete Campaign<span>"), campaign_path, :class=>"button", :method => :delete, :confirm => "This action cannot be reversed.  Are you really sure you want to delete your campaign?"%>
 </p>

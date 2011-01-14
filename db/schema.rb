@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110110041532) do
+ActiveRecord::Schema.define(:version => 20110113035604) do
 
   create_table "accounts", :force => true do |t|
     t.string   "uid"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20110110041532) do
     t.string   "body"
     t.string   "twitter_status_id"
     t.datetime "created_at"
+    t.integer  "level"
   end
 
 end

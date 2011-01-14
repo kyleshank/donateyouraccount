@@ -8,10 +8,17 @@ class StatusesController < ApplicationController
     @status = current_account.campaign.statuses.new(params[:status])
 
     if @status.save
-      request.flash.now["notice"] = "Status publishing to Twitter"
+      flash[:notice] = "Status publishing to Twitter"
+      redirect_to campaign_permalink_path(current_account.campaign)
+    else
+      error_string = "<ul>"
+      @status.errors.full_messages.each do |s|
+        error_string += "<li>#{s}</li>"
+      end
+      error_string += "</ul>"
+      flash[:notice] = error_string
+      redirect_to dashboard_path
     end
-
-    redirect_to campaign_permalink_path(current_account.campaign)
   end
 
 end

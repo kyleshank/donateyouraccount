@@ -1,12 +1,17 @@
 <% if current_account.campaign %>
-<% form_for @status || Status.new, :url => statuses_path do |f| %>
+<% form_for @status, :url => statuses_path do |f| %>
+<div class="right""><%=link_to "Profile", campaign_permalink_path(@campaign)%> - <%=link_to "Edit Campaign", edit_campaign_path%></div>
+<h1>Your Campaign (<%=pluralize(@campaign.donations.count, "donor")%> ~<%=pluralize @campaign.donations.sum("accounts.followers").to_i, "followers"%>)</h1>
 <div><%=f.text_area :body, :maxlength => 140%></div>
-<div><%=f.submit "Publish", :class => "button", :confirm => "Are you sure you *really* want to publish this update?"%> through <%=pluralize(@campaign.donations.count, "donation")%> reaching ~<%=pluralize @campaign.donations.sum("accounts.followers").to_i, "followers"%></div>
+<div><%=check_box_tag "status[levels][]", Donation::LEVELS["Gold"], false, {:id =>"gold"}%> <%=label_tag "gold" , "#{@campaign.donations.gold.count} Gold Donors (1 retweet per day)"%></div>
+<div><%=check_box_tag "status[levels][]", Donation::LEVELS["Silver"], false, {:id =>"silver"}%> <%=label_tag "silver" , "#{@campaign.donations.silver.count} Silver Donors (1 retweet per week)"%></div>
+<div><%=check_box_tag "status[levels][]", Donation::LEVELS["Bronze"], false, {:id =>"bronze"}%> <%=label_tag "bronze" , "#{@campaign.donations.bronze.count} Bronze Donors (1 retweet per month)"%></div>
+<div><%=f.submit "Publish Tweet", :class => "button", :confirm => "Are you sure you *really* want to publish this tweet through all your donors?"%></div>
 <% end %>
 <% else  %>
-<%=link_to "Create Campaign", new_campaign_path%>
+<div class="attention home"><%=link_to raw("<span>Create Campaign</span>"), new_campaign_path, :class=>"button"%> to receive donations</div>
 <% end %>
-<h2>Timeline</h2>
+<h3>Timeline</h3>
 <% if @donated_statuses.empty? %>
     <p>No donations made yet!  Donate to some accounts!</p>
 <%else%>
@@ -20,6 +25,15 @@
 <div class="description"><%=current_account.description%></div>
 <div class="url"><%=link_to current_account.url, current_account.url unless current_account.url.blank?%></div>
 
+<% if @campaign %>
+<h2>Donors (<%=@campaign.donations.count%>)</h2>
+<ul class="donations">
+  <% @campaign.donations.each do |donation| %>
+  <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.twitter_url, :target=>"_blank"%></li>
+  <% end %>
+</ul>
+<%end%>
+    
 <h2>Donations (<%=current_account.donations.count%>)</h2>
 <ul class="donations">
   <% current_account.donations.each do |donation| %>

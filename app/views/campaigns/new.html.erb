@@ -1,4 +1,5 @@
+<h1>Create Campaign</h1>
 <% form_for @campaign, :url => campaign_path do |f|%>
 <%=render :partial => "fields", :locals => {:f => f}%>
-<%=f.submit "Create Campaign"%>
+<%=f.submit "Create Campaign", :class=>"button"%>
 <% end %>

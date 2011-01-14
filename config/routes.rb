@@ -8,11 +8,14 @@ Dya::Application.routes.draw do
   resources :donations
   resources :statuses
 
-  match 'dashboard' => "accounts#index", :as => :dashboard
+  match 'home' => "accounts#index", :as => :dashboard
   match 'signout' => "dya#signout", :as => :signout
 
   root :to => "dya#index"
 
-  match ':id/donate' => "campaigns#donate", :as => :campaign_donate
+  get ':id/donate' => "donations#new", :as => :campaign_donate
+  post ':id/donate' => "donations#create"
+  delete ':id/donate' => "donations#destroy"
+  
   match ':id(.:format)' => "campaigns#show", :as => :campaign_permalink
 end

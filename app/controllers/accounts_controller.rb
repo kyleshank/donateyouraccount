@@ -6,6 +6,7 @@ class AccountsController < ApplicationController
   def index
     @donated_statuses = Status.donated_through_account(current_account).desc.paginate(:page => params[:page], :per_page=>10)
     @campaign = current_account.campaign
+    @status = Status.new
   end
 
   def new

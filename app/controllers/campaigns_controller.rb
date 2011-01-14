@@ -1,9 +1,9 @@
 class CampaignsController < ApplicationController
   include AccountsHelper
   
-  before_filter :login_required, :except => [:show,:donate]
+  before_filter :login_required, :except => [:show]
   before_filter :new_campaign, :only =>[:new,:create]
-  before_filter :load_campaign, :only =>[:edit,:update]
+  before_filter :load_campaign, :only =>[:edit,:update, :destroy]
 
   def new
 
@@ -12,6 +12,7 @@ class CampaignsController < ApplicationController
   def create
     @campaign.account = current_account
     if @campaign.save
+      flash[:notice] = "Campaign created"
       redirect_to campaign_permalink_path(@campaign) and return
     end
   end
@@ -21,6 +22,7 @@ class CampaignsController < ApplicationController
 
   def update
     if @campaign.update_attributes(params[:campaign])
+      flash[:notice] = "Campaign updated"
       redirect_to campaign_permalink_path(@campaign) and return
     end
     render :action => :edit
@@ -41,13 +43,10 @@ class CampaignsController < ApplicationController
     end
   end
 
-  def donate
-    @account = Account.first(:conditions => {:screen_name => params[:id]})
-
-    render_not_found and return unless @account and @account.campaign
-
-    session[:return_to] = campaign_permalink_path(@account.campaign)
-    redirect_to get_twitter_request_token.authorize_url.gsub("authorize","authenticate")
+  def destroy
+    @campaign.destroy
+    flash[:notice] = "Campaign destroyed"
+    redirect_to dashboard_path
   end
 
   private
