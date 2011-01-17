@@ -18,15 +18,13 @@
 
 <div id="header">
 <h1><a href="/"><span>Donate Your Account</span></a></h1>
-<ul id="nav">
 <% if current_account %>
+<ul id="nav">
     <li><%=link_to "Home", dashboard_path %></li>
     <li><% if current_account.campaign%><%= link_to current_account.screen_name, campaign_permalink_path(current_account.campaign)%><%else%><%= current_account.screen_name%><% end %></li>
     <li class="last"><%=link_to "Sign out", signout_path%></li>
-<% else %>
-    <li class="last"><%=link_to image_tag("sign-in-with-twitter-d.png"), new_account_path %></li>
-<% end %>
 </ul>
+<% end %>
 </div>
 
 <div id="content">

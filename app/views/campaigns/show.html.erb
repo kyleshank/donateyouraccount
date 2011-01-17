@@ -22,7 +22,15 @@
 <h2>Donors (<%=@campaign.donations.count%>)</h2>
 <ul class="donations">
   <% @campaign.donations.each do |donation| %>
+  <% if donation.account.campaign%>
+  <li><%=link_to image_tag(donation.account.profile_image_url), campaign_permalink_path(donation.account.campaign)%></li>
+  <% else %>
   <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.twitter_url, :target=>"_blank"%></li>
   <% end %>
+  <% end %>
 </ul>
+
+<h2>Embed</h2>
+<textarea rows="4" cols="5" id="embed" class="embed"><script src="http://<%=request.host_with_port%><%=campaign_permalink_path(@campaign, :format => "js")%>"></script></textarea>
+<p>Copy and paste the HTML code around the web to help spread the word.</p>
 <% end %>

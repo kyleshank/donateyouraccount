@@ -15,4 +15,8 @@ $(function(){
         e.preventDefault();
         return false;
     });
+    $("textarea.embed").click(function(){
+        $(this).focus();
+        $(this).select();
+    });
 });
