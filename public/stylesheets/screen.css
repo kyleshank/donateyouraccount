@@ -72,8 +72,8 @@ p{
 #container #header h1 a{
     background: url('/images/logo.png') no-repeat;
     display: block;
-    width: 390px;
-    height: 38px;
+    width: 400px;
+    height: 42px;
 }
 
 #container #nav{
@@ -143,7 +143,7 @@ p{
 
 #container #footer{
     text-align: center;
-    color: #eee;
+    color: #000;
 }
 
 ul.statuses{
