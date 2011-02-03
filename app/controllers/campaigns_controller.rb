@@ -39,7 +39,7 @@ class CampaignsController < ApplicationController
 
     respond_to do |format|
       format.html{}
-      format.js {@donors = @campaign.donations.desc.limit(12).all}
+      format.js {@donors = @campaign.donations.desc.limit(14).all}
     end
   end
 
