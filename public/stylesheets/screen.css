@@ -38,7 +38,7 @@ p{
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top:-150px;
+    margin-top:-210px;
     margin-left: -300px;
     width: 600px;
     text-align:center;
@@ -50,8 +50,38 @@ p{
 
 #footer{
     font-size: small;
-    margin: 1em 0;
+    margin: 2em 0;
     clear: both;
+}
+
+#index #campaigns {
+    background: #fff;
+    padding: 10px;
+    border-radius:10px;
+    margin-bottom: 1em;
+    text-align: left;
+}
+
+#index #campaigns h1 {
+    color: #ccc;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+#index #campaigns ul{
+    list-style-type:none;
+}
+
+#index #campaigns ul li{
+    float:left;
+    width: 20%;
+    text-align: center;
+}
+
+#index #campaigns ul li div{
+    display: block;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 /** APPLICATION **/

@@ -5,6 +5,8 @@ class Campaign < ActiveRecord::Base
 
   validates_presence_of :account, :description
 
+  scope :desc, :order => "campaigns.id desc"
+  
   def to_param
     self.account.screen_name
   end

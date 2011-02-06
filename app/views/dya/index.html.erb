@@ -14,6 +14,16 @@
 
 <div id="logo"><%=image_tag("index-logo.png")%></div>
 
+<div id="campaigns">
+  <h1>Donate Your Account to campaigns you support:</h1>
+<ul>
+  <% Campaign.desc.limit(3).all.each do |campaign| %>
+<li><a href="<%=campaign_permalink_path(campaign)%>"><%=image_tag(campaign.account.profile_image_url)%><div><%=campaign.account.screen_name%></div></a></li>
+  <% end %>
+    </ul>
+  <br style="clear:both"/>
+</div>
+
 <div id="button">
     <%=link_to image_tag("sign-in-with-twitter-d.png"), new_account_path %>
 </div>
