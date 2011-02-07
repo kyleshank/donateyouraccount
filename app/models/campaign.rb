@@ -6,6 +6,7 @@ class Campaign < ActiveRecord::Base
   validates_presence_of :account, :description
 
   scope :desc, :order => "campaigns.id desc"
+  scope :suggest_for, lambda {|aid| {:select => "DISTINCT(campaigns.id),campaigns.*", :joins => "LEFT JOIN donations ON donations.campaign_id = campaigns.id", :conditions => ["donations.account_id != ? AND campaigns.account_id != ?", aid, aid]}}
   
   def to_param
     self.account.screen_name
