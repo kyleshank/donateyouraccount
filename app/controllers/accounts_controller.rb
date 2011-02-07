@@ -7,6 +7,8 @@ class AccountsController < ApplicationController
     @donated_statuses = Status.donated_through_account(current_account).desc.paginate(:page => params[:page], :per_page=>10)
     @campaign = current_account.campaign
     @status = Status.new
+    @donations = current_account.donations.collect{|c| c.id}
+    @campaigns = Campaign.where("id NOT IN (:donations) AND account_id != :account_id", {:account_id => current_account.id, :donations => @donations.join(',')}).limit(4)
   end
 
   def new

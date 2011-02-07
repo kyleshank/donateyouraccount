@@ -11,6 +11,19 @@
 <% else  %>
 <div class="attention home"><%=link_to raw("<span>Create Campaign</span>"), new_campaign_path, :class=>"button"%> to receive donations</div>
 <% end %>
+
+<% unless @campaigns.empty? %>
+<div id="campaigns">
+  <h1>Campaign Suggestions</h1>
+<ul>
+  <% @campaigns.each do |campaign| %>
+    <li><a href="<%=campaign_permalink_path(campaign)%>"><%=image_tag(campaign.account.profile_image_url)%><div><%=campaign.account.screen_name%></div></a></li>
+  <% end %>
+    </ul>
+  <br style="clear:both"/>
+</div>
+<% end %>
+
 <h3>Timeline</h3>
 <% if @donated_statuses.empty? %>
     <p>No donations made yet!  Donate to some accounts!</p>
