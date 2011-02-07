@@ -8,7 +8,7 @@ class AccountsController < ApplicationController
     @campaign = current_account.campaign
     @status = Status.new
     @donations = current_account.donations.collect{|c| c.id}
-    @campaigns = Campaign.where("id NOT IN (:donations) AND account_id != :account_id", {:account_id => current_account.id, :donations => @donations.join(',')}).desc.limit(4)
+    @campaigns = Campaign.where("id NOT IN (#{@donations.join(',')}) AND account_id != :account_id", {:account_id => current_account.id}).desc.limit(4)
   end
 
   def new
