@@ -28,9 +28,9 @@ class Status < ActiveRecord::Base
   def publish
     unless self.twitter_status_id.blank?
       level_array = []
-      level_array << Donation::LEVELS["Gold"] if (self.level & Donation::LEVELS["Gold"])
-      level_array << Donation::LEVELS["Silver"] if (self.level & Donation::LEVELS["Silver"])
-      level_array << Donation::LEVELS["Bronze"] if (self.level & Donation::LEVELS["Bronze"])
+      level_array << Donation::LEVELS["Gold"] if ((self.level & Donation::LEVELS["Gold"]) > 0)
+      level_array << Donation::LEVELS["Silver"] if ((self.level & Donation::LEVELS["Silver"]) > 0)
+      level_array << Donation::LEVELS["Bronze"] if ((self.level & Donation::LEVELS["Bronze"]) > 0)
       self.campaign.donations.for_levels(level_array).each do |donation|
         donation.donated_statuses.create(:status => self)
       end
