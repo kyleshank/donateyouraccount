@@ -8,9 +8,9 @@ class Status < ActiveRecord::Base
 
   scope :donated_through_account, lambda {|a| {:joins => "INNER JOIN donated_statuses ON donated_statuses.status_id = statuses.id INNER JOIN donations ON donations.id = donated_statuses.donation_id INNER JOIN accounts ON donations.account_id = accounts.id ", :conditions => ["accounts.id = ?", a.id], :group => "statuses.id" } }  
   scope :desc, order("statuses.id desc")
-  scope :within_1_day, :conditions => ["statuses.created_at > ?", Time.now - 1.days]
-  scope :within_1_week, :conditions => ["statuses.created_at > ?", Time.now - 7.days]
-  scope :within_1_month, :conditions => ["statuses.created_at > ?", Time.now - 28.days]
+  scope :within_1_day, :conditions => "statuses.created_at > (NOW()-#{1.day.to_i})"
+  scope :within_1_week, :conditions => "statuses.created_at > (NOW()-#{7.day.to_i})"
+  scope :within_1_month, :conditions => "statuses.created_at > (NOW()-#{28.day.to_i})"
   scope :for_levels, lambda {|levels| {:conditions => levels.collect{|l| "statuses.level = #{l}"}.join(" OR ")}}
 
   attr_accessor :levels
