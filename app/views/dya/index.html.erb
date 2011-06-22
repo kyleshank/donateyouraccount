@@ -18,7 +18,9 @@
   <h1>Donate Your Account to campaigns you support:</h1>
 <ul>
   <% @donations.each do |donation| %>
+  <% if donation.campaign %>
 <li><a href="<%=campaign_permalink_path(donation.campaign)%>"><%=image_tag(donation.campaign.account.profile_image_url)%><div><%=donation.campaign.account.screen_name%></div></a></li>
+<% end %>
   <% end %>
     </ul>
   <br style="clear:both"/>
