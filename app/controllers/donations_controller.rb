@@ -17,36 +17,47 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 class DonationsController < ApplicationController
-  include AccountsHelper
+  include TwitterAccountsHelper
+  include FacebookAccountsHelper
   
-  before_filter :login_required, :except => [:new]
   before_filter :load_campaign
+  before_filter :twitter_required, :only => [:twitter, :twitter_create]
+  before_filter :facebook_required, :only => [:facebook, :facebook_create]
+  before_filter :login_required, :only => [:destroy]
 
-  def new
-    if current_account
-      @donation = @campaign.donations.new
-      @donation.level = Donation::LEVELS["Silver"]
+  def twitter
+    @donation = @campaign.donations.new
+    @donation.level = Donation::LEVELS["Silver"]
+  end
+
+  def twitter_create
+    @donation = @campaign.donations.new(params[:donation])
+    @donation.account = current_twitter_account
+    if @donation.save
+      redirect_to campaign_permalink_path(@campaign)
     else
-      session[:return_to] = campaign_permalink_path(@campaign)
-      session[:return_flash] = "Thanks for signing in! Click Donate below to continue"
-      redirect_to get_twitter_request_token.authorize_url.gsub("authorize","authenticate")
+      render :action => :twitter
     end
   end
 
-  def create
-    @donation = current_account.donations.new(params[:donation])
-    @donation.campaign = @campaign
+  def facebook
+    @donation = @campaign.donations.new
+    @donation.level = Donation::LEVELS["Silver"]
+  end
+
+  def facebook_create
+    @donation = @campaign.donations.new(params[:donation])
+    @donation.account = current_facebook_account
     if @donation.save
-      flash[:notice] = "Donation made to #{@donation.campaign.account.screen_name}"
       redirect_to campaign_permalink_path(@campaign)
     else
-      flash[:notice] = "There was an error donating to #{@donation.campaign.account.screen_name}"
-      render :action => :new
+      render :action => :facebook
     end
   end
 
   def destroy
-    @donation = current_account.donations.for_campaign(@campaign.id).first
+    @donation = current_twitter_account.donations.find(params[:id]) if current_twitter_account
+    @donation = current_facebook_account.donations.find(params[:id]) if !@donation && current_facebook_account
 
     if @donation
       flash[:notice] = "Donation destroyed"
@@ -59,9 +70,25 @@ class DonationsController < ApplicationController
   private
 
   def load_campaign
-    @account = Account.first(:conditions => {:screen_name => params[:id]})
-    render_not_found and return unless @account and @account.campaign
-    @campaign = @account.campaign
+    @campaign = Campaign.where(:permalink => params[:campaign_id]).first
+    render_not_found and return unless @campaign
+  end
+
+  def twitter_required
+    unless current_twitter_account
+      session[:return_to] = twitter_campaign_donations_path(@campaign)
+      redirect_to get_twitter_request_token.authorize_url.gsub("authorize","authenticate")
+    end
+  end
+
+  def facebook_required
+    unless current_facebook_account
+      session[:return_to] = facebook_campaign_donations_path(@campaign)
+      redirect_to get_oauth_client.web_server.authorize_url(
+        :redirect_uri => FACEBOOK_OAUTH_REDIRECT,
+        :scope => 'offline_access,share_item'
+      )
+    end
   end
 
 end

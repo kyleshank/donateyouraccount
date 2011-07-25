@@ -17,23 +17,33 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 Dya::Application.routes.draw do
-  resources :accounts do
+  resources :facebook_accounts do
     collection do
-      match 'oauth_create' => "accounts#create", :as => :oauth_create, :via => :get
+      match 'oauth_create' => "facebook_accounts#create", :as => :oauth_create, :via => :get
     end
   end
-  resource :campaign
-  resources :donations
-  resources :statuses
+  resources :twitter_accounts do
+    collection do
+      match 'oauth_create' => "twitter_accounts#create", :as => :oauth_create, :via => :get
+    end
+  end
+  resources :campaigns do
+    resources :donations do
+      collection do
+        get :twitter
+        match 'twitter' => "donations#twitter_create", :as => :twitter_create, :via => :post
+        get :facebook
+        match 'facebook' => "donations#facebook_create", :as => :facebook_create, :via => :post
+      end
+    end
+    resources :twitter_statuses
+    resources :facebook_statuses
+  end
 
-  match 'home' => "accounts#index", :as => :dashboard
+  match 'home' => "dya#home", :as => :dashboard
   match 'signout' => "dya#signout", :as => :signout
 
   root :to => "dya#index"
 
-  get ':id/donate' => "donations#new", :as => :campaign_donate
-  post ':id/donate' => "donations#create"
-  delete ':id/donate' => "donations#destroy"
-  
   match ':id(.:format)' => "campaigns#show", :as => :campaign_permalink
 end

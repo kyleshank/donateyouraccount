@@ -17,16 +17,25 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 class Campaign < ActiveRecord::Base
-  belongs_to :account
-  has_many :donations, :include => :account
+  has_many :donations
   has_many :statuses
+  has_many :twitter_statuses
+  belongs_to :twitter_account
+  has_many :facebook_statuses
+  belongs_to :facebook_account
 
-  validates_presence_of :account, :description
+  validates_presence_of :name, :description, :permalink
+  validates_uniqueness_of :permalink
 
   scope :desc, :order => "campaigns.id desc"
   scope :suggest_for, lambda {|aid| {:select => "DISTINCT(campaigns.id),campaigns.*", :joins => "LEFT JOIN donations ON donations.campaign_id = campaigns.id", :conditions => ["donations.account_id != ? AND campaigns.account_id != ?", aid, aid]}}
-  
+  scope :for_accounts, lambda {|accounts| {:conditions => accounts.collect{|a| "campaigns.#{a.class.name.underscore}_id=#{a.id}"}.join(" OR ")} }
+
   def to_param
-    self.account.screen_name
+    self.permalink
+  end
+
+  def image
+    self["image"] || ""
   end
 end

@@ -24,20 +24,11 @@ class DonatedStatus < ActiveRecord::Base
 
   validates_uniqueness_of :status_id, :scope => [:donation_id]
 
-  after_create :retweet
+  after_create :broadcast
 
   private
 
-  def retweet
-    retries = 0
-    while retries < 5
-      begin
-        client = Twitter::Client.new(:oauth_token => self.donation.account.token, :oauth_token_secret => self.donation.account.secret)
-        client.retweet(self.status.twitter_status_id)
-        break
-      rescue Exception
-        retries += 1
-      end
-    end
+  def broadcast
+    self.status.broadcast(self.donation)
   end
 end

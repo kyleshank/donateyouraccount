@@ -1,5 +1,23 @@
 <h1>Create Campaign</h1>
-<% form_for @campaign, :url => campaign_path do |f|%>
-<%=render :partial => "fields", :locals => {:f => f}%>
+<% form_for @campaign do |f|%>
+<%=render :partial => "layouts/errors", :locals => {:model => @campaign}%>
+<%=f.label :name %>
+<%=f.text_field :name%>
+<%=f.label :permalink%>
+<%=f.text_field :permalink, :value => (current_twitter_account ? current_twitter_account.screen_name : nil)%>
+<%=f.label :twitter_account%>
+<% if current_twitter_account %>
+    <%=f.select :twitter_account_id, [["@#{current_twitter_account.screen_name}",current_twitter_account.id]], :include_blank=>true %>
+<% else %>
+    <%=link_to "Sign in with Twitter", new_twitter_account_path%>
+<% end %>
+    <%=label_tag "Facebook Page"%>
+<% if current_facebook_account %>
+    <%=f.select :facebook_page_uid, current_facebook_account.get("/me/accounts")["data"].select{|a| a["category"] != "Application"}.collect{|a| [a["name"], a["id"] ]}, :include_blank=>true %>
+<% else %>
+    <%=link_to "Sign in with Facebook", new_facebook_account_path%>
+<% end %>
+<%=f.label :description %>
+<%=f.text_area :description%>
 <%=f.submit "Create Campaign", :class=>"button"%>
 <% end %>

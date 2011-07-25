@@ -3,292 +3,125 @@
     padding: 0;
 }
 
+ul{
+    list-style-type: none;
+}
+
 body{
-    color: #333;
-    background: #8ec8dc url('/images/bg.png') repeat-x;
-    margin:0;
-    padding:0;
-    font: normal normal normal 13px/1.5 'Helvetica Neue', Arial, Helvetica, 'Liberation Sans', FreeSans, sans-serif;
-}
-
-a{
-    color: #2D76B9;
-}
-
-a:hover{
-    color: #0084B4;
-}
-
-img{
-    border:0;
+    color: #000;
+    background: #fff;
+    font-size: medium;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    line-height: 1.3;
+    text-rendering: optimizelegibility;
 }
 
 p{
     margin: 1em 0;
 }
 
-.right{
-    float: right;
+a{
+    color: blue;
 }
 
-
-/** INDEX **/
-
-#index{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top:-210px;
-    margin-left: -300px;
-    width: 600px;
-    text-align:center;
-}
-
-#index #logo{
-    margin-bottom: 1em;
-}
-
-#footer{
-    font-size: small;
-    margin: 2em 0;
-    clear: both;
-}
-
-#index #campaigns{
-    background: #fff;
-    padding: 10px;
-    border-radius:10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    margin-bottom: 1em;
-    text-align: left;
-}
-
-#content #campaigns{
-    background: #f1f1f1;
-    padding: 10px;
-    border-radius:10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    margin-bottom: 1em;
-    text-align: left;
-}
-
-#index #campaigns h1 {
-    color: #ccc;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-#content #campaigns h1 {
-    color: #aaa;
-    font-size: 14px;
-    margin-bottom: 10px;
-    text-shadow:-1px -1px 0 #fff;
-}
-
-#index #campaigns ul, #content #campaigns ul{
-    list-style-type:none;
-}
-
-#index #campaigns ul li, #content #campaigns ul li{
-    float:left;
-    width: 25%;
-    text-align: center;
-}
-
-#index #campaigns ul li div, #content #campaigns ul li div{
-    display: block;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-/** APPLICATION **/
-#container{
-    width: 780px;
-    margin:0 auto;
-    margin-top: 1em;
-}
-
-#container #header{
+/**LAYOUT**/
+#bar{
     position: relative;
+    height: 60px;
 }
 
-#container #header h1 span{
-    display:none;
-}
-
-#container #header h1 a{
-    background: url('/images/logo.png') no-repeat;
-    display: block;
-    width: 400px;
-    height: 42px;
-}
-
-#container #nav{
-    position: absolute;
-    top:0;
-    right:0;
-    list-style-type:none;
-    padding:0;
-    margin: 0;
-    line-height: 32px;
-    height: 32px;
-    background: #fff;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    padding: 0 1em;
-}
-
-#container #nav li{
-    float: left;
-    margin-right: 1em;
-}
-
-#container #nav li.last{
-    margin-right:0;
-}
-
-#container #nav li img{
-    margin-top: 4px;
-}
-
-#container #content{
-    clear: both;
-    margin: 1em 0;
-}
-
-#container #content #columns{
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    border: 0;
-}
-
-#container #content #columns .main{
-    background: #fff;
-    font-size: medium;
-    min-height: 300px;
-    -webkit-border-radius: 10px 0 0 10px;
-    -moz-border-radius: 10px 0 0 10px;
-    border-radius: 10px 0 0 10px;
-    padding: 10px;
-    width: 580px;
-    vertical-align: top;
-}
-
-#container #content #columns .side{
-    width: 200px;
-    background: #ccc;
-    vertical-align: top;
-    -webkit-border-radius:  0 10px 10px 0;
-    -moz-border-radius:  0 10px 10px 0;
-    border-radius:  0 10px 10px 0;
-    padding: 10px;
-    color: #333;
-    font-size: small;
-}
-
-#container #footer{
-    text-align: center;
-    color: #000;
-}
-
-ul.statuses{
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-ul.statuses li{
-    min-height: 48px;
-    position: relative;
-    margin: 1em 0;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 6px;
-}
-
-ul.statuses.icon li{
-   padding-left: 56px;
-}
-
-ul.statuses li div{
-    line-height: 15px;
-}
-
-ul.statuses li div.body{
-    line-height: 19px;
-}
-
-ul.statuses li img{
+#bar #logo a span{
     display: none;
 }
 
-ul.statuses.icon li img{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 48px;
+#bar #logo a{
+    display: block;
+    width: 314px;
+    height: 40px;
+    background:  #fff url('/images/dya_small_logo.png') no-repeat 10px 16px;
+    padding:  16px 10px 4px 10px;
+}
+
+#bar #campaigns_menu{
+    display:none;
+}
+
+.container{
+    margin:  0 auto;
+    width: 790px;
+    position: relative;
+}
+
+#nav{
+    float: right;
+}
+
+#nav li{
+    float:left;
+}
+
+#nav li a{
+    padding: 0 0.5em;
+    line-height: 60px;
+    text-transform: uppercase;
+    font-size: 14px;
+    background:  #333;
+    color: #fff;
     display: block;
 }
 
-ul.statuses li .screen_name{
-    font-weight: bold;
-    margin-right: 6px;
+#nav li a.twitter{
+    background: #33ccff url('/images/twitter_small.png') no-repeat 5px 12px;
+    padding-left: 50px;
+    color: #fff;
 }
 
-ul.statuses li .name{
-    font-size: small;
-    color: #999;
+#nav li a.facebook{
+    background: #3b5999 url('/images/facebook_small.png') no-repeat 5px 10px;
+    padding-left: 50px;
+    color: #fff;
 }
 
-ul.statuses li .time{
-    font-size: 11px;
-    color: #999;
+#nav li.twitter a, #nav li.facebook a{
+    color: #fff;
 }
 
-#new_status{
-    margin-bottom: 1em;
+#nav li a{
+    text-decoration: none;
+    color: #fff;
 }
 
-#new_status textarea{
-    width: 100%;
-    height: 4em;
-    font-size: medium;
+#content{
+    position: relative;
+    background: #fff;
+    margin:  1em 0;
+    clear:both;
 }
 
-#content .main h1 img{
-    vertical-align:middle;
-    margin-right: 6px;
+#content .main{
+    width: 517px;
+    float: left;
+    min-height: 300px;
+    padding: 10px;
 }
 
 #content .side{
+    width: 233px;
+    padding: 10px;
+    float: right;
     position: relative;
-
-}
-
-#content .side .name{
-    font-weight:bold;
-    font-size: x-large;
-}
-
-#content .side .location{
-}
-
-#content .side .description{
-
-}
-
-#content .side .url{
 }
 
 #content .side h2{
-    font-size: medium;
-    margin-top: 1em;
     margin-bottom: 0.5em;
     border-bottom: 1px solid #ddd;
-    clear:both;
+    clear: both;
+    font-size: 130%;
+}
+
+#content .side .campaigns{
+    list-style-type: none;
+    margin-bottom: 1em;
 }
 
 #content .side .donations{
@@ -301,90 +134,268 @@ ul.statuses li .time{
 
 #content .side .donations img{
     width: 24px;
+    height: 24px;
     margin-right: 4px;
 }
 
-/** Buttons **/
-
-/* Default Gray/Black Button */
-.button{
-    font-size: 12px; outline: none;color:#333;text-shadow:1px 1px 0 #fff; font-weight: bold; height:34px;padding:0;position:relative;top:1px;line-height:34px;display:inline-block;text-decoration: none; white-space:nowrap;border:none;overflow:visible;background:#ddd;filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff',endColorstr='#e1e1e1');background:-webkit-gradient(linear,0% 0,0% 100%,from(#fff),to(#e1e1e1));background:-moz-linear-gradient(-90deg,#fff,#e1e1e1);border-bottom:1px solid #ebebeb;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;-webkit-box-shadow:0 1px 4px rgba(0,0,0,0.3);-moz-box-shadow:0 1px 4px rgba(0,0,0,0.3);box-shadow:0 1px 4px rgba(0,0,0,0.3);cursor:pointer;-webkit-font-smoothing:subpixel-antialiased!important;
-}
-.button span{
-    display:block;height:34px;padding:0 13px;line-height:36px;
-}
-.button:hover{color:#fff;text-shadow:-1px -1px 0 rgba(0,0,0,0.3);border-bottom-color:#333;background:#333;filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#666',endColorstr='#333');background:-webkit-gradient(linear,0% 0,0% 100%,from(#666),to(#333));background:-moz-linear-gradient(-90deg,#666,#333);}
-.button.mousedown{color:#fff;text-shadow:-1px -1px 0 rgba(0,0,0,0.3);background:#666;filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#666',endColorstr='#333');background:-webkit-gradient(linear,0% 100%,0% 0,from(#666),to(#333));background:-moz-linear-gradient(90deg,#666,#333);}
-.button.mousedown span{background-position:0 -120px;}
-input[type='submit'].button{
-    padding: 0 13px;
+textarea.embed {
+width: 100%;
+height: 70px;
+font-family: Courier;
+color: #333;
+font-size: 12px;
 }
 
-#flash{
-    padding: 5px;
-    background: #FFFCCF;
-    border: 1px solid #FFF68F;
-    -webkit-border-radius: 5px;
-    -moz-border-radius:  5px;
-    border-radius:  5px;
-    margin-bottom: 1em;
+/**FOOTER**/
+#footer{
+    clear: both;
+    text-align: center;
+    padding: 1em 0;
+    color: #999;
+    line-height: 1.5;
+}
+
+#footer a{
+    color: #666;
+}
+
+/**INDEX**/
+#index #logo{
+    margin:  1em 0;
+    clear: both;
+}
+
+#index #logo a span{
+    display: none;
+}
+
+#index #logo a{
+    display: block;
+    width: 790px;
+    height: 101px;
+    background:  url('/images/index-logo.png') no-repeat;
+}
+
+#index #promo{
+    font-size: 180%;
+    padding: 10px 20px;
+    background:  #f2f2f2;
+    color: #999;
+    letter-spacing: -1px;
+}
+
+#index #buttons {
+    margin:  1em 0;
+    position:relative;
+    clear: both;
+    padding-top: 1em;
+}
+
+#index #buttons a{
+    width: 320px;
+    display: block;
+    line-height: 65px;
+    padding-left: 75px;
+    background:  #ccc;
+    font-size: 24px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
     font-weight: bold;
 }
 
-.attention, #new_status{
-    padding: 5px;
-    background: #ebebeb;
-    border: 1px solid #ddd;
-    -webkit-border-radius: 5px;
-    -moz-border-radius:  5px;
-    border-radius:  5px;
+#index #buttons a.twitter{
+    float: left;
+    background: #33ccff url('/images/twitter_newbird_white.png') no-repeat 5px 5px;
+}
+
+#index #buttons a.facebook{
+    float: right;
+    background: #3b5999 url('/images/facebook.png') no-repeat 5px 5px;
+}
+
+#index .columns{
+    position: relative;
     margin: 1em 0;
-    color: #999;
+    min-height: 50px;
+    font-size: large;
 }
 
-#new_status{
-    padding: 10px;
-    margin-top: 0;
+#index #supporters{
+    float: left;
+    width: 354px;
+    padding: 60px 20px 20px 20px;
+    border-right:  1px solid #ccc;
+    background: #fff url('/images/supporters.png') no-repeat center 10px;
 }
 
-#new_status h1{
-    font-size: medium;
+#index #campaigns{
+    float: right;
+    width: 355px;
+    padding: 60px 20px 20px 20px;
+    border-left:  1px solid #ccc;
+    margin-left: -1px;
+    background: #fff url('/images/campaigns.png') no-repeat center 10px;
 }
 
-#status_submit{
+/**MESSAGES**/
+
+.messages{
     margin-top: 1em;
 }
 
-#status_body{
-    margin: 1em 0;
+.messages .header{
+    font-size: 18px;
+        padding-left: 50px;
+    color: #fff;
+    text-align: left;
+    line-height: 50px;
+    text-transform: uppercase;
 }
 
-.attention.home{
-    padding-bottom: 10px;
-    margin-top: 0;
+.messages ul li{
+    padding:  5px;
+    cursor: pointer;
 }
 
-.attention.home .button{
-    margin-right: 5px;
+
+
+.messages ul li.even{
+    background:  #f2f2f2;
 }
 
-#campaign_description{
+.messages ul li.odd{
+    background:  #e2e2e2;
+}
+
+.messages ul li .time{
+    font-style:italic;
+    font-size:small;
+}
+
+.levels .subHeader, .messages .subHeader{
+    text-transform: uppercase;
+    background: #333;
+    color: #fff;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.levels ul li{
+    padding:  5px;
+    background: #f2f2f2;
+}
+
+#content .main form .levels label{
+    display: inline;
+}
+
+.publish{
+    margin:  1em 0;
+}
+
+/** TWITTER **/
+.messages.twitter .header{
+    background: #33ccff url('/images/twitter_small.png') no-repeat 5px 5px;
+}
+
+.messages.facebook .header{
+    background: #3b5999 url('/images/facebook_small.png') no-repeat 5px 5px;
+}
+
+.messages ul{
+    height:200px;
+    overflow-y: scroll;
+}
+
+.messages.twitter ul li.selected{
+    background: #33ccff;
+    color: #fff;
+}
+
+.messages.facebook ul li.selected{
+    background: #3b5999;
+    color: #fff;
+}
+
+.messages.facebook ul li .title{
+    font-weight: bold;
+}
+
+
+.messages.facebook ul li.selected a{
+    color: #fff;
+}
+
+/**CAMPAIGN**/
+#content .main form label{
     display: block;
-    margin: 1em 0;
+    font-weight: bold;
 }
-#campaign_submit{
+
+#content .main form input[type="submit"]{
     display: block;
-    margin: 1em 0;
 }
 
-#flash ul{
-    list-style-type:none;
+#content .side .button{
+    line-height: 50px;
+    text-transform: uppercase;
+    font-size: 18px;
+    background:  #333;
+    color: #fff;
+    display: block;
+    font-weight:bold;
+    text-decoration: none;
+    text-align: center;
 }
 
-textarea.embed{
-    width: 100%;
-    height: 70px;
-    font-family:Courier;
-    color: #333;
-    font-size: 12px;
+#content .side .button.left{
+    padding-left: 50px;
+    text-align: left;
+}
+
+#content .side .button.twitter{
+    background: #33ccff url('/images/twitter_small.png') no-repeat 5px 5px;
+    padding-left: 50px;
+    color: #fff;
+    text-align: left;
+}
+
+#content .side .button.facebook{
+    background: #3b5999 url('/images/facebook_small.png') no-repeat 5px 5px;
+    padding-left: 50px;
+    color: #fff;
+    text-align: left;
+}
+
+#content .side .menu{
+    margin-bottom: 1em;
+}
+
+/** FLASH **/
+
+#flash{
+    	background-color: #E8FDE6;
+	border: 2px solid #35B94D;
+	font-size: medium;
+	text-align: center;
+	padding: 10px;
+	color: #35B94D;
+    clear:both;
+    margin:  1em 0;
+    text-align: center;
+}
+
+/**ERRORS**/
+.errors{
+    padding:  1em 2em;
+    margin:  1em 0;
+    background: #ffb5ae;
+    border: 1px solid #CC1100;
+    color: #CC1100;
+    list-style-type:square;
+}
+
+.field_with_errors input{
+    border:  2px solid #CC1100;
 }

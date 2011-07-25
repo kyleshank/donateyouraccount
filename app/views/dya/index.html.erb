@@ -3,31 +3,36 @@
 <head>
   <title>Donate Your Account</title>
   <link rel="icon" href="/favicon.png" type="image/png" />
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
+  <%= stylesheet_link_tag "screen" %>
   <%= csrf_meta_tag %>
   <%=yield :head%>
 </head>
 <body>
 
-<div id="index">
+<div id="index" class="container">
 
-<div id="logo"><%=image_tag("index-logo.png")%></div>
+<div id="logo"><h1><a href="/"><span>Donate Your Account</span></a></h1></div>
 
-<div id="campaigns">
-  <h1>Donate Your Account to campaigns you support:</h1>
-<ul>
-  <% @donations.each do |donation| %>
-  <% if donation.campaign %>
-<li><a href="<%=campaign_permalink_path(donation.campaign)%>"><%=image_tag(donation.campaign.account.profile_image_url)%><div><%=donation.campaign.account.screen_name%></div></a></li>
-<% end %>
-  <% end %>
-    </ul>
-  <br style="clear:both"/>
+<div id="promo">Donate Your Account is a free service that allows supporters to donate their Twitter and Facebook account to a campaign.</div>
+
+
+
+<div class="columns">
+  <div id="supporters">
+    <p>Support campaigns you believe in and help amplify their message.  Donating your Twitter and Facebook account is an easy way to help spread the word.</p>
+    <p>Donations are made on your terms and can be undone at any time.  You decide how often your account can be utilized by a Campaign: once per day, once per week or once per month.</p>
+    <p>All messages rebroadcast on your behalf will be clearly attributed to the Campaign.  For Twitter, a native retweet of a Campaign tweet is done.  For Facebook, your account will "Like" a message posted by the Campaign.</em></p>
+  </div>
+  <div id="campaigns">
+    <p>Stop asking your supporters to share everything your Campaign posts online.  Instead, ask them to <em>donate their account</em>.</p>
+    <p>Publish your message and have it automatically shared through donated Supporter accounts to all of their friends and followers online.  Extend your reach by publishing not just to your followers, but the aggregate of all of your Supporter's followers.</p>
+    <p>Supporters donate the use of their Twitter or Facebook account to be used once per day, once per week or once per month.</p>
+  </div>
 </div>
 
-<div id="button">
-    <%=link_to image_tag("sign-in-with-twitter-d.png"), new_account_path %>
+  <div id="buttons">
+  <%=link_to "Sign in with Twitter", new_twitter_account_path, :class=>"twitter"%>
+  <%=link_to "Sign in with Facebook", new_facebook_account_path, :class=>"facebook"%>
 </div>
   
 <%=render :partial => "layouts/footer"%>

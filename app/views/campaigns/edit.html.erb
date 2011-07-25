@@ -1,10 +1,23 @@
-<h1>Edit Campaign</h1>
-
+<h1><%=@campaign.name%></h1>
 <% form_for @campaign, :url => campaign_path, :method => :put do |f|%>
-<%=render :partial => "fields", :locals => {:f => f}%>
-<%=f.submit "Update Campaign",:class=>"button", %>
+<%=render :partial => "layouts/errors", :locals => {:model => @campaign}%>
+<%=f.label :name %>
+<%=f.text_field :name%>
+<%=f.label :permalink%>
+<%=f.text_field :permalink, :value => (current_twitter_account ? current_twitter_account.screen_name : nil)%>
+<%=f.label :twitter_account%>
+<% if current_twitter_account %>
+    <%=f.select :twitter_account_id, [["@#{current_twitter_account.screen_name}",current_twitter_account.id]], :include_blank=>true %>
+<% else %>
+    <%=link_to "Sign in", new_twitter_account_path, :class=> "button twitter"%>
 <% end %>
-
-<p>
-  <%=link_to raw("<span>Delete Campaign<span>"), campaign_path, :class=>"button", :method => :delete, :confirm => "This action cannot be reversed.  Are you really sure you want to delete your campaign?"%>
-</p>
+    <%=label_tag "Facebook Page"%>
+<% if current_facebook_account %>
+    <%=f.select :facebook_page_uid, current_facebook_account.get("/me/accounts")["data"].select{|a| a["category"] != "Application"}.collect{|a| [a["name"], a["id"] ]}, :include_blank=>true %>
+<% else %>
+    <%=link_to "Sign in", new_facebook_account_path, :class=> "button facebook"%>
+<% end %>
+<%=f.label :description %>
+<%=f.text_area :description%>
+<%=f.submit "Update Campaign"%>
+<% end %>

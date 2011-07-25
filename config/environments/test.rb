@@ -51,3 +51,12 @@ Dya::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 end
+
+Twitter.configure do |config|
+  config.consumer_key = "zCCT5sif1Blu4DfRmSP9RA"
+  config.consumer_secret = "oJFFXFx1tD3fY0ETSYeOpwV8zLGiuBSntxxgj8c"
+end
+
+FACEBOOK_OAUTH_REDIRECT = "http://dev.donateyouraccount.com/facebook_accounts/oauth_create"
+FACEBOOK_APPLICATION_ID="145481695503129"
+FACEBOOK_APPLICATION_SECRET="53445c024a5f5a8a638e4542bdd49a37"

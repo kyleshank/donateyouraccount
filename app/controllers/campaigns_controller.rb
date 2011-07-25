@@ -17,21 +17,23 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 class CampaignsController < ApplicationController
-  include AccountsHelper
+  include TwitterAccountsHelper
   
   before_filter :login_required, :except => [:show]
   before_filter :new_campaign, :only =>[:new,:create]
   before_filter :load_campaign, :only =>[:edit,:update, :destroy]
 
   def new
-
+    @campaign.twitter_account_id = current_twitter_account.id if current_twitter_account
   end
 
   def create
-    @campaign.account = current_account
+    @campaign.facebook_account = current_facebook_account unless @campaign.facebook_page_uid.blank?
     if @campaign.save
       flash[:notice] = "Campaign created"
-      redirect_to campaign_permalink_path(@campaign) and return
+      redirect_to campaign_permalink_path(@campaign)
+    else
+      render :action => :new
     end
   end
 
@@ -39,6 +41,11 @@ class CampaignsController < ApplicationController
   end
 
   def update
+    if params[:campaign][:facebook_page_uid].blank?
+      @campaign.facebook_account=nil
+    else
+      @campaign.facebook_account = current_facebook_account
+    end
     if @campaign.update_attributes(params[:campaign])
       flash[:notice] = "Campaign updated"
       redirect_to campaign_permalink_path(@campaign) and return
@@ -47,13 +54,13 @@ class CampaignsController < ApplicationController
   end
 
   def show
-    @account = Account.first(:conditions => {:screen_name => params[:id]})
+    @campaign = Campaign.where(:permalink => params[:id]).first
 
-    render_not_found and return unless @account and @account.campaign
+    render_not_found and return unless @campaign
 
-    @campaign = @account.campaign
     @statuses = @campaign.statuses.desc.paginate(:page => params[:page], :per_page=>10)
-    @donation = current_account.donations.for_campaign(@campaign.id).first if current_account
+    @twitter_donation = current_twitter_account.donations.for_campaign(@campaign.id).first if current_twitter_account
+    @facebook_donation = current_facebook_account.donations.for_campaign(@campaign.id).first if current_facebook_account
 
     respond_to do |format|
       format.html{}
@@ -70,12 +77,11 @@ class CampaignsController < ApplicationController
   private
 
   def new_campaign
-    redirect_to campaign_permalink_path(current_account.campaign) if current_account.campaign
     @campaign = Campaign.new(params[:campaign])
   end
 
   def load_campaign
-    @campaign = current_account.campaign
+    @campaign = Campaign.where(:permalink =>params[:id]).first
     render_not_found and return unless @campaign
   end
 end

@@ -1,14 +1,10 @@
 document.write('<%=raw stylesheet_link_tag("http://#{request.host_with_port}/stylesheets/widget.base.css")%>');
 document.write('<div id="dya_box">');
 document.write('<div id="dya_box_title"><a href="<%=raw "http://#{request.host_with_port}#{campaign_permalink_path(@campaign)}"%>">Donate Your Twitter Account</a></div>');
-document.write('<div id="dya_box_name"><a href="<%=raw "http://#{request.host_with_port}#{campaign_permalink_path(@campaign)}"%>">@<%=raw @account.screen_name%></a></div>');
+document.write('<div id="dya_box_name"><a href="<%=raw "http://#{request.host_with_port}#{campaign_permalink_path(@campaign)}"%>">@<%=raw @campaign.name%></a></div>');
 document.write('<div id="dya_box_donors">');
 <% @donors.each do |donor|%>
-<% if donor.account.campaign %>
-document.write('<%=raw link_to(image_tag(donor.account.profile_image_url), "http://#{request.host_with_port}#{campaign_permalink_path(donor.account.campaign)}", :target=>"_blank", :title => donor.account.screen_name)%>');
-<% else %>
 document.write('<%=raw link_to(image_tag(donor.account.profile_image_url), donor.account.twitter_url, :target=>"_blank", :title => donor.account.screen_name)%>');
-<% end %>
 <% end %>
 document.write('</div>');
 document.write('<div id="dya_box_footer"><a href="<%=raw "http://#{request.host_with_port}#{campaign_permalink_path(@campaign)}"%>"><img src="<%=raw "http://#{request.host_with_port}/images/logo_widget.png"%>"/></a></div>');

@@ -1,0 +1,6 @@
+pkg
+doc
+tmp
+coverage
+.bundle
+.yardoc/

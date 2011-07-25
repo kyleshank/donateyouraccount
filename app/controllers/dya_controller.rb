@@ -17,15 +17,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 class DyaController < ApplicationController
+  before_filter :login_required, :only => [:home]
+  
   def index
-    redirect_to dashboard_path and return if current_account
+    redirect_to dashboard_path and return if logged_in?
     @donations = Donation.select("DISTINCT(campaign_id)").order("id DESC").limit(4)
     render :layout => false
   end
 
+  def home
+    @donated_statuses = Status.donated_through_account(current_accounts).desc.paginate(:page => params[:page], :per_page=>10)
+    @status = Status.new
+    #@campaigns = Campaign.desc.limit(4) #suggest_for(current_account.id).desc.limit(4)
+  end
+
   def signout
-    @current_account = nil
-    session.delete(:current_account)
+    @current_twitter_account = @current_facebook_account = nil
+    session.delete(:current_twitter_account)
+    session.delete(:current_facebook_account)
     redirect_to "/"
   end
 end

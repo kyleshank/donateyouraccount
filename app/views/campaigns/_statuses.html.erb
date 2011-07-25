@@ -1,0 +1,11 @@
+<ul class="statuses <%unless defined?(no_icon)%>icon<%end%>">
+  <% statuses.each do |status| %>
+  <% if status.campaign %>
+  <% if status.is_a?(TwitterStatus)%>
+  <li><%=image_tag(status.campaign.image) unless defined?(no_icon)%><div><span class="screen_name"><%=status.campaign.name%></span><span class="name"><%=status.campaign.name%></span></div><div class="body"><% if status.body.blank?%><%=auto_link status.data["text"] if status.data%><%else%><%=auto_link status.body%><% end %></div><div class="time"><%=link_to "#{time_ago_in_words(status.created_at)} ago",status.permalink, :target=>"_blank"%></div></li>
+  <% elsif status.is_a?(FacebookStatus) %>
+  <li><%=link_to status.data["name"], status.data["link"]%><div class="description"><%=status.data["description"]%></div><div class="time"><%=link_to "#{time_ago_in_words(status.created_at)} ago",status.permalink, :target=>"_blank"%></div></li>
+  <% end %>
+  <% end %>
+  <% end %>
+</ul>

@@ -39,4 +39,8 @@ class Donation < ActiveRecord::Base
   scope :silver, {:conditions => {:level => LEVELS["Silver"]}}
   scope :bronze, {:conditions => {:level => LEVELS["Bronze"]}}
   scope :for_levels, lambda {|levels| {:conditions => levels.collect{|l| "donations.level = #{l}"}.join(" OR ")}}
+  scope :for_accounts, lambda {|accounts| {:conditions => accounts.collect{|a| "donations.account_id=#{a.id}"}.join(" OR ")} }
+  scope :group_campaign, :group => "donations.campaign_id"
+  scope :twitter, :include => :account, :conditions => ["accounts.type=?","TwitterAccount"]
+  scope :facebook, :include => :account, :conditions => ["accounts.type=?","FacebookAccount"]
 end

@@ -1,21 +1,3 @@
-##
-# Donate Your Account (donateyouraccount.com)
-# Copyright (C) 2011  Kyle Shank (kyle.shank@gmail.com)
-# http://www.gnu.org/licenses/agpl.html
-# 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-# 
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-##
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -28,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110113035604) do
+ActiveRecord::Schema.define(:version => 20110709202127) do
 
   create_table "accounts", :force => true do |t|
     t.string   "uid"
@@ -51,13 +33,19 @@ ActiveRecord::Schema.define(:version => 20110113035604) do
     t.string   "profile_text_color"
     t.boolean  "profile_background_tile"
     t.boolean  "profile_use_background_image"
+    t.string   "type"
   end
 
   create_table "campaigns", :force => true do |t|
-    t.integer  "account_id"
+    t.integer  "twitter_account_id"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "permalink"
+    t.integer  "facebook_account_id"
+    t.string   "facebook_page_uid"
+    t.string   "name"
+    t.string   "image"
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -91,9 +79,11 @@ ActiveRecord::Schema.define(:version => 20110113035604) do
   create_table "statuses", :force => true do |t|
     t.integer  "campaign_id"
     t.string   "body"
-    t.string   "twitter_status_id"
+    t.string   "uid"
     t.datetime "created_at"
     t.integer  "level"
+    t.string   "type"
+    t.text     "data"
   end
 
 end
