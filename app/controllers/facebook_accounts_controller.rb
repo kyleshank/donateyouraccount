@@ -16,14 +16,17 @@ class FacebookAccountsController < ApplicationController
 
       @account = FacebookAccount.where(:uid => user_info["id"]).first
 
-          unless @account
-            @account = FacebookAccount.new(
-                :uid => user_info["id"],
-                :token => params[:code]
-            )
-          end
+      unless @account
+        @account = FacebookAccount.new(
+            :uid => user_info["id"]
+        )
+      end
 
       @account.name = "#{user_info["first_name"]} #{user_info["last_name"]}"
+      @account.screen_name = user_info["username"]
+      @account.token = params[:code]
+      @account.followers = JSON.parse(access_token.get("/me/friends"))["data"].size
+      @account.facebook_pages = JSON.parse(access_token.get("/me/accounts"))["data"].select{|a| a["category"] != "Application"}.to_json
 
       if @account.save
         self.current_facebook_account=@account

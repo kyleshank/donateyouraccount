@@ -26,6 +26,7 @@ class Campaign < ActiveRecord::Base
 
   validates_presence_of :name, :description, :permalink
   validates_uniqueness_of :permalink
+  validates_exclusion_of :permalink, :in => %w(account accounts signin signout home facebook_accounts twitter_accounts campaign campaigns dya)
 
   scope :desc, :order => "campaigns.id desc"
   scope :suggest_for, lambda {|aid| {:select => "DISTINCT(campaigns.id),campaigns.*", :joins => "LEFT JOIN donations ON donations.campaign_id = campaigns.id", :conditions => ["donations.account_id != ? AND campaigns.account_id != ?", aid, aid]}}
@@ -36,6 +37,12 @@ class Campaign < ActiveRecord::Base
   end
 
   def image
-    self["image"] || ""
+    return self.twitter_account.profile_image_url if self.twitter_account && !self.twitter_account.profile_image_url.blank?
+    return self.facebook_page["picture"] if self.facebook_page
+    nil
+  end
+
+  def facebook_page
+    self["facebook_page"].blank? ? nil : JSON.parse(self["facebook_page"])
   end
 end

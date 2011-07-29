@@ -20,10 +20,6 @@ class FacebookAccount < Account
     "http://facebook.com/profile.php?id=#{self.uid}"
   end
 
-  def profile_image_url
-    self["profile_image_url"] || "http://a0.twimg.com/a/1294084247/images/default_profile_4_normal.png"
-  end
-
   def recent_links(_id)
     get("/#{_id}/links")
   end
@@ -41,5 +37,13 @@ class FacebookAccount < Account
       @graph ||= get_oauth_client.web_server.get_access_token(self.token, :redirect_uri => FACEBOOK_OAUTH_REDIRECT)
       @graph.post("/me/links", d)
     end
+  end
+
+  def facebook_pages
+    self["facebook_pages"].blank? ? [] : JSON.parse(self["facebook_pages"])
+  end
+
+  def profile_image_url
+    "http://graph.facebook.com/#{self.uid}/picture"
   end
 end

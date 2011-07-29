@@ -25,10 +25,16 @@ class CampaignsController < ApplicationController
 
   def new
     @campaign.twitter_account_id = current_twitter_account.id if current_twitter_account
+    @campaign.permalink = current_twitter_account.screen_name if current_twitter_account
   end
 
   def create
-    @campaign.facebook_account = current_facebook_account unless @campaign.facebook_page_uid.blank?
+    unless @campaign.facebook_page_uid.blank?
+      @campaign.facebook_account = current_facebook_account
+      current_facebook_account.facebook_pages.each do |p|
+        @campaign.facebook_page = @campaign.facebook_account.get("/#{p["id"]}").to_json if p["id"] == @campaign.facebook_page_uid
+      end
+    end
     if @campaign.save
       flash[:notice] = "Campaign created"
       redirect_to campaign_permalink_path(@campaign)
@@ -43,8 +49,13 @@ class CampaignsController < ApplicationController
   def update
     if params[:campaign][:facebook_page_uid].blank?
       @campaign.facebook_account=nil
+      @campaign.facebook_page_uid=nil
+      @campaign.facebook_page=nil
     else
       @campaign.facebook_account = current_facebook_account
+      current_facebook_account.facebook_pages.each do |p|
+        @campaign.facebook_page = @campaign.facebook_account.get("/#{p["id"]}").to_json if p["id"] == params[:campaign][:facebook_page_uid]
+      end
     end
     if @campaign.update_attributes(params[:campaign])
       flash[:notice] = "Campaign updated"

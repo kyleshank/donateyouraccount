@@ -30,6 +30,7 @@ Given /^I sign in as Facebook account "([^"]*)"$/ do |name|
     account = double("FacebookAccount")
     account.stub(:uid){(1 + rand(100000)).to_s}
     account.stub(:name){ name }
+    account.stub(:token){"token"}
   end
   access_token = double("OAuth2::AccessToken")
   access_token.stub(:get) do |arg|
@@ -38,7 +39,11 @@ Given /^I sign in as Facebook account "([^"]*)"$/ do |name|
         {"id"=>account.uid, "name"=>account.name, "first_name"=>name.split("\s+")[0], "last_name"=>name.split("\s+")[1], "link"=>"http://www.facebook.com/test", "location"=>{"id"=>"", "name"=>nil}, "gender"=>"male", "timezone"=>-5, "locale"=>"en_US", "verified"=>true, "updated_time"=>"2010-08-11T14:25:24+0000"}.to_json
       when "/me/accounts"
         {"data"=>[{"name"=>"Donate Your Account", "category"=>"Website", "id"=>"128107323942962"}, {"name"=>"Reactualize", "category"=>"Product/service", "id"=>"104955406227901"}, {"name"=>"Donate Your Account", "category"=>"Application", "id"=>"114902775246811"}, {"name"=>"Donate Your Account Staging", "category"=>"Application", "id"=>"145481695503129"}, {"category"=>"Application", "id"=>"143681932313719"}, {"category"=>"Application", "id"=>"121454094533824"}, {"category"=>"Application", "id"=>"112835425422620"}, {"category"=>"Application", "id"=>"178035084190"}]}.to_json
-      end
+      when "/me/friends"
+        {"data" => [{"name" => "My Friend 1", "id" => "12345"}, {"name" => "My Friend 2", "id" => "123456"}]}.to_json
+      when "/128107323942962"
+        {"id" => "128107323942962","name" => "Donate Your Account","picture" => "http://profile.ak.fbcdn.net/hprofile-ak-snc4/211112_128107323942962_3822781_s.jpg","link" => "http://www.facebook.com/pages/Donate-Your-Account/128107323942962","likes" => 1,"category" => "Website","website" => "http://donateyouraccount.com","founded" => "2011","description" => "A website that allows you to donate your Facebook or Twitter account to campaigns you support.","can_post" => true,"type" => "page"}.to_json
+    end
   end
 
   webserver = double()

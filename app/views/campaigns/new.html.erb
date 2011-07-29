@@ -4,7 +4,7 @@
 <%=f.label :name %>
 <%=f.text_field :name%>
 <%=f.label :permalink%>
-<%=f.text_field :permalink, :value => (current_twitter_account ? current_twitter_account.screen_name : nil)%>
+http://donateyouraccount.com/<%=f.text_field :permalink%>
 <%=f.label :twitter_account%>
 <% if current_twitter_account %>
     <%=f.select :twitter_account_id, [["@#{current_twitter_account.screen_name}",current_twitter_account.id]], :include_blank=>true %>
@@ -13,7 +13,7 @@
 <% end %>
     <%=label_tag "Facebook Page"%>
 <% if current_facebook_account %>
-    <%=f.select :facebook_page_uid, current_facebook_account.get("/me/accounts")["data"].select{|a| a["category"] != "Application"}.collect{|a| [a["name"], a["id"] ]}, :include_blank=>true %>
+    <%=f.select :facebook_page_uid, current_facebook_account.facebook_pages.collect{|a| [a["name"], a["id"] ]}, :include_blank=>true %>
 <% else %>
     <%=link_to "Sign in with Facebook", new_facebook_account_path%>
 <% end %>

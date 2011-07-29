@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110709202127) do
+ActiveRecord::Schema.define(:version => 20110728022844) do
 
   create_table "accounts", :force => true do |t|
     t.string   "uid"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20110709202127) do
     t.boolean  "profile_background_tile"
     t.boolean  "profile_use_background_image"
     t.string   "type"
+    t.text     "facebook_pages"
   end
 
   create_table "campaigns", :force => true do |t|
@@ -45,7 +46,7 @@ ActiveRecord::Schema.define(:version => 20110709202127) do
     t.integer  "facebook_account_id"
     t.string   "facebook_page_uid"
     t.string   "name"
-    t.string   "image"
+    t.text     "facebook_page"
   end
 
   create_table "delayed_jobs", :force => true do |t|

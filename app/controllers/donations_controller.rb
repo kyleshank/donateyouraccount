@@ -77,8 +77,9 @@ class DonationsController < ApplicationController
   def twitter_required
     unless current_twitter_account
       session[:return_to] = twitter_campaign_donations_path(@campaign)
-      redirect_to get_twitter_request_token.authorize_url.gsub("authorize","authenticate")
+      redirect_to get_twitter_request_token.authorize_url.gsub("authorize","authenticate") and return
     end
+    redirect_to campaign_path(@campaign) if @campaign.twitter_account.id == current_twitter_account.id
   end
 
   def facebook_required
@@ -89,6 +90,7 @@ class DonationsController < ApplicationController
         :scope => 'offline_access,share_item'
       )
     end
+    redirect_to campaign_path(@campaign) if @campaign.facebook_account.id == current_facebook_account.id
   end
 
 end

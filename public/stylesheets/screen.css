@@ -372,6 +372,16 @@ font-size: 12px;
     margin-bottom: 1em;
 }
 
+#campaign h1{
+    line-height: 48px;
+    vertical-align: top;
+}
+
+#campaign h1 img{
+    margin-right: 10px;
+    height: 48px;
+}
+
 /** FLASH **/
 
 #flash{

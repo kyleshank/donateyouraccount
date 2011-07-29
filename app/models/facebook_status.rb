@@ -11,6 +11,13 @@ class FacebookStatus < Status
   end
 
   def permalink
+    if data["actions"]
+      data["actions"].each do |action|
+        if ["Like", "Comment"].include?(action["name"])
+          return action["link"]
+        end
+      end
+    end
     data["link"]
   end
 
