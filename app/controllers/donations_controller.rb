@@ -79,7 +79,8 @@ class DonationsController < ApplicationController
       session[:return_to] = twitter_campaign_donations_path(@campaign)
       redirect_to get_twitter_request_token.authorize_url.gsub("authorize","authenticate") and return
     end
-    redirect_to campaign_path(@campaign) if @campaign.twitter_account.id == current_twitter_account.id
+    redirect_to campaign_path(@campaign) and return if @campaign.twitter_account.id == current_twitter_account.id
+    redirect_to campaign_path(@campaign) if current_twitter_account.donations.where(:campaign_id => @campaign.id).count > 0
   end
 
   def facebook_required
@@ -88,9 +89,10 @@ class DonationsController < ApplicationController
       redirect_to get_oauth_client.web_server.authorize_url(
         :redirect_uri => FACEBOOK_OAUTH_REDIRECT,
         :scope => 'offline_access,share_item'
-      )
+      ) and return
     end
-    redirect_to campaign_path(@campaign) if @campaign.facebook_account.id == current_facebook_account.id
+    redirect_to campaign_path(@campaign) and return if @campaign.facebook_account.id == current_facebook_account.id
+    redirect_to campaign_path(@campaign) if current_facebook_account.donations.where(:campaign_id => @campaign.id).count > 0
   end
 
 end

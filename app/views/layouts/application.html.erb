@@ -14,6 +14,7 @@
 
 <div id="application" class="container">
 <div id="bar">
+<% if logged_in? %>
 <ul id="nav">
     <li><% if current_twitter_account %><%= link_to "@#{current_twitter_account.screen_name}", current_twitter_account.url, :class=>"twitter", :target=>"_blank"%><%else%><%=link_to "Sign In", new_twitter_account_path, :class=>"twitter"%><% end %></li>
     <li><% if current_facebook_account %><%= link_to current_facebook_account.name, current_facebook_account.url, :class=> "facebook", :target=>"_blank"%><%else%><%=link_to "Sign In", new_facebook_account_path, :class=> "facebook" %><% end %></li>
@@ -21,6 +22,7 @@
     <li class="last"><%=link_to "Sign out", signout_path%></li>
     <% end %>
 </ul>
+<% end %>
 
 <div id="logo"><h1><a href="/home"><span>Donate Your Account</span></a></h1></div>
 </div>

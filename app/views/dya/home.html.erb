@@ -1,7 +1,7 @@
 <% if @donated_statuses.empty? %>
     <p>Donate to some campaigns!</p>
 <%else%>
-<%=render :partial => "campaigns/statuses", :object => @donated_statuses%>
+<%=render :partial => "dya/statuses", :object => @donated_statuses%>
 <%=will_paginate @donated_statuses%>
 <% end %>
 

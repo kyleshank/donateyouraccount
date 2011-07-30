@@ -382,6 +382,57 @@ font-size: 12px;
     height: 48px;
 }
 
+/** STATUSES **/
+.statuses {
+    margin:  1em 0;
+}
+
+.statuses li{
+    margin-bottom: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+
+.statuses li .time{
+    margin-top: 0.4em;
+    font-size: small;
+    line-height: 16px;
+    padding-left: 22px;
+}
+
+.statuses li.twitter .time{
+    background: url('/images/twitter_status.png') no-repeat;
+}
+
+.statuses li.facebook .time{
+    background: url('/images/facebook_status.png') no-repeat;
+}
+
+.statuses li .time a{
+    color: #aaa;
+}
+
+.statuses li .name{
+    font-weight: bold;
+    
+}
+
+.statuses.icon li {
+    padding-left: 54px;
+}
+
+.statuses.icon li a.image{
+   position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.statuses.icon li a.image img{
+    width: 48px;
+    height: 48px;
+}
+
 /** FLASH **/
 
 #flash{

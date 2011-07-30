@@ -39,7 +39,7 @@ class Campaign < ActiveRecord::Base
   def image
     return self.twitter_account.profile_image_url if self.twitter_account && !self.twitter_account.profile_image_url.blank?
     return self.facebook_page["picture"] if self.facebook_page
-    nil
+    "/images/default_campaign.png"
   end
 
   def facebook_page

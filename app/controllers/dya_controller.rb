@@ -27,8 +27,6 @@ class DyaController < ApplicationController
 
   def home
     @donated_statuses = Status.donated_through_account(current_accounts).desc.paginate(:page => params[:page], :per_page=>10)
-    @status = Status.new
-    #@campaigns = Campaign.desc.limit(4) #suggest_for(current_account.id).desc.limit(4)
   end
 
   def signout

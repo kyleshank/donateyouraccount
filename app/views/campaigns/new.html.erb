@@ -13,7 +13,11 @@ http://donateyouraccount.com/<%=f.text_field :permalink%>
 <% end %>
     <%=label_tag "Facebook Page"%>
 <% if current_facebook_account %>
-    <%=f.select :facebook_page_uid, current_facebook_account.facebook_pages.collect{|a| [a["name"], a["id"] ]}, :include_blank=>true %>
+    <% if current_facebook_account.facebook_pages.empty? %>
+       No Facebook pages are associated with your account.
+    <% else %>
+            <%=f.select :facebook_page_uid, current_facebook_account.facebook_pages.collect{|a| [a["name"], a["id"] ]}, :include_blank=>true %>
+    <%end%>
 <% else %>
     <%=link_to "Sign in with Facebook", new_facebook_account_path%>
 <% end %>
