@@ -10,6 +10,7 @@ gem "delayed_job",  :git => 'git://github.com/pda/delayed_job.git', :ref => "b70
 gem 'will_paginate', :git => "git://github.com/mislav/will_paginate", :tag => "v3.0.pre4"
 gem 'jquery-rails'
 gem 'authlogic'
+gem 'capistrano'
 
 gem 'unicorn'
 

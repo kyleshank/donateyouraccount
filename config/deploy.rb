@@ -43,7 +43,7 @@ namespace :deploy do
   desc "Restart Unicorn"
   task :restart do
     run "kill -USR2 `cat #{deploy_to}/shared/pids/unicorn.pid`"
-    run("cd #{deploy_to}/current; RAILS_ENV=production script/delayed_job restart")
+    run("cd #{deploy_to}/current; RAILS_ENV=production bundle exec script/delayed_job restart")
   end
 
   task :symlink_config, :roles => :app do
@@ -51,6 +51,9 @@ namespace :deploy do
     run "ln -sf #{deploy_to}/shared/production.rb #{release_path}/config/environments/production.rb"
   end
 
+  task :migrate do
+    run "cd #{release_path}; RAILS_ENV=production bundle exec rake db:migrate"
+  end
 end
 
 namespace :bundler do
