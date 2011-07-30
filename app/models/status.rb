@@ -23,7 +23,7 @@ class Status < ActiveRecord::Base
 
   validates_presence_of :campaign, :uid
 
-  scope :donated_through_account, lambda {|a| {:joins => "INNER JOIN donated_statuses ON donated_statuses.status_id = statuses.id INNER JOIN donations ON donations.id = donated_statuses.donation_id INNER JOIN accounts ON donations.account_id = accounts.id ", :conditions => (a.is_a?(Array) ? a.collect{|c| "accounts.id=#{c.id}"}.join(" OR ") : ["accounts.id = ?", a.id]), :group => "statuses.id" } }
+  scope :donated_through_account, lambda {|a| {:joins => "INNER JOIN donated_statuses ON donated_statuses.status_id = statuses.id INNER JOIN donations ON donations.id = donated_statuses.donation_id INNER JOIN accounts ON donations.account_id = accounts.id ", :conditions => (a.is_a?(Array) ? a.collect{|c| "accounts.id=#{c.id}"}.join(" OR ") : ["accounts.id = ?", a.id]) } }
   scope :desc, order("statuses.id desc")
   scope :within_1_day, :conditions => "statuses.created_at > (NOW()-#{1.day.to_i})"
   scope :within_1_week, :conditions => "statuses.created_at > (NOW()-#{7.day.to_i})"

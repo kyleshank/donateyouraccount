@@ -22,7 +22,8 @@ class CampaignName < ActiveRecord::Migration
     add_column :campaigns, :image, :string
     Campaign.reset_column_information
     TwitterAccount.all.each do |t|
-      t.campaign.update_attributes({:name => t.name, :image => t.profile_image_url})
+      c = Campaign.where(:twitter_account_id => t.id).first
+      c.update_attributes({:name => t.name, :image => t.profile_image_url}) if c
     end
   end
 

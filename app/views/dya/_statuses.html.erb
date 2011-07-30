@@ -2,7 +2,7 @@
   <% statuses.each do |status| -%>
   <% if status.campaign -%>
   <% if status.is_a?(TwitterStatus)-%>
-  <li class="twitter"><%=link_to(image_tag(status.campaign.image), campaign_permalink_path(status.campaign), :class => "image")%><div class="name"><%=status.campaign.name%></div><div class="body"><% if status.body.blank?%><%=auto_link status.data["text"] if status.data%><%else%><%=auto_link status.body%><% end %></div><div class="time"><%=link_to "#{time_ago_in_words(status.created_at)} ago",status.permalink, :target=>"_blank"%></div></li>
+  <li class="twitter"><%=link_to(image_tag(status.campaign.image), campaign_permalink_path(status.campaign), :class => "image")%><div class="name"><%=status.campaign.name%></div><div class="body"><% if status.body.blank?%><%=raw(auto_link(status.data["text"])) if status.data%><%else%><%=raw(auto_link(status.body))%><% end %></div><div class="time"><%=link_to "#{time_ago_in_words(status.created_at)} ago",status.permalink, :target=>"_blank"%></div></li>
   <% elsif status.is_a?(FacebookStatus) -%>
   <li class="facebook"><%=link_to(image_tag(status.campaign.image), campaign_permalink_path(status.campaign), :class=>"image")%><div class="name"><%=status.campaign.name%></div><div class="link"><%=link_to status.data["name"], status.data["link"]%></div><div class="body"><%=status.data["description"]%></div><div class="time"><%=link_to "about #{time_ago_in_words(status.created_at)} ago",status.permalink, :target=>"_blank"%></div></li>
   <% end -%>
