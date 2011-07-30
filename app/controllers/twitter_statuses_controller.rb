@@ -42,6 +42,7 @@ class TwitterStatusesController < ApplicationController
     @campaign = Campaign.where(:permalink => params[:campaign_id]).first
     redirect_to new_campaign_path and return false unless @campaign
     redirect_to campaign_path(@campaign) and return false unless @campaign.twitter_account
+    render_access_denied unless current_twitter_account and ( current_twitter_account.id == @campaign.twitter_account.id )
   end
 
 end
