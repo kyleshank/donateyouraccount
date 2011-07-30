@@ -374,12 +374,17 @@ font-size: 12px;
 
 #campaign h1{
     line-height: 48px;
-    vertical-align: top;
+    padding-left: 58px;
+    position: relative;
 }
 
+
 #campaign h1 img{
-    margin-right: 10px;
-    height: 48px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 48px;
+    height:48px;
 }
 
 /** STATUSES **/
@@ -459,4 +464,9 @@ font-size: 12px;
 
 .field_with_errors input{
     border:  2px solid #CC1100;
+}
+
+/**DONATIONS**/
+#content .main form.new_donation label{
+    display: inline;
 }

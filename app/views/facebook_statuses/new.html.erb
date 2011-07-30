@@ -1,4 +1,5 @@
-<h1><%=@campaign.name%></h1>
+<div id="campaign">
+<h1><%=image_tag(@campaign.image) if @campaign.image%><%=@campaign.name%></h1>
 <% form_for @facebook_status, :url => campaign_facebook_statuses_path(@campaign) do |f| %>
 <%=f.hidden_field :uid %>
 <%=render :partial => "layouts/errors", :locals => {:model => @facebook_status}%>
@@ -6,7 +7,7 @@
 <div class="header"><%=@campaign.facebook_account.get("/#{@campaign.facebook_page_uid}")["name"]%></div>
 <div class="subHeader">SELECT LINK FROM YOUR FACEBOOK PAGE:</div>
 <ul>
-  <%@campaign.facebook_account.recent_links(@campaign.facebook_page_uid)["data"].each_with_index do |post, i|%>
+  <%@campaign.facebook_account.recent_links(@campaign.facebook_page_uid).each_with_index do |post, i|%>
   <li facebook-id="<%=post["id"]%>" class="<% if (i % 2) == 0 %>even<%else%>odd<%end%>"><div class="title"><%=link_to post["name"], post["link"], :target=>"_blank"%></div><div class="description"><%=post["description"]%></div><div class="time"><%=time_ago_in_words(Time.parse(post["created_time"]))%> ago</div></li>
   <% end %>
 </ul>
@@ -14,12 +15,12 @@
 <div class="levels">
 <div class="subHeader">Share through:</div>
 <ul>
-<li><%=check_box_tag "facebook_status[levels][]", Donation::LEVELS["Gold"], false, {:id =>"gold"}%> <%=label_tag "gold" , "#{@campaign.donations.facebook.gold.count} Gold Donors (1 Link per day)"%></li>
-<li><%=check_box_tag "facebook_status[levels][]", Donation::LEVELS["Silver"], false, {:id =>"silver"}%> <%=label_tag "silver" , "#{@campaign.donations.facebook.silver.count} Silver Donors (1 Link per week)"%></li>
-<li><%=check_box_tag "facebook_status[levels][]", Donation::LEVELS["Bronze"], false, {:id =>"bronze"}%> <%=label_tag "bronze" , "#{@campaign.donations.facebook.bronze.count} Bronze Donors (1 Link per month)"%></li>
+<li><%=check_box_tag "facebook_status[levels][]", Donation::LEVELS["Gold"], false, {:id =>"gold"}%> <%=label_tag "gold" , "#{@campaign.donations.facebook.gold.count} Gold Donors (1 share per day)"%></li>
+<li><%=check_box_tag "facebook_status[levels][]", Donation::LEVELS["Silver"], false, {:id =>"silver"}%> <%=label_tag "silver" , "#{@campaign.donations.facebook.silver.count} Silver Donors (1 share per week)"%></li>
+<li><%=check_box_tag "facebook_status[levels][]", Donation::LEVELS["Bronze"], false, {:id =>"bronze"}%> <%=label_tag "bronze" , "#{@campaign.donations.facebook.bronze.count} Bronze Donors (1 share per month)"%></li>
 </ul>
 </div>
-<%=f.submit "Publish Link", :class => "publish", :confirm => "Are you sure you *really* want to publish Likes through all your donors?"%>
+<%=f.submit "Publish Shares", :class => "publish", :confirm => "Are you sure you *really* want to publish shares through your donors?"%>
 <% end %>
 
 <% content_for :side do %>
@@ -34,3 +35,4 @@
   <% end %>
 </ul>
 <% end %>
+</div>

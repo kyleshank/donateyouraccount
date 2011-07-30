@@ -1,31 +1,36 @@
+<div id="campaign">
 <h1><%=image_tag(@campaign.image) if @campaign.image%><%=@campaign.name%></h1>
 
 <%form_for @donation, :url => facebook_campaign_donations_path(@campaign) do |f|%>
 <p>
-  Choose the level of your donation to <strong><%=@campaign.name%></strong>:
+  Your account will automatically share links posted to the <strong><%=link_to @campaign.facebook_page["name"], @campaign.facebook_page["link"], :target => "_blank"%></strong> page on Facebook.
+</p>
+<p>
+  Choose the level of your Facebook donation to <strong><%=link_to @campaign.facebook_page["name"], @campaign.facebook_page["link"], :target => "_blank"%></strong>:
 </p>
 <p>
   <%=f.radio_button :level, Donation::LEVELS["Gold"]%>
-  <%=f.label "level_#{Donation::LEVELS["Gold"]}", "Gold: 1 Link per day"%>
+  <%=f.label "level_#{Donation::LEVELS["Gold"]}", "Gold: 1 share per day"%>
 </p>
 <p>
   <%=f.radio_button :level, Donation::LEVELS["Silver"]%>
-  <%=f.label "level_#{Donation::LEVELS["Silver"]}", "Silver: 1 Link per week"%>
+  <%=f.label "level_#{Donation::LEVELS["Silver"]}", "Silver: 1 share per week"%>
 </p>
 <p>
   <%=f.radio_button :level, Donation::LEVELS["Bronze"]%>
-  <%=f.label "level_#{Donation::LEVELS["Bronze"]}", "Bronze: 1 Link per month"%>
+  <%=f.label "level_#{Donation::LEVELS["Bronze"]}", "Bronze: 1 share per month"%>
 </p>
 <p>
-  <%=f.submit "Donate Your Facebook Account", :class => "button", :confirm => "Are you sure you want to donate Likes to #{@campaign.facebook_account.name} on Facebook?" %>
+  <%=f.submit "Donate Your Facebook Account", :class => "button", :confirm => "Are you sure you want to donate shares to #{@campaign.facebook_page["name"]} on Facebook?" %>
 </p>
 <%end%>
 
 <% content_for :side do %>
-<h2>Donors (<%=@campaign.donations.count%>)</h2>
+<h2>Facebook Donors (<%=@campaign.donations.facebook.count%>)</h2>
 <ul class="donations">
-  <% @campaign.donations.each do |donation| %>
+  <% @campaign.donations.facebook.each do |donation| %>
   <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.twitter_url, :target=>"_blank"%></li>
   <% end %>
 </ul>
 <% end %>
+</div>

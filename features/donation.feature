@@ -12,7 +12,7 @@ Feature: Donation
       And I should see "@donor" within "#nav"
       And I should see "Donate" within "#donate_twitter"
       And I click "donate_twitter"
-    Then I should see "Choose the level of your donation"
+    Then I should see "Choose the level of your Twitter donation"
       And I accept the confirmation dialog
       And I press "Donate Your Twitter Account"
     Then I should see "Twitter Donors"
@@ -28,7 +28,7 @@ Feature: Donation
       And I should not see "#donate_twitter"
       And I should see "Donate" within "#donate_facebook"
       And I click "donate_facebook"
-    Then I should see "Choose the level of your donation"
+    Then I should see "Choose the level of your Facebook donation"
       And I accept the confirmation dialog
       And I press "Donate Your Facebook Account"
     Then I should not see "Twitter Donors"
@@ -43,7 +43,7 @@ Feature: Donation
       And I am on "TwitterFacebookCampaign" campaign
       And I should see "@donor" within "#nav"
       And I click "donate_twitter"
-    Then I should see "Choose the level of your donation"
+    Then I should see "Choose the level of your Twitter donation"
       And I accept the confirmation dialog
       And I press "Donate Your Twitter Account"
     Then I should see "Twitter Donors (1)"
@@ -52,7 +52,7 @@ Feature: Donation
       And I am on "TwitterFacebookCampaign" campaign
       And I should see "Mr Pants" within "#nav"
       And I click "donate_facebook"
-    Then I should see "Choose the level of your donation"
+    Then I should see "Choose the level of your Facebook donation"
       And I accept the confirmation dialog
       And I press "Donate Your Facebook Account"
     Then I should see "Twitter Donors (1)"

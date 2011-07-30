@@ -20,7 +20,7 @@ class FacebookStatus < Status
   include RetryHelper
 
   before_create do |facebook_status|
-    facebook_status.data = facebook_status.campaign.facebook_account.get("/#{self.campaign.facebook_page_uid}_#{self.uid}").to_json
+    facebook_status.data = facebook_status.campaign.facebook_account.get("/#{self.uid}").to_json
   end
 
   def data
@@ -29,11 +29,9 @@ class FacebookStatus < Status
   end
 
   def permalink
-    if data["actions"]
-      data["actions"].each do |action|
-        if ["Like", "Comment"].include?(action["name"])
-          return action["link"]
-        end
+    if splits = self.uid.split("_")
+      if splits.size == 2
+        return "http://www.facebook.com/#{splits[0]}/posts/#{splits[1]}"
       end
     end
     data["link"]

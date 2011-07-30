@@ -1,8 +1,12 @@
+<div id="campaign">
 <h1><%=image_tag(@campaign.image) if @campaign.image%><%=@campaign.name%></h1>
 
 <%form_for @donation, :url => twitter_campaign_donations_path(@campaign) do |f|%>
 <p>
-  Choose the level of your donation to <strong><%=@campaign.name%></strong>:
+  Your account will automatically retweet messages posted to <strong><%=link_to "@#{@campaign.twitter_account.screen_name}", @campaign.twitter_account.url, :target => "_blank"%></strong> on Twitter.
+</p>
+<p>
+  Choose the level of your Twitter donation to <strong><%=link_to "@#{@campaign.twitter_account.screen_name}", @campaign.twitter_account.url, :target => "_blank"%></strong>:
 </p>
 <p>
   <%=f.radio_button :level, Donation::LEVELS["Gold"]%>
@@ -17,15 +21,15 @@
   <%=f.label "level_#{Donation::LEVELS["Bronze"]}", "Bronze: 1 retweet per month"%>
 </p>
 <p>
-  <%=f.submit "Donate Your Twitter Account", :class => "button", :confirm => "Are you sure you want to donate retweets to #{@campaign.twitter_account.screen_name} on Twitter?" %>
+  <%=f.submit "Donate Your Twitter Account", :class => "button", :confirm => "Are you sure you want to donate retweets to @#{@campaign.twitter_account.screen_name} on Twitter?" %>
 </p>
 <%end%>
-
+</div>
 <% content_for :side do %>
-<h2>Donors (<%=@campaign.donations.count%>)</h2>
+<h2>Twitter Donors (<%=@campaign.donations.twitter.count%>)</h2>
 <ul class="donations">
-  <% @campaign.donations.each do |donation| %>
-  <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.twitter_url, :target=>"_blank"%></li>
+  <% @campaign.donations.twitter.each do |donation| %>
+  <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.url, :target=>"_blank"%></li>
   <% end %>
 </ul>
 <% end %>

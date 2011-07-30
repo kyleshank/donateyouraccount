@@ -83,7 +83,7 @@ end
 Given /^there is a campaign "([^"]*)"$/ do |name|
   f = Factory.create(:facebook_account, :name => "facebook_#{name}", :uid => 1000)
   t = Factory.create(:twitter_account, :screen_name => "twitter_#{name}", :name => "twitter_#{name}", :uid => 1001)
-  Factory.create(:campaign, :name => name, :permalink => name.strip.underscore, :twitter_account => t, :facebook_account => f, :facebook_page_uid => "3209445334")
+  Factory.create(:campaign, :name => name, :permalink => name.strip.underscore, :twitter_account => t, :facebook_account => f, :facebook_page_uid => "3209445334", :facebook_page => '{"id":"3209445334","name":"Donate Your Account","picture":"http://profile.ak.fbcdn.net/hprofile-ak-snc4/211112_128107323942962_3822781_s.jpg","link":"http://www.facebook.com/pages/Donate-Your-Account/128107323942962","likes":1,"category":"Website","website":"http://donateyouraccount.com","founded":"2011","description":"A website that allows you to donate your Facebook or Twitter account to campaigns you support.","can_post":true}')
 end
 
 Given /^there is a Twitter campaign "([^"]*)"$/ do |name|
@@ -93,7 +93,7 @@ end
 
 Given /^there is a Facebook campaign "([^"]*)"$/ do |name|
   f = Factory.create(:facebook_account, :name => "facebook_#{name}", :uid => 1000)
-  Factory.create(:campaign, :name => name, :permalink => name.strip.underscore, :facebook_account => f, :facebook_page_uid => "3209445334")
+  Factory.create(:campaign, :name => name, :permalink => name.strip.underscore, :facebook_account => f, :facebook_page_uid => "3209445334", :facebook_page => '{"id":"3209445334","name":"Donate Your Account","picture":"http://profile.ak.fbcdn.net/hprofile-ak-snc4/211112_128107323942962_3822781_s.jpg","link":"http://www.facebook.com/pages/Donate-Your-Account/128107323942962","likes":1,"category":"Website","website":"http://donateyouraccount.com","founded":"2011","description":"A website that allows you to donate your Facebook or Twitter account to campaigns you support.","can_post":true}')
 end
 
 Given /^there is a Twitter account "([^"]*)"$/ do |screen_name|
@@ -106,4 +106,8 @@ end
 
 When /^I accept the confirmation dialog$/ do
   page.evaluate_script("window.confirm = function() { return true; }")
+end
+
+When /^(?:|I )visit url "(.+)"$/ do |url|
+  visit url
 end

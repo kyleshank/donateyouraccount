@@ -28,6 +28,16 @@ class Campaign < ActiveRecord::Base
   validates_uniqueness_of :permalink
   validates_exclusion_of :permalink, :in => %w(account accounts signin signout home facebook_accounts twitter_accounts campaign campaigns dya)
 
+  def validate
+    if self.twitter_account.nil? and self.facebook_account.nil?
+      errors.add(:twitter_account, "at least 1 account must be associated with a Campaign")
+      errors.add(:facebook_account, "at least 1 account must be associated with a Campaign")
+    else
+      errors.add(:twitter_account, "Twitter account can't be changed once donations have been made'") if self.changed.include?("twitter_account_id") and (self.donations.twitter.count > 0)
+      errors.add(:facebook_page_uid, "Facebook page can't be changed once donations have been made") if self.changed.include?("facebook_page_uid") and (self.donations.facebook.count > 0)
+    end
+  end
+
   scope :desc, :order => "campaigns.id desc"
   scope :suggest_for, lambda {|aid| {:select => "DISTINCT(campaigns.id),campaigns.*", :joins => "LEFT JOIN donations ON donations.campaign_id = campaigns.id", :conditions => ["donations.account_id != ? AND campaigns.account_id != ?", aid, aid]}}
   scope :for_accounts, lambda {|accounts| {:conditions => accounts.collect{|a| "campaigns.#{a.class.name.underscore}_id=#{a.id}"}.join(" OR ")} }

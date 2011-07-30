@@ -4,7 +4,7 @@ gem 'rails', '3.0.9'
 gem 'mysql2', '0.2.11'
 gem 'oauth'
 gem 'oauth-plugin'
-gem 'oauth2'
+gem 'oauth2', '0.4.1'
 gem 'twitter'
 gem "delayed_job",  :git => 'git://github.com/pda/delayed_job.git', :ref => "b7068aa67dd2602a2c2e09d448c3f072f266dde9"
 gem 'will_paginate', :git => "git://github.com/mislav/will_paginate", :tag => "v3.0.pre4"

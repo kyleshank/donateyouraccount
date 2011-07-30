@@ -1,4 +1,5 @@
-<h1><%=@campaign.name%></h1>
+<div id="campaign">
+<h1><%=image_tag(@campaign.image) if @campaign.image%><%=@campaign.name%></h1>
 <% form_for @twitter_status, :url => campaign_twitter_statuses_path(@campaign) do |f| %>
 <%=f.hidden_field :uid %>
 <%=render :partial => "layouts/errors", :locals => {:model => @twitter_status}%>
@@ -19,7 +20,7 @@
 <li><%=check_box_tag "twitter_status[levels][]", Donation::LEVELS["Bronze"], false, {:id =>"bronze"}%> <%=label_tag "bronze" , "#{@campaign.donations.twitter.bronze.count} Bronze Donors (1 retweet per month)"%></li>
 </ul>
 </div>
-<%=f.submit "Publish Tweet", :class => "publish", :confirm => "Are you sure you *really* want to publish this tweet through your donors?"%>
+<%=f.submit "Publish Retweets", :class => "publish", :confirm => "Are you sure you *really* want to publish this tweet through your donors?"%>
 <% end %>
 
 
@@ -35,3 +36,4 @@
   <% end %>
 </ul>
 <% end %>
+</div>
