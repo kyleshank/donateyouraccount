@@ -29,7 +29,7 @@
 <h2>Facebook Donors (<%=@campaign.donations.facebook.count%>)</h2>
 <ul class="donations">
   <% @campaign.donations.facebook.each do |donation| %>
-  <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.twitter_url, :target=>"_blank"%></li>
+  <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.url, :target=>"_blank"%></li>
   <% end %>
 </ul>
 <% end %>
