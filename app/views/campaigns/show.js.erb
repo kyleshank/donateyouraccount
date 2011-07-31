@@ -3,7 +3,7 @@ document.write('<div id="dya_box">');
 document.write('<div id="dya_box_title"><a href="<%=raw "http://#{request.host_with_port}#{campaign_permalink_path(@campaign)}"%>"><img src="<%=raw "http://#{request.host_with_port}"%>/images/dya_widget_title.png"/></a></div>');
 document.write('<div id="dya_box_donors">');
 <% @donors.each do |donor|%>
-document.write('<%=raw link_to(image_tag(donor.account.profile_image_url), donor.account.twitter_url, :target=>"_blank", :title => donor.account.screen_name)%>');
+document.write('<%=raw link_to(image_tag(donor.account.profile_image_url), donor.account.url, :target=>"_blank", :title => (donor.account.screen_name || donor.account.name))%>');
 <% end %>
 document.write('</div>');
 document.write('<div id="dya_box_footer"><a href="<%=raw "http://#{request.host_with_port}#{campaign_permalink_path(@campaign)}"%>">Donate Your Twitter and Facebook account to<br/><strong><%=@campaign.name%></strong></a></div>');
