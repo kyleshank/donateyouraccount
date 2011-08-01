@@ -43,6 +43,8 @@ class TwitterAccount < Account
     try_to do
       begin
         Twitter::Client.new(:oauth_token => self.token, :oauth_token_secret => self.secret).retweet(_id)
+      rescue Twitter::Forbidden
+        # DUPLICATE RTS
       rescue Twitter::Unauthorized
         # EAT IT
       end
