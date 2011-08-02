@@ -126,6 +126,7 @@ a{
 
 #content .side .donations{
     list-style-type: none;
+    margin-bottom: 1em;
 }
 
 #content .side .donations li{
@@ -469,4 +470,54 @@ font-size: 12px;
 /**DONATIONS**/
 #content .main form.new_donation label{
     display: inline;
+}
+
+/** TOPCAMPAIGNS **/
+#content .side ul.top_campaigns li a{
+    display: block;
+    line-height: 36px;
+    padding-left: 42px;
+    position:relative;
+    font-weight:bold;
+    font-size:large;
+    clear: right;
+    color: #000;
+    text-decoration: none;
+}
+
+#content .side ul.top_campaigns li a img{
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#content .side ul.top_campaigns li a .total{
+    font-weight: normal;
+    font-size: small;
+    float: right;
+    text-decoration: none;
+}
+
+/**INDEXCAMPAIGNS**/
+
+ul.index_campaigns{
+    margin:  1em 0;
+}
+
+ul.index_campaigns li{
+    width: 25%;
+    float: left;
+    text-align: center;
+}
+
+ul.index_campaigns li a{
+    display: block;
+}
+
+.more_campaigns{
+    font-size: small;
+    margin:  0.5em 0;
+    clear:both;
 }

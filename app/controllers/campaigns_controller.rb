@@ -23,6 +23,10 @@ class CampaignsController < ApplicationController
   before_filter :new_campaign, :only =>[:new,:create]
   before_filter :load_campaign, :only =>[:edit,:update, :destroy]
 
+  def index
+    @campaigns = Campaign.all
+  end
+
   def new
     @campaign.twitter_account_id = current_twitter_account.id if current_twitter_account
     @campaign.permalink = current_twitter_account.screen_name if current_twitter_account

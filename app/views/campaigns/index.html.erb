@@ -1,9 +1,10 @@
-<% if @donated_statuses.empty? %>
-<p>Donate to some <%=link_to "campaigns", campaigns_path%>!</p>
-<%else%>
-<%=render :partial => "dya/statuses", :object => @donated_statuses%>
-<%=will_paginate @donated_statuses%>
-<% end %>
+<h1>Campaigns</h1>
+
+<ul class="index_campaigns">
+  <% @campaigns.each do |campaign| %>
+  <li><a href="<%= campaign_permalink_path(campaign) %>"><%=image_tag(campaign.image)%><div><%=campaign.name %><div></a></li>
+  <% end %>
+</ul>
 
 <% content_for :side do %>
 <ul class="menu">

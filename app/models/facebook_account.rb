@@ -52,8 +52,12 @@ class FacebookAccount < Account
     d.delete("message")
     d.delete("id")
     try_to do
-      @graph ||= get_oauth_client.web_server.get_access_token(self.token, :redirect_uri => FACEBOOK_OAUTH_REDIRECT)
-      @graph.post("/me/links", d)
+      begin
+        @graph ||= get_oauth_client.web_server.get_access_token(self.token, :redirect_uri => FACEBOOK_OAUTH_REDIRECT)
+        @graph.post("/me/links", d)
+      rescue OAuth2::AccessDenied
+        # NOOP
+      end
     end
   end
 
