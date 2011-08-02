@@ -30,7 +30,7 @@
 <h2>Top Campaigns</h2>
 <ul class="top_campaigns">
   <% Donation.select("campaign_id, count(*) as total").includes(:campaign).group(:campaign_id).order("total desc").limit(5).each do |donation| %>
-  <li><a href="<%= campaign_permalink_path(donation.campaign) %>"><%=image_tag(donation.campaign.image)%><%=donation.campaign.name %><div class="total"><%=pluralize(donation.total, "donor")%></div></a></li>
+  <li><a href="<%= campaign_permalink_path(donation.campaign) %>"><%=image_tag(donation.campaign.image)%><%=truncate(donation.campaign.name,:length=>16) %><div class="total"><%=donation.total%></div></a></li>
   <% end %>
 </ul>
 <%=link_to "More Campaigns...", campaigns_path, :class=>"more_campaigns"%>

@@ -494,10 +494,14 @@ font-size: 12px;
 }
 
 #content .side ul.top_campaigns li a .total{
-    font-weight: normal;
+    font-weight: bold;
     font-size: small;
-    float: right;
-    text-decoration: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: xx-large;
+    overflow: hidden;
+    color: #ddd;
 }
 
 /**INDEXCAMPAIGNS**/
@@ -510,6 +514,9 @@ ul.index_campaigns li{
     width: 25%;
     float: left;
     text-align: center;
+    height: 72px;
+    overflow:  hidden;
+    margin-bottom: 1em;
 }
 
 ul.index_campaigns li a{
