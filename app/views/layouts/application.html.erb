@@ -4,7 +4,7 @@
   <title><%if @campaign and @campaign.persisted? %><%=@campaign.name%> on <%end%>Donate Your Account</title>
   <link rel="icon" href="/favicon.png" type="image/png" />
   <%= stylesheet_link_tag "screen" %>
-  <%= javascript_include_tag "jquery.min" %>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" %>
    <%= javascript_include_tag "rails" %>
    <%= javascript_include_tag "application" %>
   <%= csrf_meta_tag %>
