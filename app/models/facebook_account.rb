@@ -55,6 +55,8 @@ class FacebookAccount < Account
       begin
         @graph ||= get_oauth_client.web_server.get_access_token(self.token, :redirect_uri => FACEBOOK_OAUTH_REDIRECT)
         @graph.post("/me/links", d)
+      rescue OAuth2::HTTPError
+        # NOOP
       rescue OAuth2::AccessDenied
         # NOOP
       end
