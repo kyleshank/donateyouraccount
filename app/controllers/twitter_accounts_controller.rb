@@ -37,14 +37,12 @@ class TwitterAccountsController < ApplicationController
           @account = TwitterAccount.where(:uid => user_info["id"]).first
 
           unless @account
-            @account = TwitterAccount.new(
-                :uid => user_info["id"],
-                :screen_name => user_info["screen_name"],
-                :token => access_token.token,
-                :secret => access_token.secret
-            )
+            @account = TwitterAccount.new(:uid => user_info["id"])
           end
 
+          @account.token = access_token.token
+          @account.secret = access_token.secret
+          @account.screen_name = user_info["screen_name"]
           @account.name = user_info["name"]
           @account.followers = (user_info["followers_count"] || 0).to_i
           @account.url = user_info["url"]
