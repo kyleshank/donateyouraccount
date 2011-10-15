@@ -40,7 +40,21 @@ class Campaign < ActiveRecord::Base
 
   scope :desc, :order => "campaigns.id desc"
   scope :suggest_for, lambda {|aid| {:select => "DISTINCT(campaigns.id),campaigns.*", :joins => "LEFT JOIN donations ON donations.campaign_id = campaigns.id", :conditions => ["donations.account_id != ? AND campaigns.account_id != ?", aid, aid]}}
-  scope :for_accounts, lambda {|accounts| {:conditions => accounts.collect{|a| "campaigns.#{a.class.name.underscore}_id=#{a.id}"}.join(" OR ")} }
+  scope :for_accounts, lambda {|accounts| { :conditions => conditions_for_accounts(accounts)}}
+
+  def self.conditions_for_accounts(accounts)
+    conds = []
+    accounts.each do |a|
+      if a.is_a?(TwitterAccount)
+      conds << "campaigns.#{a.class.name.underscore}_id=#{a.id}"
+      elsif a.is_a?(FacebookAccount)
+        a.facebook_pages.each do |p|
+          conds << "campaigns.facebook_page_uid=#{p['id']}"
+        end
+      end
+    end
+    conds.join(" OR ")
+  end
 
   def to_param
     self.permalink

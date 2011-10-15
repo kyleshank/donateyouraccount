@@ -4,10 +4,10 @@
 <%=f.hidden_field :uid %>
 <%=render :partial => "layouts/errors", :locals => {:model => @facebook_status}%>
 <div class="messages facebook">
-<div class="header"><%=@campaign.facebook_account.get("/#{@campaign.facebook_page_uid}")["name"]%></div>
+<div class="header"><%=current_facebook_account.get("/#{@campaign.facebook_page_uid}")["name"]%></div>
 <div class="subHeader">SELECT LINK FROM YOUR FACEBOOK PAGE:</div>
 <ul>
-  <%@campaign.facebook_account.recent_links(@campaign.facebook_page_uid).each_with_index do |post, i|%>
+  <%current_facebook_account.recent_links(@campaign.facebook_page_uid).each_with_index do |post, i|%>
   <li facebook-id="<%=post["id"]%>" class="<% if (i % 2) == 0 %>even<%else%>odd<%end%>"><div class="title"><%=link_to post["name"], post["link"], :target=>"_blank"%></div><div class="description"><%=post["description"]%></div><div class="time"><%=time_ago_in_words(Time.parse(post["created_time"]))%> ago</div></li>
   <% end %>
 </ul>

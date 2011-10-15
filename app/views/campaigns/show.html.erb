@@ -31,16 +31,17 @@
 <% elsif @campaign.twitter_account %>
    <li><%= link_to "Donate", twitter_campaign_donations_path(@campaign), :id => "donate_twitter", :class => "button twitter" %></li>
 <% end %>
-<% if logged_in? and @campaign.facebook_account and current_facebook_account and (@campaign.facebook_account.id == current_facebook_account.id) %>
+<% if logged_in? and @campaign.facebook_page_uid and current_facebook_account and (current_facebook_account.facebook_page?(@campaign.facebook_page_uid)) %>
 <li><%= link_to "Publish", new_campaign_facebook_status_path(@campaign), :id => "publish_facebook", :class => "button facebook" %></li>
-<% elsif @facebook_donation %>
+<% end%>
+<% if @facebook_donation %>
    <li><%= link_to "Un-Donate", campaign_donation_path(@campaign,@facebook_donation), :id => "undonate_facebook", :class => "button facebook", :confirm => "Are you sure?", :method => :delete %></li>
 <% elsif logged_in? and @campaign.twitter_account and @campaign.facebook_account and !current_facebook_account and @campaign.twitter_account and current_twitter_account and (@campaign.twitter_account.id == current_twitter_account.id) %>
   <li><%= link_to "Sign In", new_facebook_account_path, :id => "signin_facebook", :class => "button facebook" %></li>
-<% elsif @campaign.facebook_account %>
+<% elsif @campaign.facebook_page_uid %>
    <li><%= link_to "Donate", facebook_campaign_donations_path(@campaign), :id => "donate_facebook", :class => "button facebook" %></li>
 <% end %>
-<% if logged_in? and ((@campaign.twitter_account and current_twitter_account and (@campaign.twitter_account.id == current_twitter_account.id)) or (@campaign.facebook_account and current_facebook_account and (@campaign.facebook_account.id == current_facebook_account.id))) %>
+<% if logged_in? and ((@campaign.twitter_account and current_twitter_account and (@campaign.twitter_account.id == current_twitter_account.id)) or (@campaign.facebook_page_uid and current_facebook_account and (current_facebook_account.facebook_page?(@campaign.facebook_page_uid)))) %>
 <li><%=link_to "Edit Campaign", edit_campaign_path(@campaign), :class=>"button left"%></li>
 <%end%>
 </ul>

@@ -22,7 +22,7 @@ class FacebookAccountsController < ApplicationController
   def new
     redirect_to get_oauth_client.web_server.authorize_url(
       :redirect_uri => facebook_redirect_uri,
-      :scope => 'offline_access,share_item'
+      :scope => 'offline_access,share_item,manage_pages'
     )
   end
 

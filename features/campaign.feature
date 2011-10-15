@@ -66,10 +66,18 @@ Feature: Campaign
       And I press "Create Campaign"
     Then I should see "at least 1 account must be associated with a Campaign"
 
-  Scenario: Ensure only account owners can modify Campaign
+  Scenario: Ensure only Twitter account owners can modify Campaign
     Given there is a Twitter campaign "TwitterCampaign"
     Given there is a Twitter account "donor"
     Given I am on the home page
       And I sign in as Twitter account "donor"
     Then I visit url "/campaigns/twitter_campaign/edit"
+    Then I should see "ACCESS DENIED"
+
+  Scenario: Ensure only Facebook account owners can modify Campaign
+    Given there is a Facebook campaign "FacebookCampaign"
+    Given there is a Facebook account "donor man"
+    Given I am on the home page
+      And I sign in as Facebook account "donor man"
+    Then I visit url "/campaigns/facebook_campaign/edit"
     Then I should see "ACCESS DENIED"
