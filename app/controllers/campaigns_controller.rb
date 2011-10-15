@@ -98,6 +98,6 @@ class CampaignsController < ApplicationController
   def load_campaign
     @campaign = Campaign.where(:permalink =>params[:id]).first
     render_not_found and return unless @campaign
-    render_access_denied unless (current_twitter_account and @campaign.twitter_account and (@campaign.twitter_account.id == current_twitter_account.id)) or (current_facebook_account and @campaign.facebook_account and (@campaign.facebook_account.id == current_facebook_account.id))
+    render_access_denied unless (current_twitter_account and @campaign.twitter_account and (@campaign.twitter_account.id == current_twitter_account.id)) or (current_facebook_account and @campaign.facebook_page_uid and current_facebook_account.facebook_page?(@campaign.facebook_page_uid))
   end
 end

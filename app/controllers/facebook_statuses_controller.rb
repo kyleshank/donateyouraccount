@@ -41,8 +41,8 @@ class FacebookStatusesController < ApplicationController
   def ensure_campaign
     @campaign = Campaign.where(:permalink => params[:campaign_id]).first
     redirect_to new_campaign_path and return false unless @campaign
-    redirect_to campaign_path(@campaign) and return false unless @campaign.facebook_account
-    render_access_denied unless current_facebook_account and ( current_facebook_account.id == @campaign.facebook_account.id )
+    redirect_to campaign_path(@campaign) and return false unless @campaign.facebook_page_uid
+    render_access_denied unless (current_facebook_account and @campaign.facebook_page_uid and current_facebook_account.facebook_page?(@campaign.facebook_page_uid))
   end
 
 end

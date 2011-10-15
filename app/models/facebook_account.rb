@@ -19,7 +19,9 @@
 class FacebookAccount < Account
   include FacebookAccountsHelper
   include RetryHelper
-  
+
+  attr_accessor :profile_image_url
+
   def get(uri, opts = {})
     try_to do
       @graph ||= get_oauth_client.web_server.get_access_token(self.token, :redirect_uri => FACEBOOK_OAUTH_REDIRECT)
@@ -65,6 +67,10 @@ class FacebookAccount < Account
 
   def facebook_pages
     self["facebook_pages"].blank? ? [] : JSON.parse(self["facebook_pages"])
+  end
+
+  def facebook_page?(id)
+    facebook_pages.collect{|p| p["id"]}.include?(id)
   end
 
   def profile_image_url

@@ -91,7 +91,6 @@ class DonationsController < ApplicationController
         :scope => 'offline_access,share_item'
       ) and return
     end
-    redirect_to campaign_path(@campaign) and return if @campaign.facebook_account.id == current_facebook_account.id
     redirect_to campaign_path(@campaign) if current_facebook_account.donations.where(:campaign_id => @campaign.id).count > 0
   end
 
