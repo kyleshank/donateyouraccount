@@ -388,6 +388,27 @@ font-size: 12px;
     height:48px;
 }
 
+#campaign .accountsBox{
+    margin: 1em 0;
+    padding: 1em;
+    background: #FFFCCF;
+    color: #333;
+}
+
+#campaign .accounts{
+    margin-top: 0.5em;
+}
+
+#campaign .accounts li.twitter{
+    background: url('/images/twitter_status.png') no-repeat;
+    padding-left: 22px;
+}
+
+#campaign .accounts li.facebook{
+    background: url('/images/facebook_status.png') no-repeat;
+    padding-left: 22px;
+}
+
 /** STATUSES **/
 .statuses {
     margin:  1em 0;

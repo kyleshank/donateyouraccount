@@ -17,6 +17,13 @@
 <% end %>
 <div id="campaign">
 <h1><%=image_tag(@campaign.image) if @campaign.image%><%=@campaign.name%></h1>
+<div class="accountsBox">
+  <div>Donors will rebroadcast messages posted to these accounts:</div>
+<ul class="accounts">
+  <% if @campaign.twitter_account%><li class="twitter"><%=link_to "@#{@campaign.twitter_account.screen_name}", @campaign.twitter_account.url, :target => "_blank"%></li><% end %>
+  <% unless @campaign.facebook_page.blank? %><li class="facebook"><%=link_to @campaign.facebook_page["name"], @campaign.facebook_page["link"], :target => "_blank"%></li><% end %>
+</ul>
+</div>
 <div><%=simple_format @campaign.description%></div>
 <%=render :partial => "campaigns/statuses", :object => @statuses, :locals => {:no_icon => true}%>
 </div>

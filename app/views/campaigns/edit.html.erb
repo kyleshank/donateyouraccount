@@ -15,7 +15,7 @@ http://donateyouraccount.com/<%=f.text_field :permalink%>
 <% if current_facebook_account and (@campaign.facebook_page_uid.blank? or (@campaign.donations.facebook.count==0)) %>
     <%=f.select :facebook_page_uid, current_facebook_account.facebook_pages.collect{|a| [a["name"], a["id"] ]}, :include_blank=>true %>
 <% elsif !@campaign.facebook_page_uid.blank?%>
-    <%=link_to current_facebook_account.get("/#{@campaign.facebook_page_uid}")["name"], "http://facebook.com/#{@campaign.facebook_page_uid}", :target=>"_blank"%>
+    <%=link_to @campaign.facebook_page["name"], @campaign.facebook_page["link"], :target=>"_blank"%>
 <% else %>
     <%=link_to "Sign in", new_facebook_account_path, :class=> "button facebook"%>
 <% end %>
