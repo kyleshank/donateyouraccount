@@ -35,6 +35,9 @@ Dya::Application.routes.draw do
         get :facebook
         match 'facebook' => "donations#facebook_create", :as => :facebook_create, :via => :post
       end
+      member do
+        get :delete
+      end
     end
     resources :twitter_statuses
     resources :facebook_statuses

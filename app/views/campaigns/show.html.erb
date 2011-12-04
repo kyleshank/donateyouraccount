@@ -32,7 +32,7 @@
 <% if logged_in? and @campaign.twitter_account and current_twitter_account and (@campaign.twitter_account.id == current_twitter_account.id) %>
   <li><%= link_to "Publish", new_campaign_twitter_status_path(@campaign), :id => "publish_twitter", :class => "button twitter" %></li>
 <% elsif @twitter_donation %>
-   <li><%= link_to "Un-Donate", campaign_donation_path(@campaign,@twitter_donation), :id => "undonate_twitter", :class => "button twitter", :confirm => "Are you sure?", :method => :delete %></li>
+   <li><%= link_to "Un-Donate", delete_campaign_donation_path(@campaign,@twitter_donation), :id => "undonate_twitter", :class => "button twitter" %></li>
 <% elsif logged_in? and @campaign.twitter_account and @campaign.facebook_account and !current_twitter_account and current_facebook_account and (@campaign.facebook_account.id == current_facebook_account.id) %>
    <li><%= link_to "Sign In", new_twitter_account_path, :id => "signin_twitter", :class => "button twitter" %></li>
 <% elsif @campaign.twitter_account %>
@@ -42,7 +42,7 @@
 <li><%= link_to "Publish", new_campaign_facebook_status_path(@campaign), :id => "publish_facebook", :class => "button facebook" %></li>
 <% end%>
 <% if @facebook_donation %>
-   <li><%= link_to "Un-Donate", campaign_donation_path(@campaign,@facebook_donation), :id => "undonate_facebook", :class => "button facebook", :confirm => "Are you sure?", :method => :delete %></li>
+   <li><%= link_to "Un-Donate", delete_campaign_donation_path(@campaign,@facebook_donation), :id => "undonate_facebook", :class => "button facebook" %></li>
 <% elsif logged_in? and @campaign.twitter_account and @campaign.facebook_account and !current_facebook_account and @campaign.twitter_account and current_twitter_account and (@campaign.twitter_account.id == current_twitter_account.id) %>
   <li><%= link_to "Sign In", new_facebook_account_path, :id => "signin_facebook", :class => "button facebook" %></li>
 <% elsif @campaign.facebook_page_uid %>

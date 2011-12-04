@@ -67,6 +67,12 @@ class DonationsController < ApplicationController
     redirect_to campaign_permalink_path(@campaign)
   end
 
+  def delete
+    @donation = current_twitter_account.donations.find(params[:id]) if current_twitter_account
+    @donation = current_facebook_account.donations.find(params[:id]) if !@donation && current_facebook_account
+    render_not_found and return unless @donation
+  end
+
   private
 
   def load_campaign
