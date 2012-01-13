@@ -19,7 +19,7 @@
 #require "bundler/capistrano"
 
 set :application, "dya"
-set :hostname, "donateyouraccount.com"
+set :hostname, (ENV['HOST'] || "donateyouraccount.com")
 
 set :user, "dya"
 set :host, "#{user}@#{hostname}"
@@ -35,9 +35,9 @@ set :deploy_via, :remote_cache
 set :runner, user
 set :keep_releases, 10
 
-role :app, "donateyouraccount.com"
-role :web, "donateyouraccount.com"
-role :db,  "donateyouraccount.com", :primary => true
+role :app, hostname
+role :web, hostname
+role :db,  hostname, :primary => true
 
 namespace :deploy do
   desc "Restart Unicorn"
