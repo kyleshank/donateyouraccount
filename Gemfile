@@ -11,6 +11,7 @@ gem 'will_paginate', :git => "git://github.com/mislav/will_paginate", :tag => "v
 gem 'jquery-rails'
 gem 'authlogic'
 gem 'capistrano'
+gem 'rvm'
 
 gem 'unicorn'
 
