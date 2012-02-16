@@ -46,34 +46,49 @@ set :keep_releases, 10
 role :app, hostname
 role :web, hostname
 role :db,  hostname, :primary => true
+role :worker, "23.21.224.31"
 
 namespace :deploy do
   desc "Restart Unicorn"
-  task :restart do
+  task :restart, :roles => :app do
     run "kill -USR2 `cat #{deploy_to}/shared/pids/unicorn.pid`"
-    run("cd #{deploy_to}/current; RAILS_ENV=production bundle exec script/delayed_job restart")
   end
 
-  task :symlink_config, :roles => :app do
+  task :symlink_config do
     run "ln -sf #{deploy_to}/shared/database.yml #{release_path}/config/database.yml"
     run "ln -sf #{deploy_to}/shared/production.rb #{release_path}/config/environments/production.rb"
   end
 
-  task :migrate do
-    run "cd #{release_path}; RAILS_ENV=production bundle exec rake db:migrate"
+  task :migrate, :roles => :db do
+    #run "cd #{release_path}; RAILS_ENV=production bundle exec rake db:migrate"
   end
 end
 
 namespace :bundler do
-  task :create_symlink, :roles => :app do
+  task :create_symlink do
     shared_dir = File.join(shared_path, 'bundle')
     release_dir = File.join(current_release, 'vendor','bundle')
     run("mkdir -p #{shared_dir} && ln -s #{shared_dir} #{release_dir}")
   end
 
-  task :bundle_new_release, :roles => :app do
+  task :bundle_new_release do
     run "bundle install --gemfile #{release_path}/Gemfile --path /var/www/dya/shared/bundle --deployment --without cucumber test"
     bundler.create_symlink
+  end
+end
+
+namespace :delayed_job do
+  desc "Restart Unicorn"
+  task :start, :roles => :worker do
+    run("cd #{deploy_to}/current; RAILS_ENV=production bundle exec script/delayed_job -n 3 start")
+  end
+
+  task :stop, :roles => :worker do
+    run("cd #{deploy_to}/current; RAILS_ENV=production bundle exec script/delayed_job stop")
+  end
+  
+  task :restart, :roles => :worker do
+    run("cd #{deploy_to}/current; RAILS_ENV=production bundle exec script/delayed_job restart")
   end
 end
 
