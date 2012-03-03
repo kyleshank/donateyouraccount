@@ -34,6 +34,7 @@ class DonationsController < ApplicationController
     @donation = @campaign.donations.new(params[:donation])
     @donation.account = current_twitter_account
     if @donation.save
+      expire_page("/#{@campaign.permalink}.js")
       redirect_to campaign_permalink_path(@campaign)
     else
       render :action => :twitter
@@ -49,6 +50,7 @@ class DonationsController < ApplicationController
     @donation = @campaign.donations.new(params[:donation])
     @donation.account = current_facebook_account
     if @donation.save
+      expire_page("/#{@campaign.permalink}.js")
       redirect_to campaign_permalink_path(@campaign)
     else
       render :action => :facebook
