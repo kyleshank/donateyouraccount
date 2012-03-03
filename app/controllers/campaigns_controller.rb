@@ -23,6 +23,8 @@ class CampaignsController < ApplicationController
   before_filter :new_campaign, :only =>[:new,:create]
   before_filter :load_campaign, :only =>[:edit,:update, :destroy]
 
+  caches_page :show, :if => Proc.new { |c| c.request.format.js? }
+
   def index
     @campaigns = Campaign.all
   end
