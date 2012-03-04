@@ -27,6 +27,8 @@
 <div id="logo"><h1><a href="/home"><span>Donate Your Account</span></a></h1></div>
 </div>
 
+  <%=render :partial =>"layouts/banner_ad" if defined?(BANNER_AD)%>
+
 <%if flash[:notice]%><div id="flash"><%=raw flash[:notice]%></div><% end%>
 
 <div id="content">

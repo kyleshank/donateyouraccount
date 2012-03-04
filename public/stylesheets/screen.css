@@ -549,3 +549,8 @@ ul.index_campaigns li a{
     margin:  0.5em 0;
     clear:both;
 }
+
+#bannerAd{
+    text-align: center;
+    margin:  1em 0;
+}
