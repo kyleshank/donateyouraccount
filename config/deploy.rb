@@ -51,17 +51,17 @@ role :worker, "23.21.224.31"
 namespace :deploy do
   desc "Start Unicorn"
   task :start, :roles => :app do
-    run "cd #{deploy_to}/current; RAILS_ENV=production bundle exec unicorn -c #{deploy_to}/shared/unicorn_config -E production -D"
+    run "cd #{deploy_to}/current; RAILS_ENV=production bundle exec thin -C #{deploy_to}/shared/thin.yml start"
   end
 
   desc "Restart Unicorn"
   task :restart, :roles => :app do
-    run "kill -USR2 `cat #{deploy_to}/shared/pids/unicorn.pid`"
+    run "cd #{deploy_to}/current; RAILS_ENV=production bundle exec thin -C #{deploy_to}/shared/thin.yml restart"
   end
 
   desc "Stop Unicorn"
   task :stop, :roles => :app do
-    run "kill -QUIT `cat #{deploy_to}/shared/pids/unicorn.pid`"
+    run "cd #{deploy_to}/current; RAILS_ENV=production bundle exec thin -C #{deploy_to}/shared/thin.yml stop"
   end
 
   task :symlink_config do

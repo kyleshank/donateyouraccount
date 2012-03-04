@@ -13,7 +13,7 @@ gem 'authlogic'
 gem 'capistrano'
 gem 'rvm'
 
-gem 'unicorn'
+gem 'thin'
 
 group :test, :development do
   gem 'rspec-rails'
