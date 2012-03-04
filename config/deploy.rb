@@ -49,9 +49,19 @@ role :db,  hostname, :primary => true
 role :worker, "23.21.224.31"
 
 namespace :deploy do
+  desc "Start Unicorn"
+  task :start, :roles => :app do
+    run "cd #{deploy_to}/current; RAILS_ENV=production bundle exec unicorn -c #{deploy_to}/shared/unicorn_config -E production -D"
+  end
+
   desc "Restart Unicorn"
   task :restart, :roles => :app do
     run "kill -USR2 `cat #{deploy_to}/shared/pids/unicorn.pid`"
+  end
+
+  desc "Stop Unicorn"
+  task :stop, :roles => :app do
+    run "kill -QUIT `cat #{deploy_to}/shared/pids/unicorn.pid`"
   end
 
   task :symlink_config do
@@ -60,7 +70,7 @@ namespace :deploy do
   end
 
   task :migrate, :roles => :db do
-    #run "cd #{release_path}; RAILS_ENV=production bundle exec rake db:migrate"
+    run "cd #{release_path}; RAILS_ENV=production bundle exec rake db:migrate"
   end
 end
 
