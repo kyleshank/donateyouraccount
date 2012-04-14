@@ -185,6 +185,16 @@ font-size: 12px;
     letter-spacing: -1px;
 }
 
+#index #privacy p{
+    margin: 1em 0;
+}
+
+#index #privacy ul{
+	padding-left: 2em;
+	list-style: disc;
+	margin: 1em 0;
+}
+
 #index #buttons {
     margin:  1em 0;
     position:relative;
