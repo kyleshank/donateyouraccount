@@ -20,7 +20,7 @@ class TwitterStatus < Status
   include RetryHelper
 
   before_create do |twitter_status|
-    twitter_status.data = Twitter.status(twitter_status.uid).to_json
+    twitter_status.data = Twitter::Client.new(:oauth_token => self.campaign.twitter_account.token, :oauth_token_secret => self.campaign.twitter_account.secret).status(twitter_status.uid).to_json
   end
 
   def data

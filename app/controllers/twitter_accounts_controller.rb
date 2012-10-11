@@ -24,12 +24,12 @@ class TwitterAccountsController < ApplicationController
   end
 
   def create
-    consumer = OAuth::Consumer.new(Twitter.consumer_key, Twitter.consumer_secret, {:site=>"http://twitter.com" })
+    consumer = OAuth::Consumer.new(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, {:site=>"https://api.twitter.com" })
     request_token = OAuth::RequestToken.new(consumer, session[:request_token], session[:request_token_secret])
 
     begin
       access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
-      response = consumer.request(:get, '/account/verify_credentials.json', access_token, { :scheme => :query_string })
+      response = access_token.request(:get, '/1/account/verify_credentials.json', access_token, { :scheme => :query_string })
 
       case response.code
         when "200"

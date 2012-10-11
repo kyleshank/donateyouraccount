@@ -18,9 +18,9 @@
 ##
 module TwitterAccountsHelper
   def get_twitter_request_token
-    get_request_token(Twitter.consumer_key,
-                      Twitter.consumer_secret,
-                      "http://twitter.com",
+    get_request_token(TWITTER_CONSUMER_KEY,
+                      TWITTER_CONSUMER_SECRET,
+                      "https://api.twitter.com",
                       "http://#{request.host_with_port}/twitter_accounts/oauth_create")
   end
 

@@ -8,7 +8,7 @@
 <div class="subHeader">SELECT TWEET:</div>
 <ul>
   <%@campaign.twitter_account.recent_tweets.each_with_index do |tweet, i|%>
-  <li twitter-id="<%=tweet["id_str"]%>" class="<% if (i % 2) == 0 %>even<%else%>odd<%end%>"><div><%=tweet["text"]%></div><div class="time"><%=time_ago_in_words(Time.parse(tweet["created_at"]))%> ago</div></li>
+  <li twitter-id="<%=tweet["id"]%>" class="<% if (i % 2) == 0 %>even<%else%>odd<%end%>"><div><%=tweet["text"]%></div><div class="time"><%=time_ago_in_words(tweet["created_at"])%> ago</div></li>
   <% end %>
 </ul>
 </div>
