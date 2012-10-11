@@ -15,6 +15,7 @@ gem 'rvm'
 gem 'rvm-capistrano'
 gem 'delayed_job_active_record'
 gem 'thin'
+gem 'daemons'
 
 group :test, :cucumber do
   gem 'factory_girl_rails'
