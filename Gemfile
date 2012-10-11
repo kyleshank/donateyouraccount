@@ -6,7 +6,7 @@ gem 'oauth'
 gem 'oauth-plugin'
 gem 'oauth2'
 gem 'twitter', '4.1.0'
-gem "delayed_job" 
+gem "delayed_job"
 gem 'will_paginate'
 gem 'jquery-rails'
 gem 'authlogic'
