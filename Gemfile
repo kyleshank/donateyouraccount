@@ -3,8 +3,8 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.9'
 gem 'mysql2', '0.2.11'
 gem 'oauth'
-gem 'oauth-plugin'
-gem 'oauth2'
+#gem 'oauth-plugin'
+gem 'oauth2', :path => "vendor/gems/oauth2"
 gem 'twitter', '4.1.0'
 gem "delayed_job"
 gem 'will_paginate'
