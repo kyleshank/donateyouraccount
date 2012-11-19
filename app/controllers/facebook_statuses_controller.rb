@@ -31,6 +31,8 @@ class FacebookStatusesController < ApplicationController
     if @facebook_status.save
       flash[:notice] = "Publishing to Facebook"
       redirect_to campaign_permalink_path(@campaign) and return
+    else
+      p @facebook_status.errors
     end
 
     redirect_to dashboard_path

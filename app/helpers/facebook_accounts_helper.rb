@@ -19,6 +19,7 @@
 module FacebookAccountsHelper
   def get_oauth_client
     OAuth2::Client.new(FACEBOOK_APPLICATION_ID, FACEBOOK_APPLICATION_SECRET,
+      :token_url => '/oauth/access_token',
                        :site => {
                          :url => 'https://graph.facebook.com',
                          :ssl => {

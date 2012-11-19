@@ -20,7 +20,7 @@ class FacebookAccountsController < ApplicationController
   include FacebookAccountsHelper
 
   def new
-    redirect_to get_oauth_client.web_server.authorize_url(
+    redirect_to get_oauth_client.auth_code.authorize_url(
       :redirect_uri => facebook_redirect_uri,
       :scope => 'offline_access,share_item,manage_pages'
     )
@@ -28,9 +28,10 @@ class FacebookAccountsController < ApplicationController
 
   def create
    begin
-      access_token = get_oauth_client.web_server.get_access_token(params[:code], :redirect_uri => facebook_redirect_uri)
+      access_token = get_oauth_client.auth_code.get_token(params[:code], :redirect_uri => facebook_redirect_uri, :parsed => :facebook)
+
       response = access_token.get('/me')
-      user_info = JSON.parse(response)
+      user_info = JSON.parse(response.body)
 
       @account = FacebookAccount.where(:uid => user_info["id"]).first
 
@@ -43,8 +44,8 @@ class FacebookAccountsController < ApplicationController
       @account.name = "#{user_info["first_name"]} #{user_info["last_name"]}"
       @account.screen_name = user_info["username"]
       @account.token = params[:code]
-      @account.followers = JSON.parse(access_token.get("/me/friends"))["data"].size
-      @account.facebook_pages = JSON.parse(access_token.get("/me/accounts"))["data"].select{|a| a["category"] != "Application"}.to_json
+      @account.followers = JSON.parse(access_token.get("/me/friends").body)["data"].size
+      @account.facebook_pages = JSON.parse(access_token.get("/me/accounts").body)["data"].select{|a| a["category"] != "Application"}.to_json
 
       if @account.save
         self.current_facebook_account=@account

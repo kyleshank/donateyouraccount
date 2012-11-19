@@ -1,5 +1,5 @@
 <h1><%=@campaign.name%></h1>
-<% form_for @campaign, :url => campaign_path, :method => :put do |f|%>
+<%= form_for @campaign, :url => campaign_path, :method => :put do |f|%>
 <%=render :partial => "layouts/errors", :locals => {:model => @campaign}%>
 <%=f.label :name %>
 <%=f.text_field :name%>

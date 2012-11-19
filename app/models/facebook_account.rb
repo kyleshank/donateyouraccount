@@ -24,15 +24,15 @@ class FacebookAccount < Account
 
   def get(uri, opts = {})
     try_to do
-      @graph ||= get_oauth_client.web_server.get_access_token(self.token, :redirect_uri => FACEBOOK_OAUTH_REDIRECT)
-      JSON.parse(@graph.get(uri, opts))
+      @graph ||= get_oauth_client.auth_code.get_token(self.token, :redirect_uri => FACEBOOK_OAUTH_REDIRECT, :parsed => :facebook)
+      JSON.parse(@graph.get(uri, opts).body)
     end
   end
 
   def post(uri, opts = {})
     try_to do
-      @graph ||= get_oauth_client.web_server.get_access_token(self.token, :redirect_uri => FACEBOOK_OAUTH_REDIRECT)
-      JSON.parse(@graph.post(uri, opts))
+      @graph ||= get_oauth_client.auth_code.get_token(self.token, :redirect_uri => FACEBOOK_OAUTH_REDIRECT, :parsed => :facebook)
+      JSON.parse(@graph.post(uri, opts).body)
     end
   end
 
@@ -55,11 +55,8 @@ class FacebookAccount < Account
     d.delete("id")
     try_to do
       begin
-        @graph ||= get_oauth_client.web_server.get_access_token(self.token, :redirect_uri => FACEBOOK_OAUTH_REDIRECT)
-        @graph.post("/me/links", d)
-      rescue OAuth2::HTTPError
-        # NOOP
-      rescue OAuth2::AccessDenied
+        post("/me/links", {:body => d})
+      rescue OAuth2::Error
         # NOOP
       end
     end

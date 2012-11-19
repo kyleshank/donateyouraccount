@@ -1,7 +1,7 @@
 <div id="campaign">
 <h1><%=image_tag(@campaign.image) if @campaign.image%><%=@campaign.name%></h1>
 
-<%form_for @donation, :url => twitter_campaign_donations_path(@campaign) do |f|%>
+<%=form_for @donation, :url => twitter_campaign_donations_path(@campaign) do |f|%>
 <p>
   Your account will automatically retweet messages posted to <strong><%=link_to "@#{@campaign.twitter_account.screen_name}", @campaign.twitter_account.url, :target => "_blank"%></strong> on Twitter.
 </p>
