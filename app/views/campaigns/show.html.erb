@@ -55,7 +55,7 @@
 <%if @campaign.twitter_account%>
 <h2>Twitter Donors (<%=@campaign.donations.twitter.count%>)</h2>
 <ul class="donations">
-  <% @campaign.donations.twitter.each do |donation| %>
+  <% @campaign.donations.twitter.limit(64).each do |donation| %>
   <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.url, :target=>"_blank"%></li>
   <% end %>
 </ul>
@@ -63,7 +63,7 @@
 <% if @campaign.facebook_account && !@campaign.facebook_page_uid.blank?%>
 <h2>Facebook Donors (<%=@campaign.donations.facebook.count%>)</h2>
 <ul class="donations">
-  <% @campaign.donations.facebook.each do |donation| %>
+  <% @campaign.donations.facebook.limit(64).each do |donation| %>
   <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.url, :target=>"_blank"%></li>
   <% end %>
 </ul>

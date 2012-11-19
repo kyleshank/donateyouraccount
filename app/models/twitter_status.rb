@@ -19,6 +19,8 @@
 class TwitterStatus < Status
   include RetryHelper
 
+  validate :validate_levels
+
   before_create do |twitter_status|
     twitter_status.data = Twitter::Client.new(:oauth_token => self.campaign.twitter_account.token, :oauth_token_secret => self.campaign.twitter_account.secret).status(twitter_status.uid).to_json
   end
@@ -48,13 +50,15 @@ class TwitterStatus < Status
 
   private
 
-  def validate
+  def validate_levels
     accumulator = 0
     if self.levels.is_a?(Array)
       self.levels.each do |l|
         accumulator += l.to_i
       end
     end
+    p self.levels
+    p accumulator
     self.level = accumulator
     if (self.level & Donation::LEVELS["Gold"]) > 0
       errors.add(:level, "Gold level donation has already been utilized") if (self.campaign.twitter_statuses.for_levels(4..7).within_1_day.count > 0)

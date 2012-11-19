@@ -3,15 +3,12 @@
 <head>
   <title><%if @campaign and @campaign.persisted? %><%=@campaign.name%> on <%end%>Donate Your Account</title>
   <link rel="icon" href="/favicon.png" type="image/png" />
-  <%= stylesheet_link_tag "screen" %>
-  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" %>
-   <%= javascript_include_tag "rails" %>
-   <%= javascript_include_tag "application" %>
+   <%= stylesheet_link_tag "application" %>  
+  <%= javascript_include_tag "application" %>  
   <%= csrf_meta_tag %>
   <%=yield :head%>
 </head>
 <body>
-<div style="background: black; color: white; text-align: center">Donate Your Account will be shut down on December 1st, 2012. <a href="http://www.kyleshank.com/stories/2012/09/21/iWontBuildABusinessOnTwitt.html">More info.</a></div>
 <div id="application" class="container">
 <div id="bar">
 <% if logged_in? %>

@@ -28,6 +28,9 @@ class TwitterStatusesController < ApplicationController
   def create
     @twitter_status = @campaign.twitter_statuses.new(params[:twitter_status])
 
+p params
+p @twitter_status
+
     if @twitter_status.save
       flash[:notice] = "Publishing to Twitter"
       redirect_to campaign_permalink_path(@campaign) and return

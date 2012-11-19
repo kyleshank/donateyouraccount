@@ -1,6 +1,6 @@
 <div id="campaign">
 <h1><%=image_tag(@campaign.image) if @campaign.image%><%=@campaign.name%></h1>
-<% form_for @twitter_status, :url => campaign_twitter_statuses_path(@campaign) do |f| %>
+<%= form_for @twitter_status, :url => campaign_twitter_statuses_path(@campaign) do |f| %>
 <%=f.hidden_field :uid %>
 <%=render :partial => "layouts/errors", :locals => {:model => @twitter_status}%>
 <div class="messages twitter">

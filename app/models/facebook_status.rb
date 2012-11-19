@@ -19,6 +19,8 @@
 class FacebookStatus < Status
   include RetryHelper
 
+  validate :validate_levels
+
   before_create do |facebook_status|
     facebook_status.data = facebook_status.campaign.facebook_account.get("/#{self.uid}").to_json
   end
@@ -53,7 +55,7 @@ class FacebookStatus < Status
 
   private
 
-  def validate
+  def validate_levels
     accumulator = 0
     if self.levels.is_a?(Array)
       self.levels.each do |l|
