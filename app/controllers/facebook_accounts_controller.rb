@@ -52,7 +52,8 @@ class FacebookAccountsController < ApplicationController
       end
 
       redirect_back_or_default dashboard_path
-    rescue Exception
+    rescue Exception => e
+      p e
       flash[:notice] = "Facebook error"
       redirect_to "/"
     end

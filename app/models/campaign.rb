@@ -29,7 +29,9 @@ class Campaign < ActiveRecord::Base
   validates_exclusion_of :permalink, :in => %w(account accounts signin signout home facebook_accounts twitter_accounts campaign campaigns dya)
   validates_format_of :permalink, :with => /^[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_]*$/
 
-  def validate
+  validate :validate_campaign
+
+  def validate_campaign
     if self.twitter_account.nil? and self.facebook_account.nil?
       errors.add(:twitter_account, "at least 1 account must be associated with a Campaign")
       errors.add(:facebook_account, "at least 1 account must be associated with a Campaign")

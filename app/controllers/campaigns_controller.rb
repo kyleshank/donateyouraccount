@@ -19,7 +19,7 @@
 class CampaignsController < ApplicationController
   include TwitterAccountsHelper
   
-  before_filter :login_required, :except => [:show]
+  before_filter :login_required, :except => [:show,:index]
   before_filter :new_campaign, :only =>[:new,:create]
   before_filter :load_campaign, :only =>[:edit,:update, :destroy]
 

@@ -22,3 +22,12 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier',     '>= 1.0.3'
 end
+
+group :test, :deveopment do
+	gem "rspec-rails"
+	gem 'rack-test'
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'fakeweb'
+  gem 'simplecov', :require => false
+end

@@ -42,11 +42,11 @@ class ApplicationController < ActionController::Base
 
   helper_method :render_not_found
   def render_not_found
-    render :layout => nil, :file => "#{RAILS_ROOT}/public/404.html", :status => "404 Not Found"
+    render :layout => nil, :file => "#{Rails.root}/public/404.html", :status => "404 Not Found"
   end
 
   def render_access_denied
-    render :layout => nil, :file => "#{RAILS_ROOT}/public/403.html", :status => "403 Forbidden"
+    render :layout => nil, :file => "#{Rails.root}/public/403.html", :status => "403 Forbidden"
   end
 
   def current_twitter_account
