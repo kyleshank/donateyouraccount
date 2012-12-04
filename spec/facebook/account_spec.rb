@@ -11,7 +11,7 @@ describe FacebookAccount do
 		last_response.status.should == 302
 		last_response.headers["Location"].should match /^https\:\/\/graph.facebook.com\/oauth\/authorize/
 
-		# Accpet post back from Facebook
+		# Accept post back from Facebook
 		FakeWeb.register_uri(:post, "https://graph.facebook.com/oauth/access_token",
                          :content_type => "application/json",
                          :body => json_fixture('facebook/oauth_access_token'))

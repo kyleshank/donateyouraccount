@@ -47,6 +47,8 @@ class TwitterAccount < Account
         # DUPLICATE RTS
       rescue Twitter::Error::Unauthorized
         # EAT IT
+      rescue Exception => e
+        p e.backtrace
       end
     end
   end
