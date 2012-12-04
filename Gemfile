@@ -24,6 +24,7 @@ group :assets do
 end
 
 group :test, :deveopment do
+	gem "rake"
 	gem "rspec-rails"
 	gem 'rack-test'
   gem 'database_cleaner'

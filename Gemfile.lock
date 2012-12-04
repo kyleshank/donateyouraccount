@@ -197,6 +197,7 @@ DEPENDENCIES
   rack-test
   rails (= 3.2.9)
   rails_autolink
+  rake
   rspec-rails
   rvm
   rvm-capistrano
