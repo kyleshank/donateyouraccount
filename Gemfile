@@ -16,6 +16,8 @@ gem 'delayed_job_active_record'
 gem 'thin'
 gem 'daemons'
 gem 'rails_autolink'
+gem 'libv8', '~> 3.11.8'
+gem 'therubyracer'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
