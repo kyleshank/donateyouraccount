@@ -69,6 +69,10 @@ namespace :deploy do
   task :migrate, :roles => :db do
     run "cd #{release_path}; RAILS_ENV=production bundle exec rake db:migrate"
   end
+
+  task :assets, :roles => :app do
+    run "cd #{release_path}; RAILS_ENV=production bundle exec rake assets:precompile"
+  end
 end
 
 namespace :bundler do
@@ -99,5 +103,5 @@ namespace :delayed_job do
   end
 end
 
-after 'deploy:update_code', 'bundler:bundle_new_release', "deploy:symlink_config"
+after 'deploy:update_code', 'bundler:bundle_new_release', "deploy:symlink_config", "deploy:assets"
 after "deploy:update", "deploy:cleanup"
