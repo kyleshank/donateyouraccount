@@ -20,7 +20,7 @@
 # Load RVM's capistrano plugin.
 require "rvm/capistrano"
 
-set :rvm_ruby_string, '1.9.2'
+set :rvm_ruby_string, '1.9.3'
 set :rvm_type, :user  # Don't use system-wide RVM
 
 set :application, "dya"
@@ -35,7 +35,7 @@ set :use_sudo, false
 ssh_options[:forward_agent] = true
 default_run_options[:pty] = true
 
-set :deploy_to, "/var/www/#{application}"
+set :deploy_to, "/a/#{application}"
 set :deploy_via, :remote_cache
 set :runner, user
 set :keep_releases, 10
@@ -43,7 +43,7 @@ set :keep_releases, 10
 role :app, hostname
 role :web, hostname
 role :db,  hostname, :primary => true
-role :worker, "23.21.224.31"
+role :worker, hostname
 
 namespace :deploy do
   desc "Start Unicorn"
@@ -79,7 +79,7 @@ namespace :bundler do
   end
 
   task :bundle_new_release do
-    run "bundle install --gemfile #{release_path}/Gemfile --path /var/www/dya/shared/bundle --deployment --without cucumber test"
+    run "bundle install --gemfile #{release_path}/Gemfile --path #{deploy_to}/shared/bundle --deployment --without cucumber test"
     bundler.create_symlink
   end
 end
@@ -87,7 +87,7 @@ end
 namespace :delayed_job do
   desc "Restart Unicorn"
   task :start, :roles => :worker do
-    run("cd #{deploy_to}/current; RAILS_ENV=production bundle exec script/delayed_job -n 3 start")
+    run("cd #{deploy_to}/current; RAILS_ENV=production bundle exec script/delayed_job -n 1 start")
   end
 
   task :stop, :roles => :worker do

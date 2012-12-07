@@ -18,7 +18,8 @@ gem 'daemons'
 gem 'rails_autolink'
 gem 'libv8', '~> 3.11.8'
 gem 'therubyracer'
-
+  gem "rake"
+  
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -26,7 +27,7 @@ group :assets do
 end
 
 group :test, :deveopment do
-	gem "rake"
+
 	gem "rspec-rails"
 	gem 'rack-test'
   gem 'database_cleaner'
