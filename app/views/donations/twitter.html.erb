@@ -1,35 +1,28 @@
-<div id="campaign">
-<h1><%=image_tag(@campaign.image) if @campaign.image%><%=@campaign.name%></h1>
-
-<%=form_for @donation, :url => twitter_campaign_donations_path(@campaign) do |f|%>
-<p>
-  Your account will automatically retweet messages posted to <strong><%=link_to "@#{@campaign.twitter_account.screen_name}", @campaign.twitter_account.url, :target => "_blank"%></strong> on Twitter.
-</p>
-<p>
-  Choose the level of your Twitter donation to <strong><%=link_to "@#{@campaign.twitter_account.screen_name}", @campaign.twitter_account.url, :target => "_blank"%></strong>:
-</p>
-<p>
-  <%=f.radio_button :level, Donation::LEVELS["Gold"]%>
-  <%=f.label "level_#{Donation::LEVELS["Gold"]}", "Gold: 1 retweet per day"%>
-</p>
-<p>
-  <%=f.radio_button :level, Donation::LEVELS["Silver"]%>
-  <%=f.label "level_#{Donation::LEVELS["Silver"]}", "Silver: 1 retweet per week"%>
-</p>
-<p>
-  <%=f.radio_button :level, Donation::LEVELS["Bronze"]%>
-  <%=f.label "level_#{Donation::LEVELS["Bronze"]}", "Bronze: 1 retweet per month"%>
-</p>
-<p>
-  <%=f.submit "Donate Your Twitter Account", :class => "button", :confirm => "Are you sure you want to donate retweets to @#{@campaign.twitter_account.screen_name} on Twitter?" %>
-</p>
-<%end%>
+<div class="page-header">
+  <h1><%=@campaign.name%> <small>Donate Your Account</small></h1>
 </div>
-<% content_for :side do %>
-<h2>Twitter Donors (<%=@campaign.donations.twitter.count%>)</h2>
-<ul class="donations">
-  <% @campaign.donations.twitter.each do |donation| %>
-  <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.url, :target=>"_blank"%></li>
-  <% end %>
-</ul>
-<% end %>
+
+<%=form_for @donation, :url => twitter_campaign_donations_path(@campaign), :html => {:class=>"form-horizontal"} do |f|%>
+<div class="alert alert-warning">
+  Your account will automatically retweet messages posted to <strong><%=link_to "@#{@campaign.twitter_account.screen_name}", @campaign.twitter_account.url, :target => "_blank"%></strong> on Twitter.
+</div>
+<div class="control-group">
+    <%=f.label :donation_level, :class=>"control-label" %>
+    <div class="controls">
+<label class="radio">
+  <%=f.radio_button :level, Donation::LEVELS["Gold"]%> Gold: 1 retweet per day
+</label>
+<label class="radio">
+  <%=f.radio_button :level, Donation::LEVELS["Silver"]%> Silver: 1 retweet per week
+</label>
+<label class="radio">
+  <%=f.radio_button :level, Donation::LEVELS["Bronze"]%> Bronze: 1 retweet per month
+</label>
+    </div>
+  </div>
+<div class="control-group">
+    <div class="controls">
+      <%=f.submit "Donate Your Twitter Account", :class => "btn btn-success", :confirm => "Are you sure you want to donate retweets to @#{@campaign.twitter_account.screen_name} on Twitter?" %>
+    </div>
+  </div>
+<%end%>

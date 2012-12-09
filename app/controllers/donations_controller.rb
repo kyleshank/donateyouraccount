@@ -58,8 +58,8 @@ class DonationsController < ApplicationController
   end
 
   def destroy
-    @donation = current_twitter_account.donations.find(params[:id]) if current_twitter_account
-    @donation = current_facebook_account.donations.find(params[:id]) if !@donation && current_facebook_account
+    @donation = current_twitter_account.donations.for_campaign(@campaign.id).first if current_twitter_account
+    @donation = current_facebook_account.donations.for_campaign(@campaign.id).first if current_facebook_account && @donation.nil?
 
     if @donation
       flash[:notice] = "Donation destroyed"
@@ -70,8 +70,8 @@ class DonationsController < ApplicationController
   end
 
   def delete
-    @donation = current_twitter_account.donations.find(params[:id]) if current_twitter_account
-    @donation = current_facebook_account.donations.find(params[:id]) if !@donation && current_facebook_account
+    @donation = current_twitter_account.donations.for_campaign(@campaign.id).first if current_twitter_account
+    @donation = current_facebook_account.donations.for_campaign(@campaign.id).first if current_facebook_account && @donation.nil?
     render_not_found and return unless @donation
   end
 
@@ -94,9 +94,9 @@ class DonationsController < ApplicationController
   def facebook_required
     unless current_facebook_account
       session[:return_to] = facebook_campaign_donations_path(@campaign)
-      redirect_to get_oauth_client.web_server.authorize_url(
+      redirect_to get_oauth_client.auth_code.authorize_url(
         :redirect_uri => FACEBOOK_OAUTH_REDIRECT,
-        :scope => 'offline_access,share_item'
+        :scope => 'offline_access,share_item,manage_pages'
       ) and return
     end
     redirect_to campaign_path(@campaign) if current_facebook_account.donations.where(:campaign_id => @campaign.id).count > 0
