@@ -8,10 +8,12 @@
   </thead>
   <tbody>
   <% @donations.each do |donation| %>
+  <% if donation.campaign%>
   <tr>
    <td><h3><a href="<%= campaign_permalink_path(donation.campaign) %>"><%=truncate(donation.campaign.name,:length=>24) %></h3></td>
    <td><h3><%=donation.total%></h3></td>
   </tr>
+  <% end %>
   <% end %>
   </tbody>
 </table>
