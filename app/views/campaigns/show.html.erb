@@ -54,6 +54,6 @@
   <% unless @campaign.facebook_page.blank? %><li class="facebook"><%=link_to @campaign.facebook_page["name"], @campaign.facebook_page["link"], :class=>"btn btn-primary", :target => "_blank"%></li><% end %>
 </ul>
 </div>
-<div><%=simple_format auto_link(strip_tags(@campaign.description),:rel=>"nofollow"), :class=>"lead" %></div>
+<div><%=simple_format auto_link(strip_tags(@campaign.description), :html => { :rel => 'nofollow' }), :class=>"lead" %></div>
 <%=render :partial => "campaigns/statuses", :object => @statuses, :locals => {:no_icon => true}%>
 </div>

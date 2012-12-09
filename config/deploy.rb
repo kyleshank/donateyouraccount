@@ -54,6 +54,7 @@ namespace :deploy do
 
   desc "Restart"
   task :restart, :roles => :app do
+    deploy.migrate
     run "cd #{deploy_to}/current; RAILS_ENV=production bundle exec thin -C #{deploy_to}/shared/thin.yml restart"
     delayed_job.restart
   end
