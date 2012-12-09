@@ -1,36 +1,11 @@
+<div class="page-header">
+  <a class="btn btn-primary btn-large pull-right" href="<%=new_campaign_path%>">Start a Campaign &raquo;</a>
+  <h1>Donations <small>Messages shared on your behalf</small></h1>
+
+</div>
 <% if @donated_statuses.empty? %>
-<p>Donate to some <%=link_to "campaigns", campaigns_path%>!</p>
+<a href="/campaigns" class="btn btn-large">Browse Campaigns</a>
 <%else%>
 <%=render :partial => "dya/statuses", :object => @donated_statuses%>
 <%=will_paginate @donated_statuses%>
-<% end %>
-
-<% content_for :side do %>
-<ul class="menu">
-  <li><%=link_to "Create Campaign", new_campaign_path, :class=>"button"%></li>
-</ul>
-<% if Campaign.for_accounts(current_accounts).count > 0 %>
-<h2>Campaigns</h2>
-<ul class="campaigns">
-  <% Campaign.for_accounts(current_accounts).group("campaigns.id").each do |campaign| %>
-      <li><%=link_to campaign.name, campaign_permalink_path(campaign)%></li>
-  <% end %>
-</ul>
-<% end %>
-<h2>Donations (<%=Donation.for_accounts(current_accounts).select("distinct(campaign_id)").count%>)</h2>
-<ul class="donations">
-  <% Donation.for_accounts(current_accounts).group_campaign.each do |donation| %>
-  <% if donation.campaign%>
-  <li><%=link_to image_tag(donation.campaign.image), campaign_permalink_path(donation.campaign)%></li>
-  <% end %>
-  <% end %>
-</ul>
-
-<h2>Top Campaigns</h2>
-<ul class="top_campaigns">
-  <% Donation.select("campaign_id, count(*) as total").includes(:campaign).group(:campaign_id).order("total desc").limit(5).each do |donation| %>
-  <li><a href="<%= campaign_permalink_path(donation.campaign) %>"><%=image_tag(donation.campaign.image)%><%=truncate(donation.campaign.name,:length=>16) %><div class="total"><%=donation.total%></div></a></li>
-  <% end %>
-</ul>
-<%=link_to "More Campaigns...", campaigns_path, :class=>"more_campaigns"%>
 <% end %>

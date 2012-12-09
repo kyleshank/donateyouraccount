@@ -21,8 +21,10 @@ class FacebookStatus < Status
 
   validate :validate_levels
 
-  before_create do |facebook_status|
-    facebook_status.data = facebook_status.campaign.facebook_account.get("/#{self.uid}").to_json
+  before_create :set_data
+
+  def set_data
+    self.data = self.campaign.facebook_account.get("/#{self.uid}").to_json
   end
 
   def data

@@ -43,6 +43,7 @@ Dya::Application.routes.draw do
     resources :facebook_statuses
   end
 
+  match 'start' => "dya#start", :as => :start
   match 'home' => "dya#home", :as => :dashboard
   match 'signout' => "dya#signout", :as => :signout
 

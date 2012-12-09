@@ -24,15 +24,15 @@ class FacebookAccount < Account
 
   def get(uri, opts = {})
     try_to do
-      @graph ||= get_oauth_client.auth_code.get_token(self.token, :redirect_uri => FACEBOOK_OAUTH_REDIRECT, :parsed => :facebook)
-      JSON.parse(@graph.get(uri, opts).body)
+      graph = OAuth2::AccessToken.new(get_oauth_client, self.token, :refresh_token=>self.refresh_token)
+      JSON.parse(graph.get(uri, opts).body)
     end
   end
 
   def post(uri, opts = {})
     try_to do
-      @graph ||= get_oauth_client.auth_code.get_token(self.token, :redirect_uri => FACEBOOK_OAUTH_REDIRECT, :parsed => :facebook)
-      JSON.parse(@graph.post(uri, opts).body)
+      graph = OAuth2::AccessToken.new(get_oauth_client, self.token, :refresh_token=>self.refresh_token)
+      JSON.parse(graph.post(uri, opts).body)
     end
   end
 

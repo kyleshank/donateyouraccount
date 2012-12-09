@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign into Donate Your Account</title>
+  <link rel="icon" href="/favicon.png" type="image/png" />
+  <%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag "application" %> 
+  <%= csrf_meta_tag %>
+  <%=yield :head%>
+</head>
+<body style="background-color: #f5f5f5;">
+
+    <div class="container">
+    <form class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <%=link_to "Sign in with Twitter", new_twitter_account_path(:return_to => new_campaign_path), :class=>"twitter btn btn-info btn-large btn-block"%>
+        <%=link_to "Sign in with Facebook", new_facebook_account_path(:return_to => new_campaign_path), :class=> "facebook btn btn-primary btn-large btn-block" %>
+      </form>
+    </div> <!-- /container -->
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2236980-11']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>

@@ -1,39 +1,38 @@
-<div id="campaign">
-<h1><%=image_tag(@campaign.image) if @campaign.image%><%=@campaign.name%></h1>
-<%= form_for @twitter_status, :url => campaign_twitter_statuses_path(@campaign) do |f| %>
+<div class="page-header">
+  <h1><%=@campaign.name%> <small>Publish retweets</small></h1>
+</div>
+<%= form_for @twitter_status, :url => campaign_twitter_statuses_path(@campaign), :html => {:class=>"form-horizontal"} do |f| %>
 <%=f.hidden_field :uid %>
 <%=render :partial => "layouts/errors", :locals => {:model => @twitter_status}%>
-<div class="messages twitter">
-<div class="header">@<%=@campaign.twitter_account.screen_name%></div>
-<div class="subHeader">SELECT TWEET:</div>
-<ul>
-  <%@campaign.twitter_account.recent_tweets.each_with_index do |tweet, i|%>
-  <li twitter-id="<%=tweet["id"]%>" class="<% if (i % 2) == 0 %>even<%else%>odd<%end%>"><div><%=tweet["text"]%></div><div class="time"><%=time_ago_in_words(tweet["created_at"])%> ago</div></li>
-  <% end %>
-</ul>
-</div>
-<div class="levels">
-<div class="subHeader">Retweet through:</div>
-<ul>
-<li><%=check_box_tag "twitter_status[levels][]", Donation::LEVELS["Gold"], false, {:id =>"gold"}%> <%=label_tag "gold" , "#{@campaign.donations.twitter.gold.count} Gold Donors (1 retweet per day)"%></li>
-<li><%=check_box_tag "twitter_status[levels][]", Donation::LEVELS["Silver"], false, {:id =>"silver"}%> <%=label_tag "silver" , "#{@campaign.donations.twitter.silver.count} Silver Donors (1 retweet per week)"%></li>
-<li><%=check_box_tag "twitter_status[levels][]", Donation::LEVELS["Bronze"], false, {:id =>"bronze"}%> <%=label_tag "bronze" , "#{@campaign.donations.twitter.bronze.count} Bronze Donors (1 retweet per month)"%></li>
-</ul>
-</div>
-<%=f.submit "Publish Retweets", :class => "publish", :confirm => "Are you sure you *really* want to publish this tweet through your donors?"%>
+  <div class="control-group">
+    <%=f.label :twitter_account, :class=>"control-label" %>
+    <div class="controls">
+    	<%=link_to "@#{@campaign.twitter_account.screen_name}", "http://twitter.com/#{@campaign.twitter_account.screen_name}", :class => "btn btn-info", :target=>"_blank"%>
+    </div>
+  </div>
+    <div class="control-group">
+    <%=f.label :select_tweet, :class=>"control-label" %>
+    <div class="controls">
+    	<table class="table table-striped messages">
+    		<tbody>
+    	<%@campaign.twitter_account.recent_tweets.each_with_index do |tweet, i|%>
+  		<tr twitter-id="<%=tweet["id"]%>"><td><div><%=tweet["text"]%></div><div class="time"><%=time_ago_in_words(tweet["created_at"])%> ago</div></td></tr>
+  		<% end %>
+  	</tbody>
+		</table>
+    </div>
+  </div>
+  <div class="control-group">
+    <%=f.label :retweet_through, :class=>"control-label" %>
+    <div class="controls">
+    <label class="checkbox"><%=check_box_tag "twitter_status[levels][]", Donation::LEVELS["Gold"], false, {:id =>"gold"}%> <%=@campaign.donations.twitter.gold.count%> Gold Donors (1 retweet per day)</label>
+<label class="checkbox"><%=check_box_tag "twitter_status[levels][]", Donation::LEVELS["Silver"], false, {:id =>"silver"}%> <%=@campaign.donations.twitter.silver.count%> Silver Donors (1 retweet per week)</label>
+<label class="checkbox"><%=check_box_tag "twitter_status[levels][]", Donation::LEVELS["Bronze"], false, {:id =>"bronze"}%> <%=@campaign.donations.twitter.bronze.count%> Bronze Donors (1 retweet per month)</label>
+    </div>
+  </div>
+    <div class="control-group">
+    <div class="controls">
+    	<%=f.submit "Publish Retweets", :class => "btn btn-success", :confirm => "Are you sure you *really* want to publish this tweet through your donors?"%>
+    </div>
+  </div>
 <% end %>
-
-
-<% content_for :side do %>
-<ul class="menu">
-<li><%=link_to "Edit Campaign", edit_campaign_path(@campaign), :class=>"button"%></li>
-</ul>
-
-<h2>Twitter Donors (<%=@campaign.donations.twitter.count%>)</h2>
-<ul class="donations">
-  <% @campaign.donations.twitter.each do |donation| %>
-  <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.url, :target=>"_blank"%></li>
-  <% end %>
-</ul>
-<% end %>
-</div>

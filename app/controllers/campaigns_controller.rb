@@ -26,7 +26,7 @@ class CampaignsController < ApplicationController
   caches_page :show, :if => Proc.new { |c| c.request.format.js? }
 
   def index
-    @campaigns = Campaign.all
+    @donations = Donation.select("campaign_id, count(*) as total").includes(:campaign).group(:campaign_id).order("total desc")
   end
 
   def new

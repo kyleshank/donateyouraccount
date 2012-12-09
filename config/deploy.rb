@@ -46,18 +46,21 @@ role :db,  hostname, :primary => true
 role :worker, hostname
 
 namespace :deploy do
-  desc "Start Unicorn"
+  desc "Start"
   task :start, :roles => :app do
     run "cd #{deploy_to}/current; RAILS_ENV=production bundle exec thin -C #{deploy_to}/shared/thin.yml start"
+    delayed_job.start
   end
 
-  desc "Restart Unicorn"
+  desc "Restart"
   task :restart, :roles => :app do
     run "cd #{deploy_to}/current; RAILS_ENV=production bundle exec thin -C #{deploy_to}/shared/thin.yml restart"
+    delayed_job.restart
   end
 
-  desc "Stop Unicorn"
+  desc "Stop"
   task :stop, :roles => :app do
+    delayed_job.stop
     run "cd #{deploy_to}/current; RAILS_ENV=production bundle exec thin -C #{deploy_to}/shared/thin.yml stop"
   end
 
@@ -91,7 +94,7 @@ end
 namespace :delayed_job do
   desc "Restart Unicorn"
   task :start, :roles => :worker do
-    run("cd #{deploy_to}/current; RAILS_ENV=production bundle exec script/delayed_job -n 1 start")
+    run("cd #{deploy_to}/current; RAILS_ENV=production bundle exec script/delayed_job -n 2 start")
   end
 
   task :stop, :roles => :worker do

@@ -1,55 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Donate Your Account - Donate your Twitter and Facebook account to Campaigns you support</title>
-  <link rel="icon" href="/favicon.png" type="image/png" />
-  <%= stylesheet_link_tag "application" %>
-  <%= csrf_meta_tag %>
-  <%=yield :head%>
-</head>
-<body>
 
-<div id="index" class="container">
 
-<div id="logo"><h1><a href="/"><span>Donate Your Account</span></a></h1></div>
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>Supporter Based Marketing</h1>
+        <p>Donate Your Account allows supporters to donate their Twitter and Facebook accounts to a campaign.</p>
+        <p>Campaigns can spread their message by having it automatically retweeted or reshared through donated accounts.</p>
+        <p>Donated accounts can be utilized by a campaign at most once per day, once per week or once per month.</p>
+        <p><a class="btn btn-primary btn-large" href="/start">Start a Campaign &raquo;</a></p>
+      </div>
 
-<div id="promo">Donate Your Account is a free service that allows supporters to donate their Twitter and Facebook account to a campaign.</div>
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span4">
+          <h2>Supporters</h2>
+          <p>Support campaigns you believe in and help amplify their message. Donating your Twitter and Facebook account is an easy way to help spread the word.</p>
 
-<div class="columns">
-  <div id="supporters">
-    <p>Support campaigns you believe in and help amplify their message.  Donating your Twitter and Facebook account is an easy way to help spread the word.</p>
-    <p>Donations are made on your terms and can be undone at any time.  You decide how often your account can be utilized by a Campaign: once per day, once per week or once per month.</p>
-    <p>All messages rebroadcast on your behalf will be clearly attributed to the Campaign.  For Twitter, a native retweet of a Campaign tweet is done.  For Facebook, your account shares a link posted by the Campaign to your wall.</p>
-  </div>
-  <div id="campaigns">
-    <p>Stop asking your supporters to share everything your Campaign posts online.  Instead, ask them to <em>donate their account</em>.</p>
-    <p>Publish your message and have it automatically shared through donated Supporter accounts to all of their friends and followers online.  Extend your reach by publishing not just to your followers, but the aggregate of all of your Supporter's followers.</p>
-    <p>Supporters donate the use of their Twitter or Facebook account to be used once per day, once per week or once per month.</p>
-  </div>
-</div>
+<p>Donations are made on your terms and can be undone at any time. You decide how often your account can be utilized by a Campaign: once per day, once per week or once per month.</p>
 
-  <div id="buttons">
-  <%=link_to "Sign in with Twitter", new_twitter_account_path, :class=>"twitter"%>
-  <%=link_to "Sign in with Facebook", new_facebook_account_path, :class=>"facebook"%>
-</div>
-  
-<%=render :partial => "layouts/footer"%>
+<p>All messages rebroadcast on your behalf will be clearly attributed to the Campaign. For Twitter, a native retweet of a Campaign tweet is done. For Facebook, your account shares a link posted by the Campaign to your wall.</p>
+        </div>
+        <div class="span4">
+          <h2>Campaigns</h2>
+          <p>Stop asking your supporters to share everything your Campaign posts online. Instead, ask them to donate their account.</p>
+<p>Publish your message and have it automatically shared through donated Supporter accounts to all of their friends and followers online. Extend your reach by publishing not just to your followers, but the aggregate of all of your Supporter's followers.</p>
+<p>Supporters donate the use of their Twitter or Facebook account to be used once per day, once per week or once per month.</p>
+<p><a class="btn" href="/campaigns">View Campaigns &raquo;</a></p>
+       </div>
+        <div class="span4">
+          <h2>Open Source</h2>
+          <p>Donate Your Account is an open source Ruby on Rails application licensed under the AGPL version 3.</p>
+          <p>You can run it on your own server if you'd like.</p>
+          <p><a class="btn" href="http://github.com/kyleshank/donateyouraccount">View source &raquo;</a></p>
+        </div>
+      </div>
 
-</div>
-
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-2236980-11']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-
-</body>
-</html>

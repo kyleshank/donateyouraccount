@@ -1,7 +1,7 @@
 <% unless model.errors.empty? %>
-<ul class="errors">
+<div class="alert alert-error">
   <% model.errors.full_messages.each do |e| %>
-  <li><%=e%></li>
+  <div><%=e%></div>
   <% end %>
-</ul>
+</div>
 <% end %>

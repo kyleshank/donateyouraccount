@@ -48,13 +48,7 @@ class Campaign < ActiveRecord::Base
   def self.conditions_for_accounts(accounts)
     conds = []
     accounts.each do |a|
-      if a.is_a?(TwitterAccount)
       conds << "campaigns.#{a.class.name.underscore}_id=#{a.id}"
-      elsif a.is_a?(FacebookAccount)
-        a.facebook_pages.each do |p|
-          conds << "campaigns.facebook_page_uid=#{p['id']}"
-        end
-      end
     end
     conds.join(" OR ")
   end

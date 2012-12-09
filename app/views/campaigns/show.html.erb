@@ -1,75 +1,59 @@
-<% content_for :head do %>
-<% if @campaign.twitter_account %>
-<style type="text/css">
-  body{
-    <% unless @campaign.twitter_account.profile_background_color.blank?%>
-      background-color: #<%=@campaign.twitter_account.profile_background_color%>;
-    <%end%>
-    <% if @campaign.twitter_account.profile_use_background_image %>
-        <% unless @campaign.twitter_account.profile_background_image_url.blank?%>background-image: url(<%=@campaign.twitter_account.profile_background_image_url%>);<% end %>
-        <% unless @campaign.twitter_account.profile_background_tile%>background-repeat: no-repeat;<% end %>
-    <% else %>
-    background-image: none;
-    <% end %>
-  }
-</style>
-<% end %>
-<% end %>
-<div id="campaign">
-<h1><%=image_tag(@campaign.image) if @campaign.image%><%=@campaign.name%></h1>
-<div class="accountsBox">
-  <div>Donors will rebroadcast messages posted to these accounts:</div>
-<ul class="accounts">
-  <% if @campaign.twitter_account%><li class="twitter"><%=link_to "@#{@campaign.twitter_account.screen_name}", @campaign.twitter_account.url, :target => "_blank"%></li><% end %>
-  <% unless @campaign.facebook_page.blank? %><li class="facebook"><%=link_to @campaign.facebook_page["name"], @campaign.facebook_page["link"], :target => "_blank"%></li><% end %>
-</ul>
-</div>
-<div><%=simple_format @campaign.description%></div>
-<%=render :partial => "campaigns/statuses", :object => @statuses, :locals => {:no_icon => true}%>
-</div>
-<% content_for :side do %>
-<ul class="menu">
+<div id="campaign_sidebar">
+<div class="btn-group btn-group-vertical btn-block">
 <% if logged_in? and @campaign.twitter_account and current_twitter_account and (@campaign.twitter_account.id == current_twitter_account.id) %>
-  <li><%= link_to "Publish", new_campaign_twitter_status_path(@campaign), :id => "publish_twitter", :class => "button twitter" %></li>
+  <%= link_to "Publish Twitter", new_campaign_twitter_status_path(@campaign), :id => "publish_twitter", :class => "btn btn-large btn-block btn-info" %>
 <% elsif @twitter_donation %>
-   <li><%= link_to "Un-Donate", delete_campaign_donation_path(@campaign,@twitter_donation), :id => "undonate_twitter", :class => "button twitter" %></li>
+   <%= link_to "Un-Donate Twitter", delete_campaign_donation_path(@campaign,@twitter_donation), :id => "undonate_twitter", :class => "btn btn-large btn-block btn-info" %>
 <% elsif logged_in? and @campaign.twitter_account and @campaign.facebook_account and !current_twitter_account and current_facebook_account and (@campaign.facebook_account.id == current_facebook_account.id) %>
-   <li><%= link_to "Sign In", new_twitter_account_path, :id => "signin_twitter", :class => "button twitter" %></li>
+   <%= link_to "Sign In Twitter", new_twitter_account_path, :id => "signin_twitter", :class => "btn btn-large btn-block btn-info" %>
 <% elsif @campaign.twitter_account %>
-   <li><%= link_to "Donate", twitter_campaign_donations_path(@campaign), :id => "donate_twitter", :class => "button twitter" %></li>
+   <%= link_to "Donate Twitter", twitter_campaign_donations_path(@campaign), :id => "donate_twitter", :class => "btn btn-large btn-block btn-info" %>
 <% end %>
-<% if logged_in? and @campaign.facebook_page_uid and current_facebook_account and (current_facebook_account.facebook_page?(@campaign.facebook_page_uid)) %>
-<li><%= link_to "Publish", new_campaign_facebook_status_path(@campaign), :id => "publish_facebook", :class => "button facebook" %></li>
+<% if logged_in? and @campaign.facebook_page_uid and current_facebook_account and (@campaign.facebook_account_id==current_facebook_account.id) and (current_facebook_account.facebook_page?(@campaign.facebook_page_uid)) %>
+  <%= link_to "Publish Facebook", new_campaign_facebook_status_path(@campaign), :id => "publish_facebook", :class => "btn btn-large btn-block btn-primary" %>
 <% end%>
 <% if @facebook_donation %>
-   <li><%= link_to "Un-Donate", delete_campaign_donation_path(@campaign,@facebook_donation), :id => "undonate_facebook", :class => "button facebook" %></li>
+  <%= link_to "Un-Donate Facebook", delete_campaign_donation_path(@campaign,@facebook_donation), :id => "undonate_facebook", :class => "btn btn-large btn-block btn-primary" %>
 <% elsif logged_in? and @campaign.twitter_account and @campaign.facebook_account and !current_facebook_account and @campaign.twitter_account and current_twitter_account and (@campaign.twitter_account.id == current_twitter_account.id) %>
-  <li><%= link_to "Sign In", new_facebook_account_path, :id => "signin_facebook", :class => "button facebook" %></li>
-<% elsif @campaign.facebook_page_uid %>
-   <li><%= link_to "Donate", facebook_campaign_donations_path(@campaign), :id => "donate_facebook", :class => "button facebook" %></li>
+  <%= link_to "Sign In Facebook", new_facebook_account_path, :id => "signin_facebook", :class => "btn btn-large btn-block btn-primary" %>
+<% elsif @campaign.facebook_page_uid and !@campaign.facebook_page_uid.empty? %>
+  <%= link_to "Donate Facebook", facebook_campaign_donations_path(@campaign), :id => "donate_facebook", :class => "btn btn-large btn-block btn-primary" %>
 <% end %>
-<% if logged_in? and ((@campaign.twitter_account and current_twitter_account and (@campaign.twitter_account.id == current_twitter_account.id)) or (@campaign.facebook_page_uid and current_facebook_account and (current_facebook_account.facebook_page?(@campaign.facebook_page_uid)))) %>
-<li><%=link_to "Edit Campaign", edit_campaign_path(@campaign), :class=>"button left"%></li>
+<% if logged_in? and ((@campaign.twitter_account and current_twitter_account and (@campaign.twitter_account.id == current_twitter_account.id)) or (@campaign.facebook_page_uid and current_facebook_account and (@campaign.facebook_account_id==current_facebook_account.id) and (current_facebook_account.facebook_page?(@campaign.facebook_page_uid)))) %>
+  <%=link_to "Edit Campaign", edit_campaign_path(@campaign), :class=>"btn btn-large btn-block"%>
 <%end%>
-</ul>
+</div>
 <%if @campaign.twitter_account%>
-<h2>Twitter Donors (<%=@campaign.donations.twitter.count%>)</h2>
+<h3>Twitter Donors (<%=@campaign.donations.twitter.count%>)</h3>
 <ul class="donations">
-  <% @campaign.donations.twitter.limit(64).each do |donation| %>
+  <% @campaign.donations.twitter.limit(36).each do |donation| %>
   <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.url, :target=>"_blank"%></li>
   <% end %>
 </ul>
 <% end %>
 <% if @campaign.facebook_account && !@campaign.facebook_page_uid.blank?%>
-<h2>Facebook Donors (<%=@campaign.donations.facebook.count%>)</h2>
+<h3>Facebook Donors (<%=@campaign.donations.facebook.count%>)</h3>
 <ul class="donations">
-  <% @campaign.donations.facebook.limit(64).each do |donation| %>
+  <% @campaign.donations.facebook.limit(36).each do |donation| %>
   <li><%=link_to image_tag(donation.account.profile_image_url), donation.account.url, :target=>"_blank"%></li>
   <% end %>
 </ul>
 <% end %>
 
-<h2>Embed</h2>
+<h4>Embed</h4>
 <textarea rows="4" cols="5" id="embed" class="embed"><script src="http://<%=request.host_with_port%><%=campaign_permalink_path(@campaign, :format => "js")%>"></script></textarea>
 <p>Copy and paste the HTML code around the web to help spread the word.</p>
-<% end %>
+</div>
+
+<div id="campaign">
+<h1><%=image_tag(@campaign.image) if @campaign.image%><%=@campaign.name%></h1>
+<div class="alert alert-warning">
+  <div><strong>Donors will rebroadcast messages posted to these accounts:</strong></div>
+<ul class="accounts">
+  <% if @campaign.twitter_account%><li class="twitter"><%=link_to "@#{@campaign.twitter_account.screen_name}", @campaign.twitter_account.url, :class=>"btn btn-info", :target => "_blank"%></li><% end %>
+  <% unless @campaign.facebook_page.blank? %><li class="facebook"><%=link_to @campaign.facebook_page["name"], @campaign.facebook_page["link"], :class=>"btn btn-primary", :target => "_blank"%></li><% end %>
+</ul>
+</div>
+<div><%=simple_format auto_link(strip_tags(@campaign.description),:rel=>"nofollow"), :class=>"lead" %></div>
+<%=render :partial => "campaigns/statuses", :object => @statuses, :locals => {:no_icon => true}%>
+</div>

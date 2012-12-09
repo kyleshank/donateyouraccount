@@ -1,11 +1,13 @@
-<ul class="statuses">
+<table class="table table-striped statuses">
+	<tbody>
   <% statuses.each do |status| -%>
   <% if status.campaign -%>
   <% if status.is_a?(TwitterStatus)-%>
-  <li class="twitter"><div class="body"><% if status.body.blank?%><%=raw(auto_link(status.data["text"])) if status.data%><%else%><%=raw(auto_link(status.body))%><% end %></div><div class="time"><%=link_to "#{time_ago_in_words(status.created_at)} ago",status.permalink, :target=>"_blank"%></div></li>
+  <tr><td class="twitter"><div class="body"><% if status.body.blank?%><%=raw(auto_link(status.data["text"])) if status.data%><%else%><%=raw(auto_link(status.body))%><% end %></div><div class="time"><%=link_to "Tweet rebroadcast #{time_ago_in_words(status.created_at)} ago through #{status.donated_statuses.count} donated accounts",status.permalink, :target=>"_blank"%></div></td></tr>
   <% elsif status.is_a?(FacebookStatus) -%>
-  <li class="facebook"><div class="link"><%=link_to status.data["name"], status.data["link"]%></div><div class="body"><%=status.data["description"]%></div><div class="time"><%=link_to "about #{time_ago_in_words(status.created_at)} ago",status.permalink, :target=>"_blank"%></div></li>
+  <tr><td class="facebook"><div class="link"><%=link_to status.data["name"], status.data["link"]%></div><div class="body"><%=status.data["description"]%></div><div class="time"><%=link_to "Facebook link rebroadcast #{time_ago_in_words(status.created_at)} ago through #{status.donated_statuses.count} donated accounts",status.permalink, :target=>"_blank"%></div></td></tr>
   <% end -%>
   <% end -%>
   <% end -%>
-</ul>
+</tbody>
+</table>

@@ -1,6 +1,6 @@
 //= require jquery  
 //= require jquery_ujs  
-//= require_self  
+//= require bootstrap
 //= require_tree . 
 
 $(function(){
@@ -8,14 +8,14 @@ $(function(){
         $(this).focus();
         $(this).select();
     });
-    $("#new_twitter_status .messages li").click(function(){
+    $("#new_twitter_status .messages tr").click(function(){
         $("#twitter_status_uid").val($(this).attr("twitter-id"));
-        $(".messages li").removeClass("selected");
-        $(this).addClass("selected");
+        $(".messages tr").removeClass("success");
+        $(this).addClass("success");
     });
-    $("#new_facebook_status .messages li").click(function(){
+    $("#new_facebook_status .messages tr").click(function(){
         $("#facebook_status_uid").val($(this).attr("facebook-id"));
-        $(".messages li").removeClass("selected");
-        $(this).addClass("selected");
+        $(".messages tr").removeClass("success");
+        $(this).addClass("success");
     });
 });

@@ -1,27 +1,53 @@
-<h1>Create Campaign</h1>
-<%= form_for @campaign do |f|%>
+<div class="page-header">
+  <h1>Create Campaign</h1>
+</div>
+<%= form_for @campaign, :html => {:class=>"form-horizontal"} do |f|%>
 <%=render :partial => "layouts/errors", :locals => {:model => @campaign}%>
-<%=f.label :name %>
-<%=f.text_field :name%>
-<%=f.label :permalink%>
-http://donateyouraccount.com/<%=f.text_field :permalink%>
-<%=f.label :twitter_account%>
-<% if current_twitter_account %>
+  <div class="control-group">
+    <%=f.label :name, :class=>"control-label" %>
+    <div class="controls">
+      <%=f.text_field :name, :placeholder => "Campaign name"%>
+    </div>
+  </div>
+  <div class="control-group">
+    <%=f.label :permalink, :class=>"control-label" %>
+    <div class="controls">
+      http://donateyouraccount.com/<%=f.text_field :permalink, :placeholder => "Permalink"%>
+    </div>
+  </div>
+  <div class="control-group">
+    <%=f.label :twitter_account, :class=>"control-label" %>
+    <div class="controls">
+      <% if current_twitter_account %>
     <%=f.select :twitter_account_id, [["@#{current_twitter_account.screen_name}",current_twitter_account.id]], :include_blank=>true %>
 <% else %>
-    <%=link_to "Sign in with Twitter", new_twitter_account_path%>
+    <%=link_to "Sign in with Twitter", new_twitter_account_path(:return_to => new_campaign_path), :class => "btn btn-info" %>
 <% end %>
-    <%=label_tag "Facebook Page"%>
+    </div>
+  </div>
+  <div class="control-group">
+    <%=f.label :facebook_page, :class=>"control-label" %>
+    <div class="controls">
 <% if current_facebook_account %>
     <% if current_facebook_account.facebook_pages.empty? %>
-       No Facebook pages are associated with your account.
+    <div class="alert alert-info">No Facebook pages are associated with your account.</div>
     <% else %>
             <%=f.select :facebook_page_uid, current_facebook_account.facebook_pages.collect{|a| [a["name"], a["id"] ]}, :include_blank=>true %>
     <%end%>
 <% else %>
-    <%=link_to "Sign in with Facebook", new_facebook_account_path%>
+    <%=link_to "Sign in with Facebook", new_facebook_account_path(:return_to => new_campaign_path), :class=> "btn btn-primary"%>
 <% end %>
-<%=f.label :description %>
-<%=f.text_area :description%>
-<%=f.submit "Create Campaign", :class=>"button"%>
+    </div>
+  </div>
+  <div class="control-group">
+    <%=f.label :description, :class=>"control-label" %>
+    <div class="controls">
+      <%=f.text_area :description, :rows => 4, :placeholder=>"Description"%>
+    </div>
+  </div>
+<div class="control-group">
+    <div class="controls">
+<%=f.submit "Create Campaign", :class=>"btn btn-success block"%>
+</div>
+  </div>
 <% end %>
