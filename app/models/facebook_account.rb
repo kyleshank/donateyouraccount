@@ -73,4 +73,17 @@ class FacebookAccount < Account
   def profile_image_url
     "http://graph.facebook.com/#{self.uid}/picture"
   end
+
+  def active!
+    graph = OAuth2::AccessToken.new(get_oauth_client, self.token, :refresh_token=>self.refresh_token)
+    graph.get("/me")
+    long_lived_token_response = get_oauth_client.request(:get, "/oauth/access_token", :params => {:client_id => FACEBOOK_APPLICATION_ID, :client_secret => FACEBOOK_APPLICATION_SECRET, :grant_type => "fb_exchange_token", :fb_exchange_token => self.token})
+    long_lived_token = Rack::Utils.parse_nested_query(long_lived_token_response.body)
+    self.token = long_lived_token["access_token"]
+    self.expires_at = Time.now.utc + long_lived_token["expires"].to_i if long_lived_token["expires"]
+    self.save
+  rescue Exception
+    self.expires_at=Time.now
+    self.save
+  end
 end

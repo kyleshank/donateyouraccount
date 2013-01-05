@@ -42,5 +42,5 @@ class Donation < ActiveRecord::Base
   scope :for_accounts, lambda {|accounts| {:conditions => accounts.collect{|a| "donations.account_id=#{a.id}"}.join(" OR ")} }
   scope :group_campaign, :group => "donations.campaign_id"
   scope :twitter, :include => :account, :conditions => ["accounts.type=?","TwitterAccount"]
-  scope :facebook, :include => :account, :conditions => ["accounts.type=?","FacebookAccount"]
+  scope :facebook, :include => :account, :conditions => ["accounts.type=? and (accounts.expires_at IS NULL or accounts.expires_at > NOW())","FacebookAccount"]
 end
