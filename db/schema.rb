@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121209160904) do
+ActiveRecord::Schema.define(:version => 20130105192338) do
 
   create_table "accounts", :force => true do |t|
     t.string   "uid"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20121209160904) do
     t.string   "type"
     t.text     "facebook_pages"
     t.string   "refresh_token"
+    t.datetime "expires_at"
   end
 
   create_table "campaigns", :force => true do |t|

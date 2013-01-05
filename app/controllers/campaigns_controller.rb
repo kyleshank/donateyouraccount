@@ -30,6 +30,9 @@ class CampaignsController < ApplicationController
   end
 
   def new
+    if current_facebook_account
+      redirect_to new_facebook_account_path(:manage_pages => "true", :return_to => new_campaign_path) unless session[:manage_pages]=="true"
+    end
     @campaign.twitter_account_id = current_twitter_account.id if current_twitter_account
     @campaign.permalink = current_twitter_account.screen_name if current_twitter_account
   end
@@ -50,6 +53,9 @@ class CampaignsController < ApplicationController
   end
 
   def edit
+    if current_facebook_account
+      redirect_to new_facebook_account_path(:manage_pages => "true", :return_to => edit_campaign_path(@campaign)) unless session[:manage_pages]=="true"
+    end
   end
 
   def update

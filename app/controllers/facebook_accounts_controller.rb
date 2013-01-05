@@ -16,20 +16,33 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
+
 class FacebookAccountsController < ApplicationController
   include FacebookAccountsHelper
 
   def new
     session[:return_to] = params[:return_to] if params[:return_to]
+    permissions = ["share_item"]
+    if (params[:manage_pages]=="true") or (session[:manage_pages]=="true") or (cookies[:manage_pages]=="true")
+      session[:manage_pages]="true"
+      cookies[:manage_pages]="true"
+      permissions << "manage_pages" 
+    end
     redirect_to get_oauth_client.auth_code.authorize_url(
       :redirect_uri => facebook_redirect_uri,
-      :scope => 'offline_access,share_item,manage_pages'
+      :scope => permissions.join(',')
     )
   end
 
   def create
+    session[:return_to] = params[:return_to] if params[:return_to]
    begin
-      access_token = get_oauth_client.auth_code.get_token(params[:code], :redirect_uri => facebook_redirect_uri, :parsed => :facebook)
+      short_lived_access_token = get_oauth_client.auth_code.get_token(params[:code], :redirect_uri => facebook_redirect_uri, :parsed => :facebook)
+
+      long_lived_token_response = get_oauth_client.request(:get, "/oauth/access_token", :params => {:client_id => FACEBOOK_APPLICATION_ID, :client_secret => FACEBOOK_APPLICATION_SECRET, :grant_type => "fb_exchange_token", :fb_exchange_token => short_lived_access_token.token})
+      long_lived_token = Rack::Utils.parse_nested_query(long_lived_token_response.body)
+
+      access_token = OAuth2::AccessToken.new(get_oauth_client, long_lived_token["access_token"])
 
       response = access_token.get('/me')
       user_info = JSON.parse(response.body)
@@ -47,7 +60,8 @@ class FacebookAccountsController < ApplicationController
       @account.token = access_token.token
       @account.refresh_token = access_token.refresh_token
       @account.followers = JSON.parse(access_token.get("/me/friends").body)["data"].size
-      @account.facebook_pages = JSON.parse(access_token.get("/me/accounts").body)["data"].select{|a| a["category"] != "Application"}.to_json
+      @account.facebook_pages = JSON.parse(access_token.get("/me/accounts").body)["data"].select{|a| a["category"] != "Application"}.to_json if session[:manage_pages]=="true"
+      @account.expires_at = Time.now.utc + long_lived_token["expires"].to_i if long_lived_token["expires"]
 
       if @account.save
         self.current_facebook_account=@account

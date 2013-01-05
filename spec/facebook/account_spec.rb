@@ -16,6 +16,9 @@ describe FacebookAccount do
                          :content_type => "application/json",
                          :body => json_fixture('facebook/oauth_access_token'))
 
+		FakeWeb.register_uri(:get, /^https:\/\/graph.facebook.com\/oauth\/access_token.+/,
+                         :body => "access_token=324893248977342&expires=5332343")
+
 		facebook_uid = "123456"
 
 		FakeWeb.register_uri(:get, "https://graph.facebook.com/me",
@@ -38,10 +41,13 @@ describe FacebookAccount do
 	end
 
 	it "should allow a person signed in with Facebook to create a Campaign" do
-		# Accpet post back from Facebook
+		# Accept post back from Facebook
 		FakeWeb.register_uri(:post, "https://graph.facebook.com/oauth/access_token",
                          :content_type => "application/json",
                          :body => json_fixture('facebook/oauth_access_token'))
+
+		FakeWeb.register_uri(:get, /^https:\/\/graph.facebook.com\/oauth\/access_token.+/,
+                         :body => "access_token=324893248977342&expires=5332343")
 
 		facebook_page_uid = "234324"
 
@@ -76,7 +82,11 @@ describe FacebookAccount do
 		follow_redirect!
 
 		get new_campaign_path
-		last_response.status.should==200
+		last_response.status.should==302
+		last_response.headers["Location"].should=="http://example.org/facebook_accounts/new?manage_pages=true&return_to=%2Fcampaigns%2Fnew"
+		follow_redirect!
+
+		get new_campaign_path
 
 		post campaigns_path, {campaign: {name: "My Facebook Campaign", permalink: "test", description: "My description", facebook_page_uid: facebook_page_uid}}
 		last_response.status.should==302
