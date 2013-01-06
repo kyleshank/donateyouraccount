@@ -47,6 +47,8 @@ Dya::Application.routes.draw do
   match 'home' => "dya#home", :as => :dashboard
   match 'signout' => "dya#signout", :as => :signout
 
+  post 'facebook_accounts/new' => "facebook_accounts#new"
+
   root :to => "dya#index"
 
   match ':id(.:format)' => "campaigns#show", :as => :campaign_permalink

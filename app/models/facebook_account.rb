@@ -86,4 +86,16 @@ class FacebookAccount < Account
     self.expires_at=Time.now
     self.save
   end
+
+  def notify!
+    campaigns = self.donations.collect{|d| d.campaign}
+    graph = OAuth2::AccessToken.new(get_oauth_client, FACEBOOK_APPLICATION_TOKEN)
+    graph.post("/#{self.uid}/notifications?href=#{CGI.escape("facebook_accounts/new")}&template=#{CGI.escape("Click here to continue donating to #{campaigns.collect{|c| c.name}.join(', ')}")}.")
+  end
+
+  def self.notify!
+    FacebookAccount.where(["(expires_at > NOW()) AND (expires_at < ?)", Time.now+(86400*7)]).each do |account|
+      account.notify!
+    end
+  end
 end
