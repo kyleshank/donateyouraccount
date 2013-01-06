@@ -89,8 +89,10 @@ class FacebookAccount < Account
 
   def notify!
     campaigns = self.donations.collect{|d| d.campaign}
-    graph = OAuth2::AccessToken.new(get_oauth_client, FACEBOOK_APPLICATION_TOKEN)
-    graph.post("/#{self.uid}/notifications?href=#{CGI.escape("facebook_accounts/new")}&template=#{CGI.escape("Click here to continue donating to #{campaigns.collect{|c| c.name}.join(', ')}")}.")
+    unless campaigns.empty?
+      graph = OAuth2::AccessToken.new(get_oauth_client, FACEBOOK_APPLICATION_TOKEN)
+      graph.post("/#{self.uid}/notifications?href=#{CGI.escape("facebook_accounts/new")}&template=#{CGI.escape("Click here to continue donating to #{campaigns.collect{|c| c.name}.join(', ')}")}.")
+    end
   end
 
   def self.notify!
