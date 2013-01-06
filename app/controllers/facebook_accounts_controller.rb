@@ -67,7 +67,11 @@ class FacebookAccountsController < ApplicationController
         self.current_facebook_account=@account
       end
 
-      redirect_back_or_default dashboard_path
+      if RAILS_ENV=="production"
+        redirect_back_or_default("https://#{request.host_with_port}/home")
+      else
+        redirect_back_or_default dashboard_path
+      end
     rescue Exception => e
       p e
       flash[:notice] = "Facebook error"
