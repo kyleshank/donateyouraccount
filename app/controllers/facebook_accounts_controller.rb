@@ -78,6 +78,6 @@ class FacebookAccountsController < ApplicationController
   private
 
   def facebook_redirect_uri
-    "http://#{request.host_with_port}/facebook_accounts/oauth_create"
+    "https://#{request.host_with_port}/facebook_accounts/oauth_create"
   end
 end
