@@ -53,6 +53,10 @@ class FacebookAccountsController < ApplicationController
         @account = FacebookAccount.new(
             :uid => user_info["id"]
         )
+      else
+        notice = "Your Facebook donations have been refreshed"
+        notice += " through #{Time.now.utc + long_lived_token["expires"].to_i}" if long_lived_token["expires"]
+        flash[:notice] = notice
       end
 
       @account.name = "#{user_info["first_name"]} #{user_info["last_name"]}"
@@ -67,7 +71,7 @@ class FacebookAccountsController < ApplicationController
         self.current_facebook_account=@account
       end
 
-      if RAILS_ENV=="production"
+      if Rails.env=="production"
         redirect_back_or_default("https://#{request.host_with_port}/home")
       else
         redirect_back_or_default dashboard_path
