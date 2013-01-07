@@ -20,7 +20,7 @@ module RetryHelper
   def try_to(&block)
     retries = 0
     e = nil
-    while retries < 5
+    while retries < 3
       begin
         response = yield
         return response

@@ -41,17 +41,7 @@ class TwitterAccount < Account
 
   def retweet(_id)
     try_to do
-      begin
-        Twitter::Client.new(:oauth_token => self.token, :oauth_token_secret => self.secret).retweet(_id)
-      rescue Twitter::Error::Forbidden
-        self.expires_at = Time.now
-        self.save
-      rescue Twitter::Error::Unauthorized
-        self.expires_at = Time.now
-        self.save
-      rescue Exception => e
-        p e.backtrace
-      end
+      Twitter::Client.new(:oauth_token => self.token, :oauth_token_secret => self.secret).retweet(_id)
     end
   end
 end

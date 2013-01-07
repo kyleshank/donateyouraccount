@@ -50,14 +50,7 @@ class FacebookAccount < Account
     d.delete("message")
     d.delete("id")
     try_to do
-      begin
-        post("/me/links", {:body => d})
-      rescue OAuth2::Error
-        self.expires_at=Time.now
-        self.save
-      rescue Exception
-        # Eat
-      end
+      post("/me/links", {:body => d})
     end
   end
 
