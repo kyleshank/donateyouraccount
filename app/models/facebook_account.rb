@@ -23,17 +23,13 @@ class FacebookAccount < Account
   attr_accessor :profile_image_url
 
   def get(uri, opts = {})
-    try_to do
-      graph = OAuth2::AccessToken.new(get_oauth_client, self.token, :refresh_token=>self.refresh_token)
-      JSON.parse(graph.get(uri, opts).body)
-    end
+    graph = OAuth2::AccessToken.new(get_oauth_client, self.token, :refresh_token=>self.refresh_token)
+    JSON.parse(graph.get(uri, opts).body)
   end
 
   def post(uri, opts = {})
-    try_to do
-      graph = OAuth2::AccessToken.new(get_oauth_client, self.token, :refresh_token=>self.refresh_token)
-      JSON.parse(graph.post(uri, opts).body)
-    end
+    graph = OAuth2::AccessToken.new(get_oauth_client, self.token, :refresh_token=>self.refresh_token)
+    JSON.parse(graph.post(uri, opts).body)
   end
 
   def url
@@ -57,7 +53,10 @@ class FacebookAccount < Account
       begin
         post("/me/links", {:body => d})
       rescue OAuth2::Error
-        # NOOP
+        self.expires_at=Time.now
+        self.save
+      rescue Exception
+        # Eat
       end
     end
   end

@@ -44,9 +44,11 @@ class TwitterAccount < Account
       begin
         Twitter::Client.new(:oauth_token => self.token, :oauth_token_secret => self.secret).retweet(_id)
       rescue Twitter::Error::Forbidden
-        # DUPLICATE RTS
+        self.expires_at = Time.now
+        self.save
       rescue Twitter::Error::Unauthorized
-        # EAT IT
+        self.expires_at = Time.now
+        self.save
       rescue Exception => e
         p e.backtrace
       end
