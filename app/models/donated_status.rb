@@ -31,9 +31,6 @@ class DonatedStatus < ActiveRecord::Base
   def broadcast
     self.status.broadcast(self.donation)
   rescue Exception
-  	account = self.donation.account
-  	account.expires_at = Time.now
-  	account.save
   	self.destroy
   end
 end

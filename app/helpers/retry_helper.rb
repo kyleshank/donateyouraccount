@@ -24,6 +24,8 @@ module RetryHelper
       begin
         response = yield
         return response
+      rescue StopRetryingException => ex
+        raise RetryException.new("Retry failure: #{ex.class} <#{ex.message}>")
       rescue Exception => ex
         retries += 1
         e = ex
@@ -35,4 +37,7 @@ module RetryHelper
 end
 
 class RetryException < Exception
+end
+
+class StopRetryingException < Exception
 end
