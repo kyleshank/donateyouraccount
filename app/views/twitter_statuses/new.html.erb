@@ -7,7 +7,7 @@
   <div class="control-group">
     <%=f.label :twitter_account, :class=>"control-label" %>
     <div class="controls">
-    	<%=link_to "@#{@campaign.twitter_account.screen_name}", "http://twitter.com/#{@campaign.twitter_account.screen_name}", :class => "btn btn-info", :target=>"_blank"%>
+    	<%=link_to raw("<i class='icon-twitter'></i> @#{@campaign.twitter_account.screen_name}"), "http://twitter.com/#{@campaign.twitter_account.screen_name}", :class => "btn btn-info", :target=>"_blank"%>
     </div>
   </div>
     <div class="control-group">

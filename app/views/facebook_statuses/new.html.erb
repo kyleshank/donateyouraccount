@@ -7,7 +7,7 @@
  <div class="control-group">
     <%=f.label :facebook_page, :class=>"control-label" %>
     <div class="controls">
-    	<%=link_to @campaign.facebook_page["name"], @campaign.facebook_page["link"], :class=>"btn btn-primary", :target => "_blank"%>
+    	<%=link_to raw("<i class='icon-facebook'></i> #{@campaign.facebook_page["name"]}"), @campaign.facebook_page["link"], :class=>"btn btn-primary", :target => "_blank"%>
     </div>
   </div>
    <div class="control-group">

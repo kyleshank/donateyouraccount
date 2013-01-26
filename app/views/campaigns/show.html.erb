@@ -50,8 +50,8 @@
 <div class="alert alert-warning">
   <div><strong>Donors will rebroadcast messages posted to these accounts:</strong></div>
 <ul class="accounts">
-  <% if @campaign.twitter_account%><li class="twitter"><%=link_to "@#{@campaign.twitter_account.screen_name}", @campaign.twitter_account.url, :class=>"btn btn-info", :target => "_blank"%></li><% end %>
-  <% unless @campaign.facebook_page.blank? %><li class="facebook"><%=link_to @campaign.facebook_page["name"], @campaign.facebook_page["link"], :class=>"btn btn-primary", :target => "_blank"%></li><% end %>
+  <% if @campaign.twitter_account%><li class="twitter"><%=link_to raw("<i class='icon-twitter'></i> @#{@campaign.twitter_account.screen_name}"), @campaign.twitter_account.url, :class=>"btn btn-info", :target => "_blank"%></li><% end %>
+  <% unless @campaign.facebook_page.blank? %><li class="facebook"><%=link_to raw("<i class='icon-facebook'></i> #{@campaign.facebook_page["name"]}"), @campaign.facebook_page["link"], :class=>"btn btn-primary", :target => "_blank"%></li><% end %>
 </ul>
 </div>
 <div><%=simple_format auto_link(strip_tags(@campaign.description), :html => { :rel => 'nofollow' }), :class=>"lead" %></div>

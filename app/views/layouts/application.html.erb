@@ -13,7 +13,7 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <a class="brand" href="/">Donate Your Account</a>
+          <a class="brand" href="/"><i class='icon-flag'></i> Donate Your Account</a>
           <div class="nav-collapse">
             <% if logged_in? %>
           <ul class="nav">
@@ -44,8 +44,8 @@
             </ul>
             <% end %>
           <div class="nav-collapse pull-right">
-          <% if current_twitter_account %><%= link_to "@#{current_twitter_account.screen_name}", current_twitter_account.url, :class=>"twitter btn btn-info", :target=>"_blank"%><%else%><%=link_to "Sign in with Twitter", new_twitter_account_path, :class=>"twitter btn btn-info"%><% end %>
-          <% if current_facebook_account %><%= link_to current_facebook_account.name, current_facebook_account.url, :class=> "facebook btn btn-primary", :target=>"_blank"%><%else%><%=link_to "Sign in with Facebook", new_facebook_account_path, :class=> "facebook btn btn-primary" %><% end %>
+          <% if current_twitter_account %><%= link_to raw("<i class='icon-twitter'></i> @#{current_twitter_account.screen_name}"), current_twitter_account.url, :class=>"twitter btn btn-info", :target=>"_blank"%><%else%><%=link_to raw("<i class='icon-twitter'></i> Sign in with Twitter"), new_twitter_account_path, :class=>"twitter btn btn-info"%><% end %>
+          <% if current_facebook_account %><%= link_to raw("<i class='icon-facebook'></i> #{current_facebook_account.name}"), current_facebook_account.url, :class=> "facebook btn btn-primary", :target=>"_blank"%><%else%><%=link_to raw("<i class='icon-facebook'></i> Sign in with Facebook"), new_facebook_account_path, :class=> "facebook btn btn-primary" %><% end %>
           <% if logged_in? %><%=link_to "Sign out", signout_path, :class=>"btn btn-inverse" %><% end %>
           </div><!--/.nav-collapse -->
           </div>
@@ -63,7 +63,7 @@
     </div>
 
       <footer>
-        <p>&copy; 2012 <a href="http://www.kyleshank.com">Kyle Shank</a>. <a href="/privacy.html">Privacy Policy</a> - <a href="http://www.gnu.org/licenses/agpl.html">License</a> - <a href="http://twitter.com/donateuraccount">Twitter</a> - <a href="http://github.com/kyleshank/donateyouraccount">Source Code</a></p>
+        <p>&copy; 2013 <a href="http://www.kyleshank.com">Kyle Shank</a>. <a href="/privacy.html">Privacy Policy</a> - <a href="http://www.gnu.org/licenses/agpl.html">License</a> - <a href="http://twitter.com/donateuraccount">Twitter</a> - <a href="http://github.com/kyleshank/donateyouraccount">Source Code</a></p>
       </footer>
 
     </div> <!-- /container -->
