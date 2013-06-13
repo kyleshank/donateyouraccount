@@ -22,7 +22,7 @@ describe TwitterAccount do
 
 		twitter_uid = "123456"
 
-		FakeWeb.register_uri(:get, "https://api.twitter.com/1/account/verify_credentials.json",
+		FakeWeb.register_uri(:get, "https://api.twitter.com/1.1/account/verify_credentials.json",
                      :content_type => "application/json",
                      :body => json_fixture('twitter/verify_credentials.json', :twitter_uid => twitter_uid))
 
