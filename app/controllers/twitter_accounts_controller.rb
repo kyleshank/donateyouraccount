@@ -30,7 +30,7 @@ class TwitterAccountsController < ApplicationController
 
     begin
       access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
-      response = access_token.request(:get, '/1/account/verify_credentials.json', access_token, { :scheme => :query_string })
+      response = access_token.request(:get, '/1.1/account/verify_credentials.json', access_token, { :scheme => :query_string })
 
       case response.code
         when "200"
