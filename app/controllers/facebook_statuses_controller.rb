@@ -21,6 +21,9 @@ class FacebookStatusesController < ApplicationController
   before_filter :login_required
   before_filter :ensure_campaign
 
+  skip_before_filter :redirect_if_campaign_domain, :only => [:new]
+  before_filter :redirect_to_dya_if_campaign_domain, :only => [:new]
+
   def new
     @facebook_status = @campaign.facebook_statuses.new
   end

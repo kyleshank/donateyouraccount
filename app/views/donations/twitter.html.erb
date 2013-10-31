@@ -9,15 +9,21 @@
 <div class="control-group">
     <%=f.label :donation_level, :class=>"control-label" %>
     <div class="controls">
+<% if !@campaign.premium? || (@campaign.premium? and ((@campaign.levels & Donation::LEVELS["Gold"])==Donation::LEVELS["Gold"])) %>
 <label class="radio">
   <%=f.radio_button :level, Donation::LEVELS["Gold"]%> Gold: 1 retweet per day
 </label>
+<% end %>
+<% if !@campaign.premium? || (@campaign.premium? and ((@campaign.levels & Donation::LEVELS["Silver"])==Donation::LEVELS["Silver"])) %>
 <label class="radio">
   <%=f.radio_button :level, Donation::LEVELS["Silver"]%> Silver: 1 retweet per week
 </label>
+<% end %>
+<% if !@campaign.premium? || (@campaign.premium? and ((@campaign.levels & Donation::LEVELS["Bronze"])==Donation::LEVELS["Bronze"])) %>
 <label class="radio">
   <%=f.radio_button :level, Donation::LEVELS["Bronze"]%> Bronze: 1 retweet per month
 </label>
+<% end %>
     </div>
   </div>
 <div class="control-group">

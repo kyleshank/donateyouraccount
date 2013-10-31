@@ -25,6 +25,9 @@ class CampaignsController < ApplicationController
 
   caches_page :show, :if => Proc.new { |c| c.request.format.js? }
 
+  before_filter :redirect_to_dya_if_campaign_domain, :only => [:edit]
+  before_filter :redirect_if_campaign_domain, :except => [:show]
+
   def index
     @donations = Donation.joins(:account).where("accounts.expires_at IS NULL or accounts.expires_at > NOW()").select("campaign_id, count(*) as total").includes(:campaign).group(:campaign_id).order("total desc")
   end
@@ -78,8 +81,19 @@ class CampaignsController < ApplicationController
 
   def show
     @campaign = Campaign.where(:permalink => params[:id]).first
+    @campaign = @premium_campaign if @premium_campaign
 
     render_not_found and return unless @campaign
+
+    if @campaign.premium? and @campaign.domain and (request.format!="js")
+      if (request.host != @campaign.domain) or (request.path!="/")
+        if Rails.env=="production"
+          redirect_to "https://#{@campaign.domain}" and return
+        else
+          redirect_to "http://#{@campaign.domain}" and return
+        end
+      end
+    end
 
     @statuses = @campaign.statuses.desc.paginate(:page => params[:page], :per_page=>10)
     @twitter_donation = current_twitter_account.donations.for_campaign(@campaign.id).first if current_twitter_account

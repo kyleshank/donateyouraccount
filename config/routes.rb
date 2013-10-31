@@ -49,6 +49,7 @@ Dya::Application.routes.draw do
 
   post 'facebook_accounts/new' => "facebook_accounts#new"
 
+  match '/' => 'campaigns#show', :constraints => { :host => /^((?!#{DYA_DOMAIN}).)*$/ }  
   root :to => "dya#index"
 
   match ':id(.:format)' => "campaigns#show", :as => :campaign_permalink

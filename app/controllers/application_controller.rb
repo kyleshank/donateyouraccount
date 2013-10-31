@@ -28,6 +28,9 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::MethodNotAllowed, :with => :render_not_found unless Rails.env == "development"
   rescue_from ActionView::MissingTemplate, :with => :render_not_found unless Rails.env == "development"
 
+  before_filter :load_campaign_domain
+  before_filter :redirect_if_campaign_domain
+
   def current_twitter_account=(account)
     @current_twitter_account = account
     session[:current_twitter_account] = account.id
@@ -36,6 +39,26 @@ class ApplicationController < ActionController::Base
   def current_facebook_account=(account)
     @current_facebook_account = account
     session[:current_facebook_account] = account.id
+  end
+
+  protected
+
+  def load_campaign_domain
+    @premium_campaign = Campaign.where(:domain => request.host).first
+  end
+
+  def redirect_if_campaign_domain
+    if @premium_campaign
+      redirect_to "#{request.protocol}#{@premium_campaign.domain}"
+      return false
+    end
+  end
+
+  def redirect_to_dya_if_campaign_domain
+    if @premium_campaign
+      redirect_to "#{request.protocol}#{DYA_DOMAIN}#{request.path}?#{request.query_string}"
+      return false
+    end
   end
 
   private

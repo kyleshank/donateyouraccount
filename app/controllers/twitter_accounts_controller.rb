@@ -19,6 +19,8 @@
 class TwitterAccountsController < ApplicationController
   include TwitterAccountsHelper
 
+  skip_before_filter :redirect_if_campaign_domain
+
   def new
     session[:return_to] = params[:return_to] if params[:return_to]
     redirect_to get_twitter_request_token.authorize_url.gsub("authorize","authenticate")
@@ -62,7 +64,7 @@ class TwitterAccountsController < ApplicationController
           if @account.save
             self.current_twitter_account=@account
           end
-
+          
           redirect_back_or_default dashboard_path
       end
     rescue OAuth::Unauthorized

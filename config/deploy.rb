@@ -17,12 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 
-# Load RVM's capistrano plugin.
-require "rvm/capistrano"
-
-set :rvm_ruby_string, '1.9.3'
-set :rvm_type, :user  # Don't use system-wide RVM
-
 set :application, "dya"
 set :hostname, (ENV['HOST'] || "donateyouraccount.com")
 
@@ -30,6 +24,7 @@ set :user, "dya"
 set :host, "#{user}@#{hostname}"
 
 set :scm, :git
+set :branch, "master"
 set :repository,  "git@github.com:kyleshank/donateyouraccount.git"
 set :use_sudo, false
 ssh_options[:forward_agent] = true

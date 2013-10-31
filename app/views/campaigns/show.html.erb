@@ -41,7 +41,7 @@
 <% end %>
 
 <h4>Embed</h4>
-<textarea rows="4" cols="5" id="embed" class="embed"><script src="http://<%=request.host_with_port%><%=campaign_permalink_path(@campaign, :format => "js")%>"></script></textarea>
+<textarea rows="4" cols="5" id="embed" class="embed"><script src="http://<%=defined?(DYA_DOMAIN) ? DYA_DOMAIN : request.host_with_port%><%=campaign_permalink_path(@campaign, :format => "js")%>"></script></textarea>
 <p>Copy and paste the HTML code around the web to help spread the word.</p>
 </div>
 

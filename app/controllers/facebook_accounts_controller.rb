@@ -20,8 +20,14 @@
 class FacebookAccountsController < ApplicationController
   include FacebookAccountsHelper
 
+  skip_before_filter :redirect_if_campaign_domain
+
   def new
     session[:return_to] = params[:return_to] if params[:return_to]
+    if @premium_campaign
+      redirect_to "#{request.protocol}#{DYA_DOMAIN}#{request.path}?return_to=#{CGI.escape(request.original_url)}" 
+      return
+    end
     permissions = ["share_item"]
     if (params[:manage_pages]=="true") or (session[:manage_pages]=="true") or (cookies[:manage_pages]=="true")
       session[:manage_pages]="true"
@@ -35,7 +41,17 @@ class FacebookAccountsController < ApplicationController
   end
 
   def create
-    session[:return_to] = params[:return_to] if params[:return_to]
+    session[:return_to] = params[:return_to] if params[:return_to] and (session[:return_to].nil?)
+    if session[:return_to]
+      return_to_scheme = URI.parse(session[:return_to]).scheme
+      return_to_host = URI.parse(session[:return_to]).host
+      @premium_campaign = Campaign.where(domain: return_to_host).first
+      if @premium_campaign and (@premium_campaign.domain != request.host)
+        params[:return_to] = "#{return_to_scheme}://#{return_to_host}"
+        redirect_to "#{return_to_scheme}://#{return_to_host}#{oauth_create_facebook_accounts_path(params)}"
+        return
+      end
+    end
    begin
       short_lived_access_token = get_oauth_client.auth_code.get_token(params[:code], :redirect_uri => facebook_redirect_uri, :parsed => :facebook)
 
@@ -72,7 +88,7 @@ class FacebookAccountsController < ApplicationController
       end
 
       if Rails.env=="production"
-        redirect_back_or_default("https://#{request.host_with_port}/home")
+        redirect_back_or_default("https://#{request.host_with_port}/")
       else
         redirect_back_or_default dashboard_path
       end
@@ -86,6 +102,6 @@ class FacebookAccountsController < ApplicationController
   private
 
   def facebook_redirect_uri
-    "https://#{request.host_with_port}/facebook_accounts/oauth_create"
+    FACEBOOK_OAUTH_REDIRECT
   end
 end

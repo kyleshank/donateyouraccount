@@ -25,9 +25,11 @@ class DonationsController < ApplicationController
   before_filter :facebook_required, :only => [:facebook, :facebook_create]
   before_filter :login_required, :only => [:destroy]
 
+  skip_before_filter :redirect_if_campaign_domain
+
   def twitter
     @donation = @campaign.donations.new
-    @donation.level = Donation::LEVELS["Silver"]
+    @donation.level = Donation::LEVELS["Gold"]
   end
 
   def twitter_create
@@ -43,7 +45,7 @@ class DonationsController < ApplicationController
 
   def facebook
     @donation = @campaign.donations.new
-    @donation.level = Donation::LEVELS["Silver"]
+    @donation.level = Donation::LEVELS["Gold"]
   end
 
   def facebook_create
@@ -93,11 +95,11 @@ class DonationsController < ApplicationController
 
   def facebook_required
     unless current_facebook_account
-      session[:return_to] = facebook_campaign_donations_path(@campaign)
-      redirect_to get_oauth_client.auth_code.authorize_url(
-        :redirect_uri => FACEBOOK_OAUTH_REDIRECT,
-        :scope => 'offline_access,share_item,manage_pages'
-      ) and return
+      session[:return_to] = "#{request.protocol.downcase}#{request.host_with_port}#{facebook_campaign_donations_path(@campaign)}"
+      if @premium_campaign
+        redirect_to new_facebook_account_path
+        return
+      end
     end
     redirect_to campaign_path(@campaign) if current_facebook_account.donations.where(:campaign_id => @campaign.id).count > 0
   end

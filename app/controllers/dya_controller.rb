@@ -19,6 +19,8 @@
 class DyaController < ApplicationController
   before_filter :login_required, :only => [:home]
   
+  before_filter :redirect_if_campaign_domain, :except => [:signout]
+
   def index
     redirect_to dashboard_path and return if logged_in?
     @donations = Donation.select("DISTINCT(campaign_id)").order("id DESC").limit(4)
