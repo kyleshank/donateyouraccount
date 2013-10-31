@@ -85,8 +85,14 @@ class ApplicationController < ActionController::Base
   def login_required
     unless current_twitter_account or current_facebook_account
       store_location
-      flash[:notice] = "You must be logged in to access this page"
-      redirect_to "/"
+      if self.class.name.match(/^facebook.+$/i)
+        redirect_to new_facebook_account_path
+      elsif self.class.name.match(/^twitter.+$/i)
+        redirect_to new_twitter_account_path
+      else
+        flash[:notice] = "You must be logged in to access this page"
+        redirect_to "/"
+      end
       return false
     end
   end

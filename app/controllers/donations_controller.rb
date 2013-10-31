@@ -60,8 +60,18 @@ class DonationsController < ApplicationController
   end
 
   def destroy
-    @donation = current_twitter_account.donations.for_campaign(@campaign.id).first if current_twitter_account
-    @donation = current_facebook_account.donations.for_campaign(@campaign.id).first if current_facebook_account && @donation.nil?
+    @donation = @campaign.donations.find(params[:id])
+    render_not_found and return unless @donation
+
+    if @donation.account.is_a?(TwitterAccount)
+      unless current_twitter_account and (current_twitter_account.id==@donation.account.id)
+        render_not_found and return
+      end
+    elsif @donation.account.is_a?(FacebookAccount)
+      unless current_facebook_account and (current_facebook_account.id==@donation.account.id)
+        render_not_found and return
+      end
+    end
 
     if @donation
       flash[:notice] = "Donation destroyed"
@@ -72,9 +82,18 @@ class DonationsController < ApplicationController
   end
 
   def delete
-    @donation = current_twitter_account.donations.for_campaign(@campaign.id).first if current_twitter_account
-    @donation = current_facebook_account.donations.for_campaign(@campaign.id).first if current_facebook_account && @donation.nil?
+    @donation = @campaign.donations.find(params[:id])
     render_not_found and return unless @donation
+
+    if @donation.account.is_a?(TwitterAccount)
+      unless current_twitter_account and (current_twitter_account.id==@donation.account.id)
+        render_not_found and return
+      end
+    elsif @donation.account.is_a?(FacebookAccount)
+      unless current_facebook_account and (current_facebook_account.id==@donation.account.id)
+        render_not_found and return
+      end
+    end
   end
 
   private
