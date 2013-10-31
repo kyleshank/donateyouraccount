@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
 
   def redirect_if_campaign_domain
     if @premium_campaign
-      redirect_to "#{request.protocol}#{@premium_campaign.domain}"
+      redirect_to "http://#{@premium_campaign.domain}"
       return false
     end
   end

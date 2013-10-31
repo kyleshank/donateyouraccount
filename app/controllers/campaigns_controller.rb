@@ -87,11 +87,7 @@ class CampaignsController < ApplicationController
 
     if @campaign.premium? and @campaign.domain and (request.format!="js")
       if (request.host != @campaign.domain) or (request.path!="/")
-        if Rails.env=="production"
-          redirect_to "https://#{@campaign.domain}" and return
-        else
-          redirect_to "http://#{@campaign.domain}" and return
-        end
+        redirect_to "http://#{@campaign.domain}" and return
       end
     end
 

@@ -47,8 +47,8 @@ class FacebookAccountsController < ApplicationController
       return_to_host = URI.parse(session[:return_to]).host
       @premium_campaign = Campaign.where(domain: return_to_host).first
       if @premium_campaign and (@premium_campaign.domain != request.host)
-        params[:return_to] = "#{return_to_scheme}://#{return_to_host}"
-        redirect_to "#{return_to_scheme}://#{return_to_host}#{oauth_create_facebook_accounts_path(params)}"
+        params[:return_to] = "http://#{return_to_host}"
+        redirect_to "http://#{return_to_host}#{oauth_create_facebook_accounts_path(params)}"
         return
       end
     end

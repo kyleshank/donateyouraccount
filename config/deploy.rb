@@ -29,6 +29,7 @@ set :repository,  "git@github.com:kyleshank/donateyouraccount.git"
 set :use_sudo, false
 ssh_options[:forward_agent] = true
 default_run_options[:pty] = true
+default_run_options[:shell] = '/bin/bash'
 
 set :deploy_to, "/a/#{application}"
 set :deploy_via, :remote_cache
@@ -82,7 +83,7 @@ namespace :bundler do
   end
 
   task :bundle_new_release do
-    run "bundle install --gemfile #{release_path}/Gemfile --path #{deploy_to}/shared/bundle --deployment --without cucumber test"
+    run "cd #{release_path}; bundle install --gemfile #{release_path}/Gemfile --path #{deploy_to}/shared/bundle --deployment --without cucumber test"
     bundler.create_symlink
   end
 end
