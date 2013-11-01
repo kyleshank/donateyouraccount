@@ -60,9 +60,6 @@ describe TwitterAccount do
 		get edit_campaign_path(campaign)
 		last_response.status.should==200
 		put campaign_path(campaign), {campaign: {name: "My Twitter Campaign Update", permalink: "test2", description: "My description", twitter_account_id: account.id}}
-		last_response.status.should==302
-		last_response.headers["Location"].should match /^http\:\/\/.+\/test2$/
-		follow_redirect!
 		last_response.status.should==200
 	end
 
