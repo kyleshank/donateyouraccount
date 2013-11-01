@@ -44,6 +44,14 @@
       <%=f.text_area :description, :rows => 4, :placeholder=>"Description"%>
     </div>
   </div>
+<% if @campaign.premium? %>
+  <div class="control-group">
+    <%=f.label :css, :class=>"control-label" %>
+    <div class="controls">
+      <%=f.text_area :css, :rows => 8, :placeholder=>"CSS"%>
+    </div>
+  </div>
+<% end %>
 <div class="control-group">
     <div class="controls">
 <%=f.submit "Update Campaign", :class=>"btn btn-success block"%>

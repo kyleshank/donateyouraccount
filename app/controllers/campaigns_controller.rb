@@ -74,7 +74,7 @@ class CampaignsController < ApplicationController
     end
     if @campaign.update_attributes(params[:campaign])
       flash[:notice] = "Campaign updated"
-      redirect_to campaign_permalink_path(@campaign) and return
+      # redirect_to campaign_permalink_path(@campaign) and return
     end
     render :action => :edit
   end

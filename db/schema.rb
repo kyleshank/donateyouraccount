@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131030161640) do
+ActiveRecord::Schema.define(:version => 20131101130932) do
 
   create_table "accounts", :force => true do |t|
     t.string   "uid"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20131030161640) do
     t.string   "domain"
     t.boolean  "premium",             :default => false
     t.integer  "levels",              :default => 0
+    t.text     "css"
   end
 
   create_table "delayed_jobs", :force => true do |t|

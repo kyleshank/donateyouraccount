@@ -1,3 +1,8 @@
+<% if @campaign.premium? %>
+<style type="text/css">
+<%= @campaign.css %>
+</style>
+<% end %>
 <div id="campaign_sidebar">
 <div class="btn-group btn-group-vertical btn-block">
 <% if logged_in? and @campaign.twitter_account and current_twitter_account and (@campaign.twitter_account.id == current_twitter_account.id) %>
@@ -54,6 +59,10 @@
   <% unless @campaign.facebook_page.blank? %><li class="facebook"><%=link_to raw("<i class='icon-facebook'></i> #{@campaign.facebook_page["name"]}"), @campaign.facebook_page["link"], :class=>"btn btn-primary", :target => "_blank"%></li><% end %>
 </ul>
 </div>
-<div><%=simple_format auto_link(strip_tags(@campaign.description), :html => { :rel => 'nofollow' }), :class=>"lead" %></div>
+<% if @campaign.premium? %>
+<div class="description"><%=simple_format auto_link(@campaign.description)%></div>
+<% else %>
+<div class="description"><%=simple_format auto_link(strip_tags(@campaign.description), :html => { :rel => 'nofollow' }), :class=>"lead" %></div>
+<% end %>
 <%=render :partial => "campaigns/statuses", :object => @statuses, :locals => {:no_icon => true}%>
 </div>
