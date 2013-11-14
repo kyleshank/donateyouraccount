@@ -62,14 +62,16 @@ class CampaignsController < ApplicationController
   end
 
   def update
-    if params[:campaign][:facebook_page_uid].blank?
-      @campaign.facebook_account=nil
-      @campaign.facebook_page_uid=nil
-      @campaign.facebook_page=nil
-    else
-      @campaign.facebook_account = current_facebook_account
-      current_facebook_account.facebook_pages.each do |p|
-        @campaign.facebook_page = @campaign.facebook_account.get("/#{p["id"]}").to_json if p["id"] == params[:campaign][:facebook_page_uid]
+    if params[:campaign][:facebook_page_uid]
+      if params[:campaign][:facebook_page_uid].blank?
+        @campaign.facebook_account=nil
+        @campaign.facebook_page_uid=nil
+        @campaign.facebook_page=nil
+      else
+        @campaign.facebook_account = current_facebook_account
+        current_facebook_account.facebook_pages.each do |p|
+          @campaign.facebook_page = @campaign.facebook_account.get("/#{p["id"]}").to_json if p["id"] == params[:campaign][:facebook_page_uid]
+        end
       end
     end
     if @campaign.update_attributes(params[:campaign])
