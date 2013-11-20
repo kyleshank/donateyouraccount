@@ -37,18 +37,24 @@ class FacebookAccount < Account
   end
 
   def recent_links(_id)
-    get("/#{_id}/feed")["data"].select {|item| !item["link"].blank? }
+    get("/#{_id}/links")["data"].select {|item| !item["link"].blank? }
   end
 
   def share(_data)
     d = _data.dup
-    d.delete("from")
     d.delete("actions")
     d.delete("created_time")
     d.delete("updated_time")
     d.delete("privacy")
-    d.delete("message")
     d.delete("id")
+    from = d.delete("from")
+    if from
+      message = "via #{from["name"]}:"
+      unless d["message"].empty?
+        message = "#{message}\n\n#{d["message"]}"
+      end
+      d["message"] = message
+    end
     try_to do
       begin
         post("/me/links", {:body => d})

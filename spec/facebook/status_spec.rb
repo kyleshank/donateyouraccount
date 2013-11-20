@@ -11,7 +11,7 @@ describe FacebookStatus do
                      :content_type => "application/json",
                      :body => json_fixture('facebook/page.json', :id => facebook_page_uid))
 
-        FakeWeb.register_uri(:get, "https://graph.facebook.com/234324/feed",
+        FakeWeb.register_uri(:get, "https://graph.facebook.com/234324/links",
                      :content_type => "application/json",
                      :body => json_fixture('facebook/feed.json', :id => facebook_page_uid))
 
