@@ -37,7 +37,7 @@ class FacebookAccount < Account
   end
 
   def recent_links(_id)
-    get("/#{_id}/links")["data"].select {|item| !item["link"].blank? }
+    get("/#{_id}/feed")["data"].select {|item| !item["link"].blank? }
   end
 
   def share(_data)
