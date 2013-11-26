@@ -115,10 +115,8 @@ class DonationsController < ApplicationController
   def facebook_required
     unless current_facebook_account
       session[:return_to] = "#{request.protocol.downcase}#{request.host_with_port}#{facebook_campaign_donations_path(@campaign)}"
-      if @premium_campaign
-        redirect_to new_facebook_account_path
-        return
-      end
+      redirect_to new_facebook_account_path
+      return
     end
     redirect_to campaign_path(@campaign) if current_facebook_account.donations.where(:campaign_id => @campaign.id).count > 0
   end
