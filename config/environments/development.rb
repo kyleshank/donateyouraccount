@@ -54,10 +54,10 @@ Dya::Application.configure do
   config.active_record.auto_explain_threshold_in_seconds = 0.5
 end
 
-Twitter.configure do |config|
-  config.consumer_key = "zCCT5sif1Blu4DfRmSP9RA"
-  config.consumer_secret = "oJFFXFx1tD3fY0ETSYeOpwV8zLGiuBSntxxgj8c"
-end
+# Twitter.configure do |config|
+#   config.consumer_key = "zCCT5sif1Blu4DfRmSP9RA"
+#   config.consumer_secret = "oJFFXFx1tD3fY0ETSYeOpwV8zLGiuBSntxxgj8c"
+# end
 
 TWITTER_CONSUMER_KEY="zCCT5sif1Blu4DfRmSP9RA"
 TWITTER_CONSUMER_SECRET="oJFFXFx1tD3fY0ETSYeOpwV8zLGiuBSntxxgj8c"

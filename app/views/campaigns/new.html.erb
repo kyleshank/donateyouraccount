@@ -1,52 +1,52 @@
 <div class="page-header">
   <h1>Create Campaign</h1>
 </div>
-<%= form_for @campaign, :html => {:class=>"form-horizontal"} do |f|%>
+<%= form_for @campaign, :html => {:role=>"form", :class=>"form-horizontal"} do |f|%>
 <%=render :partial => "layouts/errors", :locals => {:model => @campaign}%>
-  <div class="control-group">
-    <%=f.label :name, :class=>"control-label" %>
-    <div class="controls">
-      <%=f.text_field :name, :placeholder => "Campaign name"%>
+  <div class="form-group">
+    <%=f.label :name, :class=>"control-label col-sm-2" %>
+    <div class="col-sm-10">
+      <%=f.text_field :name, :placeholder => "Campaign name", :class=>"form-control"%>
     </div>
   </div>
-  <div class="control-group">
-    <%=f.label :permalink, :class=>"control-label" %>
-    <div class="controls">
-      http://donateyouraccount.com/<%=f.text_field :permalink, :placeholder => "Permalink"%>
+  <div class="form-group">
+    <%=f.label :permalink, :class=>"control-label col-sm-2" %>
+    <div class="col-sm-10">
+      http://donateyouraccount.com/<%=f.text_field :permalink, :placeholder => "Permalink", :class=>"form-control", :cols=>"30", :style=>"display: inline-block; width: 16em;"%>
     </div>
   </div>
-  <div class="control-group">
-    <%=f.label :twitter_account, :class=>"control-label" %>
-    <div class="controls">
+  <div class="form-group">
+    <%=f.label :twitter_account, :class=>"control-label col-sm-2" %>
+    <div class="col-sm-10">
       <% if current_twitter_account %>
-    <%=f.select :twitter_account_id, [["@#{current_twitter_account.screen_name}",current_twitter_account.id]], :include_blank=>true %>
+    <%=f.select :twitter_account_id, [["@#{current_twitter_account.screen_name}",current_twitter_account.id]], :include_blank=>true, :class=>"form-control" %>
 <% else %>
     <%=link_to "Sign in with Twitter", new_twitter_account_path(:return_to => new_campaign_path), :class => "btn btn-info" %>
 <% end %>
     </div>
   </div>
-  <div class="control-group">
-    <%=f.label :facebook_page, :class=>"control-label" %>
-    <div class="controls">
+  <div class="form-group">
+    <%=f.label :facebook_page, :class=>"control-label col-sm-2" %>
+    <div class="col-sm-10">
 <% if current_facebook_account %>
     <% if current_facebook_account.facebook_pages.empty? %>
     <div class="alert alert-info">No Facebook pages are associated with your account.</div>
     <% else %>
-            <%=f.select :facebook_page_uid, current_facebook_account.facebook_pages.collect{|a| [a["name"], a["id"] ]}, :include_blank=>true %>
+            <%=f.select :facebook_page_uid, current_facebook_account.facebook_pages.collect{|a| [a["name"], a["id"] ]}, :include_blank=>true, :class=>"form-control" %>
     <%end%>
 <% else %>
     <%=link_to "Sign in with Facebook", new_facebook_account_path(:return_to => new_campaign_path), :class=> "btn btn-primary"%>
 <% end %>
     </div>
   </div>
-  <div class="control-group">
-    <%=f.label :description, :class=>"control-label" %>
-    <div class="controls">
-      <%=f.text_area :description, :rows => 4, :placeholder=>"Description"%>
+  <div class="form-group">
+    <%=f.label :description, :class=>"control-label col-sm-2" %>
+    <div class="col-sm-10">
+      <%=f.text_area :description, :rows => 4, :placeholder=>"Description", :class=>"form-control"%>
     </div>
   </div>
-<div class="control-group">
-    <div class="controls">
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
 <%=f.submit "Create Campaign", :class=>"btn btn-success block"%>
 </div>
   </div>

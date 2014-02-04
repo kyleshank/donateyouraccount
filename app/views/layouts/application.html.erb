@@ -3,25 +3,44 @@
 <head>
   <title><%if @campaign and @campaign.persisted? %><%=@campaign.name%> on <%end%>Donate Your Account</title>
   <link rel="icon" href="/favicon.png" type="image/png" />
+
+<!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+  <!-- Latest compiled and minified JavaScript -->
+  
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
   <%= stylesheet_link_tag "application" %>
-  <%= javascript_include_tag "application" %> 
+  <%= javascript_include_tag "application" %>
+
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script> 
+  
   <%= csrf_meta_tag %>
   <%=yield :head%>
 </head>
 <body>
 
 <% unless @premium_campaign %>
-<div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="brand" href="/"><i class='icon-flag'></i> Donate Your Account</a>
-          <div class="nav-collapse">
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><i class='icon-flag'></i> Donate Your Account</a>
+    </div>
+          
             <% if logged_in? %>
-          <ul class="nav">
+    <div class="nav-collapse">
+          <ul class="nav navbar-nav">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Donations <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li class="nav-header">Your Donations</li>
+                  <li class="dropdown-header">Your Donations</li>
                   <% Donation.for_accounts(current_accounts).group_campaign.each do |donation| %>
                   <% if donation.campaign%>
                   <li><%=link_to donation.campaign.name, campaign_permalink_path(donation.campaign)%></li>
@@ -36,23 +55,22 @@
                   <li class="divider"></li>
                   <li><%=link_to "Browse Campaigns", campaigns_path%></li>
                   <li class="divider"></li>
-                  <li class="nav-header">Your Campaigns</li>
+                  <li class="dropdown-header">Your Campaigns</li>
                   <% Campaign.for_accounts(current_accounts).group("campaigns.id").each do |campaign| %>
                       <li><%=link_to campaign.name, campaign_permalink_path(campaign)%></li>
                   <% end %>
                 </ul>
               </li>
             </ul>
-            <% end %>
-          <div class="nav-collapse pull-right">
-          <% if current_twitter_account %><%= link_to raw("<i class='icon-twitter'></i> @#{current_twitter_account.screen_name}"), current_twitter_account.url, :class=>"twitter btn btn-info", :target=>"_blank"%><%else%><%=link_to raw("<i class='icon-twitter'></i> Sign in with Twitter"), new_twitter_account_path, :class=>"twitter btn btn-info"%><% end %>
-          <% if current_facebook_account %><%= link_to raw("<i class='icon-facebook'></i> #{current_facebook_account.name}"), current_facebook_account.url, :class=> "facebook btn btn-primary", :target=>"_blank"%><%else%><%=link_to raw("<i class='icon-facebook'></i> Sign in with Facebook"), new_facebook_account_path, :class=> "facebook btn btn-primary" %><% end %>
-          <% if logged_in? %><%=link_to "Sign out", signout_path, :class=>"btn btn-inverse" %><% end %>
-          </div><!--/.nav-collapse -->
-          </div>
-        </div>
-      </div>
     </div>
+            <% end %>
+    <div class="navbar-collapse pull-right">
+          <% if current_twitter_account %><%= link_to raw("<i class='icon-twitter'></i> @#{current_twitter_account.screen_name}"), current_twitter_account.url, :class=>"twitter btn btn-info navbar-btn", :target=>"_blank"%><%else%><%=link_to raw("<i class='icon-twitter'></i> Sign in with Twitter"), new_twitter_account_path, :class=>"twitter btn btn-info navbar-btn"%><% end %>
+          <% if current_facebook_account %><%= link_to raw("<i class='icon-facebook'></i> #{current_facebook_account.name}"), current_facebook_account.url, :class=> "facebook btn btn-primary navbar-btn", :target=>"_blank"%><%else%><%=link_to raw("<i class='icon-facebook'></i> Sign in with Facebook"), new_facebook_account_path, :class=> "facebook btn btn-primary navbar-btn" %><% end %>
+          <% if logged_in? %><%=link_to "Sign out", signout_path, :class=>"btn btn-inverse navbar-btn" %><% end %>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
 <% end %>
     <div class="container">
 
@@ -64,7 +82,7 @@
     </div>
 
       <footer>
-        <p>&copy; 2013 <a href="http://www.kyleshank.com">Kyle Shank</a>. <a href="/privacy.html">Privacy Policy</a> - <a href="http://www.gnu.org/licenses/agpl.html">License</a> - <a href="http://twitter.com/donateuraccount">Twitter</a> - <a href="http://github.com/kyleshank/donateyouraccount">Source Code</a></p>
+        <p>&copy; 2014 <a href="http://www.kyleshank.com">Kyle Shank</a>. <a href="/privacy.html">Privacy Policy</a> - <a href="http://www.gnu.org/licenses/agpl.html">License</a> - <a href="http://twitter.com/donateuraccount">Twitter</a> - <a href="http://github.com/kyleshank/donateyouraccount">Source Code</a></p>
       </footer>
 
     </div> <!-- /container -->

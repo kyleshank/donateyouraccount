@@ -27,7 +27,7 @@ class Campaign < ActiveRecord::Base
   validates_presence_of :name, :description, :permalink
   validates_uniqueness_of :permalink
   validates_exclusion_of :permalink, :in => %w(account accounts signin signout home facebook_accounts twitter_accounts campaign campaigns dya)
-  validates_format_of :permalink, :with => /^[a-zA-Z0-9_]*[a-zA-Z][a-zA-Z0-9_]*$/
+  validates_format_of :permalink, :with => /\A[a-z0-9]+\z/i
 
   validate :validate_campaign
 

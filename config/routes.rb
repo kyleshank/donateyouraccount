@@ -19,21 +19,21 @@
 Dya::Application.routes.draw do
   resources :facebook_accounts do
     collection do
-      match 'oauth_create' => "facebook_accounts#create", :as => :oauth_create, :via => :get
+      get 'oauth_create' => "facebook_accounts#create", :as => :oauth_create
     end
   end
   resources :twitter_accounts do
     collection do
-      match 'oauth_create' => "twitter_accounts#create", :as => :oauth_create, :via => :get
+      get 'oauth_create' => "twitter_accounts#create", :as => :oauth_create
     end
   end
   resources :campaigns do
     resources :donations do
       collection do
         get :twitter
-        match 'twitter' => "donations#twitter_create", :as => :twitter_create, :via => :post
+        post 'twitter' => "donations#twitter_create", :as => :twitter_create
         get :facebook
-        match 'facebook' => "donations#facebook_create", :as => :facebook_create, :via => :post
+        post 'facebook' => "donations#facebook_create", :as => :facebook_create
       end
       member do
         get :delete
@@ -43,14 +43,14 @@ Dya::Application.routes.draw do
     resources :facebook_statuses
   end
 
-  match 'start' => "dya#start", :as => :start
-  match 'home' => "dya#home", :as => :dashboard
-  match 'signout' => "dya#signout", :as => :signout
+  get 'start' => "dya#start", :as => :start
+  get 'home' => "dya#home", :as => :dashboard
+  get 'signout' => "dya#signout", :as => :signout
 
   post 'facebook_accounts/new' => "facebook_accounts#new"
 
-  match '/' => 'campaigns#show', :constraints => { :host => /^((?!#{DYA_DOMAIN}).)*$/ }  
+  get '/' => 'campaigns#show', :constraints => { :host => /^((?!#{DYA_DOMAIN}).)*$/ }  
   root :to => "dya#index"
 
-  match ':id(.:format)' => "campaigns#show", :as => :campaign_permalink
+  get ':id(.:format)' => "campaigns#show", :as => :campaign_permalink
 end
