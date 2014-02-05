@@ -22,13 +22,4 @@ class Account < ActiveRecord::Base
 
   validates_presence_of :name, :uid, :token
   validates_uniqueness_of :uid, :scope => [:type]
-
-  def active?
-    return true if self.expires_at.nil?
-    if self.expires_at > Time.now
-      return true
-    else
-      return false
-    end
-  end
 end
