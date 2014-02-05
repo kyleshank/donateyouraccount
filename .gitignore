@@ -8,3 +8,4 @@ tmp/**/*
 .idea
 config/environments/production.rb
 vendor/cache
+config/deploy/*.rb

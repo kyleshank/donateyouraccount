@@ -1,107 +1,41 @@
-##
-# Donate Your Account (donateyouraccount.com)
-# Copyright (C) 2011  Kyle Shank (kyle.shank@gmail.com)
-# http://www.gnu.org/licenses/agpl.html
-# 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-# 
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-##
+set :application, 'dya'
+set :repo_url, 'git@github.com:kyleshank/donateyouraccount.git'
 
-set :application, "dya"
-set :hostname, (ENV['HOST'] || "donateyouraccount.com")
+# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
-set :user, "dya"
-set :host, "#{user}@#{hostname}"
-
+set :deploy_to, '/a/dya'
 set :scm, :git
-set :branch, "master"
-set :repository,  "git@github.com:kyleshank/donateyouraccount.git"
-set :use_sudo, false
-ssh_options[:forward_agent] = true
-default_run_options[:pty] = true
-default_run_options[:shell] = '/bin/bash'
 
-set :deploy_to, "/a/#{application}"
-set :deploy_via, :remote_cache
-set :runner, user
-set :keep_releases, 10
+# set :format, :pretty
+# set :log_level, :debug
+set :pty, true
 
-role :app, hostname
-role :web, hostname
-role :db,  hostname, :primary => true
-role :worker, hostname
+set :linked_files, %w{config/database.yml config/environments/production.rb}
+
+# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{tmp/pids tmp/cache tmp/sockets log}
+
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+set :keep_releases, 5
 
 namespace :deploy do
-  desc "Start"
-  task :start, :roles => :app do
-    run "cd #{deploy_to}/current; RAILS_ENV=production bundle exec thin -C #{deploy_to}/shared/thin.yml start"
-    delayed_job.start
+
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      old_pid = capture("cat /a/dya/shared/tmp/pids/unicorn.pid")
+      execute :kill, "-s QUIT #{old_pid}"
+    end
   end
 
-  desc "Restart"
-  task :restart, :roles => :app do
-    deploy.migrate
-    run "cd #{deploy_to}/current; RAILS_ENV=production bundle exec thin -C #{deploy_to}/shared/thin.yml restart"
-    delayed_job.restart
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
+    end
   end
 
-  desc "Stop"
-  task :stop, :roles => :app do
-    delayed_job.stop
-    run "cd #{deploy_to}/current; RAILS_ENV=production bundle exec thin -C #{deploy_to}/shared/thin.yml stop"
-  end
-
-  task :symlink_config do
-    run "ln -sf #{deploy_to}/shared/database.yml #{release_path}/config/database.yml"
-    run "ln -sf #{deploy_to}/shared/production.rb #{release_path}/config/environments/production.rb"
-  end
-
-  task :migrate, :roles => :db do
-    run "cd #{release_path}; RAILS_ENV=production bundle exec rake db:migrate"
-  end
-
-  task :assets, :roles => :app do
-    run "cd #{release_path}; RAILS_ENV=production bundle exec rake assets:precompile"
-  end
+  after :finishing, 'deploy:cleanup'
 end
-
-namespace :bundler do
-  task :create_symlink do
-    shared_dir = File.join(shared_path, 'bundle')
-    release_dir = File.join(current_release, 'vendor','bundle')
-    run("mkdir -p #{shared_dir} && ln -s #{shared_dir} #{release_dir}")
-  end
-
-  task :bundle_new_release do
-    run "cd #{release_path}; bundle install --gemfile #{release_path}/Gemfile --path #{deploy_to}/shared/bundle --deployment --without cucumber test"
-    bundler.create_symlink
-  end
-end
-
-namespace :delayed_job do
-  desc "Restart Unicorn"
-  task :start, :roles => :worker do
-    run("cd #{deploy_to}/current; RAILS_ENV=production bundle exec script/delayed_job -n 2 start")
-  end
-
-  task :stop, :roles => :worker do
-    run("cd #{deploy_to}/current; RAILS_ENV=production bundle exec script/delayed_job stop")
-  end
-  
-  task :restart, :roles => :worker do
-    run("cd #{deploy_to}/current; RAILS_ENV=production bundle exec script/delayed_job restart")
-  end
-end
-
-after 'deploy:update_code', 'bundler:bundle_new_release', "deploy:symlink_config", "deploy:assets"
-after "deploy:update", "deploy:cleanup"
