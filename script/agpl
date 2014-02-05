@@ -11,7 +11,7 @@ module FileBrowser
        Dir.new(filename).each do |child|
          unless ['..', '.','.git'].include? child
            f = filename + "/" + child
-           queue.push(f) unless /\/vendor\/bundle/ =~ f
+           queue.push(f) unless /\/vendor/ =~ f
          end
        end
      end
