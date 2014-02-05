@@ -63,8 +63,8 @@ class CampaignsController < ApplicationController
   end
 
   def update
-    if params[:campaign][:facebook_page_uid]
-      if params[:campaign][:facebook_page_uid].blank?
+    if campaign_params[:facebook_page_uid]
+      if campaign_params[:facebook_page_uid].blank?
         @campaign.facebook_account=nil
         @campaign.facebook_page_uid=nil
         @campaign.facebook_page=nil
@@ -75,7 +75,7 @@ class CampaignsController < ApplicationController
         end
       end
     end
-    if @campaign.update_attributes(params[:campaign])
+    if @campaign.update_attributes(campaign_params)
       flash[:notice] = "Campaign updated"
       # redirect_to campaign_permalink_path(@campaign) and return
     end

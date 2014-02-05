@@ -55,8 +55,6 @@ class TwitterAccount < Account
     end
   end
 
-  private
-
   def get_twitter_client
       Twitter::REST::Client.new do |config|
         config.consumer_key        = TWITTER_CONSUMER_KEY

@@ -29,7 +29,8 @@ class FacebookStatusesController < ApplicationController
   end
 
   def create
-    @facebook_status = @campaign.facebook_statuses.new(params[:facebook_status])
+    @facebook_status = @campaign.facebook_statuses.new(status_params)
+    @facebook_status.levels = params[:facebook_status][:levels]
 
     if @facebook_status.save
       flash[:notice] = "Publishing to Facebook"
@@ -41,6 +42,10 @@ class FacebookStatusesController < ApplicationController
   end
 
   private
+
+  def status_params
+    params.require(:facebook_status).permit(:uid)
+  end
 
   def ensure_campaign
     @campaign = Campaign.where(:permalink => params[:campaign_id]).first

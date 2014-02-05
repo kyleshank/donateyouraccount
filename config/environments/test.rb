@@ -26,7 +26,7 @@ Dya::Application.configure do
   config.cache_classes = true
 
   # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
+  # config.whiny_nils = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
@@ -61,13 +61,11 @@ config.static_cache_control = "public, max-age=3600"
 config.assets.allow_debugging = true  
 
   # Raise exception on mass assignment protection for Active Record models
-  config.active_record.mass_assignment_sanitizer = :strict
+  # config.active_record.mass_assignment_sanitizer = :strict
+
+  config.eager_load = false
 end
 
-Twitter.configure do |config|
-  config.consumer_key = "zCCT5sif1Blu4DfRmSP9RA"
-  config.consumer_secret = "oJFFXFx1tD3fY0ETSYeOpwV8zLGiuBSntxxgj8c"
-end
 
 TWITTER_CONSUMER_KEY="zCCT5sif1Blu4DfRmSP9RA"
 TWITTER_CONSUMER_SECRET="oJFFXFx1tD3fY0ETSYeOpwV8zLGiuBSntxxgj8c"

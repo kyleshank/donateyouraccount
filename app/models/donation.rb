@@ -33,15 +33,16 @@ class Donation < ActiveRecord::Base
   validates_uniqueness_of :account_id, :scope =>[:campaign_id]
   validates_inclusion_of :level, :in => [1,2,4]
 
-  scope :for_campaign, lambda {|i| {:conditions => {:campaign_id => i}}}
-  scope :desc, order("donations.id DESC")
-  scope :gold, {:conditions => {:level => LEVELS["Gold"]}}
-  scope :silver, {:conditions => {:level => LEVELS["Silver"]}}
-  scope :bronze, {:conditions => {:level => LEVELS["Bronze"]}}
-  scope :for_levels, lambda {|levels| {:conditions => levels.collect{|l| "donations.level = #{l}"}.join(" OR ")}}
-  scope :for_accounts, lambda {|accounts| {:conditions => accounts.collect{|a| "donations.account_id=#{a.id}"}.join(" OR ")} }
-  scope :active, :include => :account, :conditions => "accounts.expires_at IS NULL or accounts.expires_at > NOW()"
-  scope :group_campaign, :group => "donations.campaign_id"
-  scope :twitter, :include => :account, :conditions => ["accounts.type=? and (accounts.expires_at IS NULL or accounts.expires_at > NOW())","TwitterAccount"]
-  scope :facebook, :include => :account, :conditions => ["accounts.type=? and (accounts.expires_at IS NULL or accounts.expires_at > NOW())","FacebookAccount"]
+  scope :with_account, -> {joins(:account)}
+  scope :for_campaign, ->(i) {where(campaign_id: i)}
+  scope :desc, -> {order("donations.id DESC")}
+  scope :gold, -> {where(level: LEVELS["Gold"])}
+  scope :silver, -> {where(level: LEVELS["Silver"])}
+  scope :bronze, -> {where(level: LEVELS["Bronze"])}
+  scope :for_levels, ->(levels) {where(levels.collect{|l| "donations.level = #{l}"}.join(" OR "))}
+  scope :for_accounts, ->(accounts) {where(accounts.collect{|a| "donations.account_id=#{a.id}"}.join(" OR ")) }
+  scope :active, -> { with_account.where("accounts.expires_at IS NULL or accounts.expires_at > NOW()") }
+  scope :group_campaign, -> { with_account.group("donations.campaign_id") }
+  scope :twitter, -> { with_account.where(["accounts.type=? and (accounts.expires_at IS NULL or accounts.expires_at > NOW())","TwitterAccount"]) }
+  scope :facebook, -> { with_account.where(["accounts.type=? and (accounts.expires_at IS NULL or accounts.expires_at > NOW())","FacebookAccount"]) }
 end

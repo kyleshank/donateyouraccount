@@ -64,5 +64,9 @@ gem 'delayed_job_active_record'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'fakeweb'
+  gem 'simplecov', :require => false
 end
 

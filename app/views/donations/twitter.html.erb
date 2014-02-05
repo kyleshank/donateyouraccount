@@ -28,7 +28,7 @@
   </div>
 <div class="control-group">
     <div class="controls">
-      <%=f.submit "Donate Your Twitter Account", :class => "btn btn-success", :confirm => "Are you sure you want to donate retweets to @#{@campaign.twitter_account.screen_name} on Twitter?" %>
+      <%=f.submit "Donate Your Twitter Account", :class => "btn btn-success", :data => {:confirm => "Are you sure you want to donate retweets to @#{@campaign.twitter_account.screen_name} on Twitter?"} %>
     </div>
   </div>
 <%end%>

@@ -29,7 +29,8 @@ class TwitterStatusesController < ApplicationController
   end
 
   def create
-    @twitter_status = @campaign.twitter_statuses.new(params[:twitter_status])
+    @twitter_status = @campaign.twitter_statuses.new(status_params)
+    @twitter_status.levels = params[:twitter_status][:levels]
 
     if @twitter_status.save
       flash[:notice] = "Publishing to Twitter"
@@ -40,6 +41,10 @@ class TwitterStatusesController < ApplicationController
   end
 
   private
+
+  def status_params
+    params.require(:twitter_status).permit(:uid)
+  end
 
   def ensure_campaign
     @campaign = Campaign.where(:permalink => params[:campaign_id]).first

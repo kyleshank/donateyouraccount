@@ -33,7 +33,7 @@ class DonationsController < ApplicationController
   end
 
   def twitter_create
-    @donation = @campaign.donations.new(params[:donation])
+    @donation = @campaign.donations.new(donation_params)
     @donation.account = current_twitter_account
     if @donation.save
       expire_page("/#{@campaign.permalink}.js")
@@ -49,7 +49,7 @@ class DonationsController < ApplicationController
   end
 
   def facebook_create
-    @donation = @campaign.donations.new(params[:donation])
+    @donation = @campaign.donations.new(donation_params)
     @donation.account = current_facebook_account
     if @donation.save
       expire_page("/#{@campaign.permalink}.js")
@@ -98,6 +98,10 @@ class DonationsController < ApplicationController
 
   private
 
+  def donation_params
+    params.require(:donation).permit(:level)
+  end
+
   def load_campaign
     @campaign = Campaign.where(:permalink => params[:campaign_id]).first
     render_not_found and return unless @campaign
@@ -114,11 +118,9 @@ class DonationsController < ApplicationController
 
   def facebook_required
     unless current_facebook_account
-      session[:return_to] = "#{request.protocol.downcase}#{request.host_with_port}#{facebook_campaign_donations_path(@campaign)}"
-      if @premium_campaign
-        redirect_to new_facebook_account_path
-        return
-      end
+      session[:return_to] = facebook_campaign_donations_path(@campaign)
+      session[:return_to] = "#{request.protocol.downcase}#{request.host_with_port}#{facebook_campaign_donations_path(@campaign)}" if @premium_campaign
+      redirect_to new_facebook_account_path and return
     end
     redirect_to campaign_path(@campaign) if current_facebook_account.donations.where(:campaign_id => @campaign.id).count > 0
   end

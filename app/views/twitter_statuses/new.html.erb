@@ -32,7 +32,7 @@
   </div>
     <div class="control-group">
     <div class="controls">
-    	<%=f.submit "Publish Retweets", :class => "btn btn-success", :confirm => "Are you sure you *really* want to publish this tweet through your donors?"%>
+    	<%=f.submit "Publish Retweets", :class => "btn btn-success", :data => {:confirm => "Are you sure you *really* want to publish this tweet through your donors?"}%>
     </div>
   </div>
 <% end %>
