@@ -60,6 +60,8 @@ gem 'browser-timezone-rails'
 gem 'actionpack-action_caching'
 gem 'actionpack-page_caching'
 
+gem 'delayed_job_active_record'
+
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
 end

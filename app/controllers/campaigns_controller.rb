@@ -20,7 +20,6 @@ class CampaignsController < ApplicationController
   include TwitterAccountsHelper
   
   before_filter :login_required, :except => [:show,:index]
-  before_filter :new_campaign, :only =>[:new,:create]
   before_filter :load_campaign, :only =>[:edit,:update, :destroy]
 
   caches_page :show, :if => Proc.new { |c| c.request.format.js? }
@@ -33,6 +32,7 @@ class CampaignsController < ApplicationController
   end
 
   def new
+    @campaign = Campaign.new
     if current_facebook_account
       redirect_to new_facebook_account_path(:manage_pages => "true", :return_to => new_campaign_path) unless session[:manage_pages]=="true"
     end
@@ -41,6 +41,7 @@ class CampaignsController < ApplicationController
   end
 
   def create
+    @campaign = Campaign.new(campaign_params)
     unless @campaign.facebook_page_uid.blank?
       @campaign.facebook_account = current_facebook_account
       current_facebook_account.facebook_pages.each do |p|
@@ -111,8 +112,8 @@ class CampaignsController < ApplicationController
 
   private
 
-  def new_campaign
-    @campaign = Campaign.new(params[:campaign])
+  def campaign_params
+    params.require(:campaign).permit(:name, :permalink, :twitter_account_id, :facebook_page_uid, :description)
   end
 
   def load_campaign

@@ -35,14 +35,14 @@ class TwitterAccount < Account
 
   def recent_tweets
     try_to do
-      Twitter::Client.new(:oauth_token => self.token, :oauth_token_secret => self.secret).user_timeline(self.screen_name, :trim_user => true, :count => 50)
+      get_twitter_client.user_timeline(self.screen_name, :trim_user => true, :count => 50)
     end
   end
 
   def retweet(_id)
     try_to do
       begin
-        Twitter::Client.new(:oauth_token => self.token, :oauth_token_secret => self.secret).retweet(_id)
+        get_twitter_client.retweet(_id)
       rescue Twitter::Error::Forbidden => e
         self.expires_at = Time.now
         self.save
@@ -53,5 +53,16 @@ class TwitterAccount < Account
         raise StopRetryingException.new(e)
       end
     end
+  end
+
+  private
+
+  def get_twitter_client
+      Twitter::REST::Client.new do |config|
+        config.consumer_key        = TWITTER_CONSUMER_KEY
+        config.consumer_secret     = TWITTER_CONSUMER_SECRET
+        config.access_token        = self.token
+        config.access_token_secret = self.secret
+      end
   end
 end

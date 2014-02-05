@@ -2,9 +2,20 @@
 <html>
 <head>
   <title>Sign into Donate Your Account</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.png" type="image/png" />
+<!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+  <!-- Latest compiled and minified JavaScript -->
+  
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
   <%= stylesheet_link_tag "application" %>
-  <%= javascript_include_tag "application" %> 
+  <%= javascript_include_tag "application" %>
+
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script> 
   <%= csrf_meta_tag %>
   <%=yield :head%>
 </head>
@@ -13,8 +24,8 @@
     <div class="container">
     <form class="form-signin">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <%=link_to "Sign in with Twitter", new_twitter_account_path(:return_to => new_campaign_path), :class=>"twitter btn btn-info btn-large btn-block"%>
-        <%=link_to "Sign in with Facebook", new_facebook_account_path(:return_to => new_campaign_path), :class=> "facebook btn btn-primary btn-large btn-block" %>
+        <%=link_to "Sign in with Twitter", new_twitter_account_path(:return_to => new_campaign_path), :class=>"twitter btn btn-info btn-lg btn-block"%>
+        <%=link_to "Sign in with Facebook", new_facebook_account_path(:return_to => new_campaign_path), :class=> "facebook btn btn-primary btn-lg btn-block" %>
       </form>
     </div> <!-- /container -->
 

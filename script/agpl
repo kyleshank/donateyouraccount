@@ -75,7 +75,7 @@ end
 RUBY_HEADER = <<RUBY
 ##
 # Donate Your Account (donateyouraccount.com)
-# Copyright (C) 2011  Kyle Shank (kyle.shank@gmail.com)
+# Copyright (C) 2014  Kyle Shank (kyle.shank@gmail.com)
 # http://www.gnu.org/licenses/agpl.html
 # 
 # This program is free software: you can redistribute it and/or modify
