@@ -25,6 +25,7 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       old_pid = capture("cat /a/dya/shared/tmp/pids/unicorn.pid")
       execute :kill, "-s QUIT #{old_pid}"
+      execute :sudo, "/usr/bin/svc -t /service/worker0"
     end
   end
 
