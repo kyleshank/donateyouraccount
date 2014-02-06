@@ -59,7 +59,7 @@
 <textarea rows="4" cols="5" id="embed" class="form-control"><script src="http://<%=defined?(DYA_DOMAIN) ? DYA_DOMAIN : request.host_with_port%><%=campaign_permalink_path(@campaign, :format => "js")%>"></script></textarea>
 <p>Copy and paste the HTML code around the web to help spread the word.</p>
 
-
+<%=render :partial => "layouts/sidebar_ad" if defined?(BANNER_AD)%>
 </div>
 
 <div class="col-md-8">

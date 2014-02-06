@@ -88,8 +88,9 @@
   </div>
 </div>
 <% end %>
+<%=render :partial => "layouts/banner_ad" if defined?(BANNER_AD) and (request.path != "/")%>
     <div class="container">
-
+    
     <div id="content">
         <% if flash[:notice] %>
         <div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">×</button><%=flash[:notice]%></div>
