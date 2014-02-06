@@ -66,4 +66,15 @@ class Campaign < ActiveRecord::Base
   def facebook_page
     self["facebook_page"].blank? ? nil : JSON.parse(self["facebook_page"])
   end
+
+  def managed_by?(accounts)
+    found = false
+    accounts.each do |a|
+      if (self.twitter_account_id == a.id) or (self.facebook_account_id == a.id)
+        found = true
+        break
+      end
+    end
+    found
+  end
 end

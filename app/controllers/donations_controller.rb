@@ -23,7 +23,7 @@ class DonationsController < ApplicationController
   before_filter :load_campaign
   before_filter :twitter_required, :only => [:twitter, :twitter_create]
   before_filter :facebook_required, :only => [:facebook, :facebook_create]
-  before_filter :login_required, :only => [:destroy]
+  before_filter :login_required, :only => [:delete, :destroy, :thanks]
 
   skip_before_filter :redirect_if_campaign_domain
 
@@ -37,7 +37,11 @@ class DonationsController < ApplicationController
     @donation.account = current_twitter_account
     if @donation.save
       expire_page("/#{@campaign.permalink}.js")
-      redirect_to campaign_permalink_path(@campaign)
+      if @campaign.premium? and !@campaign.thank_you_body.empty?
+        redirect_to thanks_campaign_donation_path(@campaign, @donation)
+      else
+        redirect_to campaign_permalink_path(@campaign)
+      end
     else
       render :action => :twitter
     end
@@ -53,7 +57,11 @@ class DonationsController < ApplicationController
     @donation.account = current_facebook_account
     if @donation.save
       expire_page("/#{@campaign.permalink}.js")
-      redirect_to campaign_permalink_path(@campaign)
+      if @campaign.premium? and !@campaign.thank_you_body.empty?
+        redirect_to thanks_campaign_donation_path(@campaign, @donation)
+      else
+        redirect_to campaign_permalink_path(@campaign)
+      end
     else
       render :action => :facebook
     end
@@ -94,6 +102,12 @@ class DonationsController < ApplicationController
         render_not_found and return
       end
     end
+  end
+
+  def thanks
+    @donation = @campaign.donations.find(params[:id])
+    @twitter_donation = current_twitter_account.donations.for_campaign(@campaign.id).first if current_twitter_account
+    @facebook_donation = current_facebook_account.donations.for_campaign(@campaign.id).first if current_facebook_account
   end
 
   private

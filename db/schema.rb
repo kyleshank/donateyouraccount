@@ -1,21 +1,3 @@
-##
-# Donate Your Account (donateyouraccount.com)
-# Copyright (C) 2014  Kyle Shank (kyle.shank@gmail.com)
-# http://www.gnu.org/licenses/agpl.html
-# 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-# 
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-##
 # encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
@@ -27,11 +9,11 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131101130932) do
+ActiveRecord::Schema.define(version: 20140206192907) do
 
-  create_table "accounts", :force => true do |t|
+  create_table "accounts", force: true do |t|
     t.string   "uid"
     t.string   "name"
     t.string   "screen_name"
@@ -58,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20131101130932) do
     t.datetime "expires_at"
   end
 
-  create_table "campaigns", :force => true do |t|
+  create_table "campaigns", force: true do |t|
     t.integer  "twitter_account_id"
     t.text     "description"
     t.datetime "created_at"
@@ -69,14 +51,16 @@ ActiveRecord::Schema.define(:version => 20131101130932) do
     t.string   "name"
     t.text     "facebook_page"
     t.string   "domain"
-    t.boolean  "premium",             :default => false
-    t.integer  "levels",              :default => 0
+    t.boolean  "premium",             default: false
+    t.integer  "levels",              default: 0
     t.text     "css"
+    t.string   "thank_you_title"
+    t.text     "thank_you_body"
   end
 
-  create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0
-    t.integer  "attempts",   :default => 0
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0
+    t.integer  "attempts",   default: 0
     t.text     "handler"
     t.text     "last_error"
     t.datetime "run_at"
@@ -88,22 +72,22 @@ ActiveRecord::Schema.define(:version => 20131101130932) do
     t.string   "queue"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "donated_statuses", :force => true do |t|
+  create_table "donated_statuses", force: true do |t|
     t.integer  "donation_id"
     t.integer  "status_id"
     t.datetime "created_at"
   end
 
-  create_table "donations", :force => true do |t|
+  create_table "donations", force: true do |t|
     t.integer  "account_id"
     t.integer  "campaign_id"
     t.datetime "created_at"
     t.integer  "level"
   end
 
-  create_table "statuses", :force => true do |t|
+  create_table "statuses", force: true do |t|
     t.integer  "campaign_id"
     t.string   "body"
     t.string   "uid"

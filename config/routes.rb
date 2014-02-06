@@ -37,6 +37,7 @@ Dya::Application.routes.draw do
       end
       member do
         get :delete
+        get :thanks
       end
     end
     resources :twitter_statuses

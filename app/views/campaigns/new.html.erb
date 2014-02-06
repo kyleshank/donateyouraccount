@@ -19,7 +19,7 @@
     <%=f.label :twitter_account, :class=>"control-label col-sm-2" %>
     <div class="col-sm-10">
       <% if current_twitter_account %>
-    <%=f.select :twitter_account_id, [["@#{current_twitter_account.screen_name}",current_twitter_account.id]], :include_blank=>true, :class=>"form-control" %>
+    <%=f.select :twitter_account_id, [["@#{current_twitter_account.screen_name}",current_twitter_account.id]], {:include_blank=>true}, {:class=>"form-control"} %>
 <% else %>
     <%=link_to "Sign in with Twitter", new_twitter_account_path(:return_to => new_campaign_path), :class => "btn btn-info" %>
 <% end %>
@@ -32,7 +32,7 @@
     <% if current_facebook_account.facebook_pages.empty? %>
     <div class="alert alert-info">No Facebook pages are associated with your account.</div>
     <% else %>
-            <%=f.select :facebook_page_uid, current_facebook_account.facebook_pages.collect{|a| [a["name"], a["id"] ]}, :include_blank=>true, :class=>"form-control" %>
+            <%=f.select :facebook_page_uid, current_facebook_account.facebook_pages.collect{|a| [a["name"], a["id"] ]}, {:include_blank=>true}, {:class=>"form-control"} %>
     <%end%>
 <% else %>
     <%=link_to "Sign in with Facebook", new_facebook_account_path(:return_to => new_campaign_path), :class=> "btn btn-primary"%>

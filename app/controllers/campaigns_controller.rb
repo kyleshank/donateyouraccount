@@ -88,9 +88,11 @@ class CampaignsController < ApplicationController
 
     render_not_found and return unless @campaign
 
-    if @campaign.premium? and @campaign.domain and (request.format!="js")
-      if (request.host != @campaign.domain) or (request.path!="/")
-        redirect_to "http://#{@campaign.domain}" and return
+    unless @campaign.managed_by?(current_accounts)
+      if @campaign.premium? and @campaign.domain and (request.format!="js")
+        if (request.host != @campaign.domain) or (request.path!="/")
+          redirect_to "http://#{@campaign.domain}" and return
+        end
       end
     end
 
@@ -113,7 +115,11 @@ class CampaignsController < ApplicationController
   private
 
   def campaign_params
-    params.require(:campaign).permit(:name, :permalink, :twitter_account_id, :facebook_page_uid, :description)
+    if @campaign and @campaign.premium?
+      params.require(:campaign).permit(:name, :permalink, :twitter_account_id, :facebook_page_uid, :description, :domain, :css, :thank_you_title, :thank_you_body)
+    else
+      params.require(:campaign).permit(:name, :permalink, :twitter_account_id, :facebook_page_uid, :description)
+    end
   end
 
   def load_campaign

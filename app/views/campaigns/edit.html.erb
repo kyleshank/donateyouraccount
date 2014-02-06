@@ -20,7 +20,7 @@
     <%=f.label :twitter_account, :class=>"control-label col-sm-2" %>
     <div class="col-sm-10">
       <% if current_twitter_account %>
-    <%=f.select :twitter_account_id, [["@#{current_twitter_account.screen_name}",current_twitter_account.id]], :include_blank=>true %>
+    <%=f.select :twitter_account_id, [["@#{current_twitter_account.screen_name}",current_twitter_account.id]], {:include_blank=>true}, {:class=>"form-control"} %>
 <% else %>
     <%=link_to "Sign in with Twitter", new_twitter_account_path, :class => "btn btn-info" %>
 <% end %>
@@ -30,7 +30,7 @@
     <%=f.label :facebook_page, :class=>"control-label col-sm-2" %>
     <div class="col-sm-10">
 <% if current_facebook_account and (@campaign.facebook_page_uid.blank? or (@campaign.donations.facebook.count==0)) %>
-    <%=f.select :facebook_page_uid, current_facebook_account.facebook_pages.collect{|a| [a["name"], a["id"] ]}, :include_blank=>true %>
+    <%=f.select :facebook_page_uid, current_facebook_account.facebook_pages.collect{|a| [a["name"], a["id"] ]}, {:include_blank=>true}, {:class=>"form-control"} %>
 <% elsif !@campaign.facebook_page_uid.blank?%>
     <%=link_to @campaign.facebook_page["name"], @campaign.facebook_page["link"], :class=> "btn btn-primary facebook", :target=>"_blank"%>
 <% else %>
@@ -45,10 +45,32 @@
     </div>
   </div>
 <% if @campaign.premium? %>
+<div class="form-group">
+    <%=f.label :domain, :class=>"control-label col-sm-2" %>
+    <div class="col-sm-10">
+      <%=f.text_field :domain, :placeholder => "donateyouraccount.yourdomain.com", :class=>"form-control"%>
+      <div class="helper">Run Donate Your Account on your own domain. Add a CNAME record for a subdomain (e.g. donate.yourdomain.com) with the value <strong>donateyouraccount.com</strong>.</div>
+    </div>
+  </div>
   <div class="form-group">
-    <%=f.label :css, :class=>"control-label col-sm-2" %>
+    <%=f.label :css, "CSS", :class=>"control-label col-sm-2" %>
     <div class="col-sm-10">
       <%=f.text_area :css, :rows => 8, :placeholder=>"CSS", :class=>"form-control"%>
+      <div class="helper">Use CSS to customize the look and feel of your campaign pages.</div>
+    </div>
+  </div>
+<div class="form-group">
+    <%=f.label :thank_you_title, :class=>"control-label col-sm-2" %>
+    <div class="col-sm-10">
+      <%=f.text_field :thank_you_title, :placeholder => "Thank You Page Title", :class=>"form-control"%>
+      <div class="helper">The title to use on the thank you page shown after somone donates.</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <%=f.label :thank_you_body, :class=>"control-label col-sm-2" %>
+    <div class="col-sm-10">
+      <%=f.text_area :thank_you_body, :rows => 8, :placeholder=>"Thank You Page Body", :class=>"form-control"%>
+      <div class="helper">The body of the thank you page shown after someone donates. This can contain images, links or any HTML you'd like.</div>
     </div>
   </div>
 <% end %>

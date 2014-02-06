@@ -2,16 +2,16 @@
   <h1><%=@campaign.name%> <small>Donate Your Account</small></h1>
 </div>
 
-<%=form_for @donation, :url => twitter_campaign_donations_path(@campaign), :html => {:class=>"form-horizontal"} do |f|%>
+<%=form_for @donation, :url => twitter_campaign_donations_path(@campaign), :html => {:role=>"form", :class=>"form-horizontal"} do |f|%>
 <div class="alert alert-warning">
   Your account will automatically retweet messages posted to <strong><%=link_to "@#{@campaign.twitter_account.screen_name}", @campaign.twitter_account.url, :target => "_blank"%></strong> on Twitter.
 </div>
-<div class="control-group">
-    <%=f.label :donation_level, :class=>"control-label" %>
-    <div class="controls">
+<div class="col-md-offset-4 col-md-4">
+<div class="form-group">
+    <%=f.label :donation_level %>
 <% if !@campaign.premium? || (@campaign.premium? and ((@campaign.levels & Donation::LEVELS["Gold"])==Donation::LEVELS["Gold"])) %>
 <label class="radio">
-  <%=f.radio_button :level, Donation::LEVELS["Gold"]%> Gold: 1 retweet per day
+  <%=f.radio_button :level, Donation::LEVELS["Gold"] %> Gold: 1 retweet per day
 </label>
 <% end %>
 <% if !@campaign.premium? || (@campaign.premium? and ((@campaign.levels & Donation::LEVELS["Silver"])==Donation::LEVELS["Silver"])) %>
@@ -24,11 +24,9 @@
   <%=f.radio_button :level, Donation::LEVELS["Bronze"]%> Bronze: 1 retweet per month
 </label>
 <% end %>
-    </div>
   </div>
-<div class="control-group">
-    <div class="controls">
-      <%=f.submit "Donate Your Twitter Account", :class => "btn btn-success", :data => {:confirm => "Are you sure you want to donate retweets to @#{@campaign.twitter_account.screen_name} on Twitter?"} %>
-    </div>
+<div class="form-group">
+      <%=f.submit "Donate Your Twitter Account", :class => "btn btn-success btn-lg", :data => {:confirm => "Are you sure you want to donate retweets to @#{@campaign.twitter_account.screen_name} on Twitter?"} %>
   </div>
+</div>
 <%end%>
