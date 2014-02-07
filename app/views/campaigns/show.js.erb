@@ -1,4 +1,4 @@
-document.write('<%=raw stylesheet_link_tag("http://#{request.host_with_port}#{asset_path('widget.base.css')}")%>');
+document.write('<%=raw stylesheet_link_tag("http://#{request.host_with_port}#{asset_path('widget.css')}")%>');
 document.write('<div id="dya_box">');
 document.write('<div id="dya_box_title"><a href="<%=raw "http://#{request.host_with_port}#{campaign_permalink_path(@campaign)}"%>"><img src="<%=raw "http://#{request.host_with_port}#{asset_path('dya_widget_title.png')}"%>"/></a></div>');
 document.write('<div id="dya_box_donors">');
