@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140206192907) do
+ActiveRecord::Schema.define(version: 20140207014839) do
 
   create_table "accounts", force: true do |t|
     t.string   "uid"
@@ -56,6 +56,9 @@ ActiveRecord::Schema.define(version: 20140206192907) do
     t.text     "css"
     t.string   "thank_you_title"
     t.text     "thank_you_body"
+    t.string   "level_gold"
+    t.string   "level_silver"
+    t.string   "level_bronze"
   end
 
   create_table "delayed_jobs", force: true do |t|

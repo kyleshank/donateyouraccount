@@ -75,6 +75,9 @@ class CampaignsController < ApplicationController
         end
       end
     end
+
+    @campaign.levels = params[:levels]
+
     if @campaign.update_attributes(campaign_params)
       flash[:notice] = "Campaign updated"
       # redirect_to campaign_permalink_path(@campaign) and return
@@ -116,7 +119,7 @@ class CampaignsController < ApplicationController
 
   def campaign_params
     if @campaign and @campaign.premium?
-      params.require(:campaign).permit(:name, :permalink, :twitter_account_id, :facebook_page_uid, :description, :domain, :css, :thank_you_title, :thank_you_body)
+      params.require(:campaign).permit(:name, :permalink, :twitter_account_id, :facebook_page_uid, :description, :domain, :css, :thank_you_title, :thank_you_body, :level_gold, :level_silver, :level_bronze)
     else
       params.require(:campaign).permit(:name, :permalink, :twitter_account_id, :facebook_page_uid, :description)
     end

@@ -46,6 +46,21 @@
   </div>
 <% if @campaign.premium? %>
 <div class="form-group">
+    <%=f.label :levels, "Donation Levels", :class=>"control-label col-sm-2" %>
+    <div class="col-sm-10">
+<label class="radio">
+  <%=check_box_tag "levels[]", Donation::LEVELS["Gold"], ((@campaign.levels & Donation::LEVELS["Gold"])==Donation::LEVELS["Gold"]) %> <%=f.text_field :level_gold, :placeholder => "Gold", :class=>"form-inline" %>: 1 retweet per day
+</label>
+<label class="radio">
+  <%=check_box_tag "levels[]", Donation::LEVELS["Silver"], ((@campaign.levels & Donation::LEVELS["Silver"])==Donation::LEVELS["Silver"])%> <%=f.text_field :level_silver, :placeholder => "Silver", :class=>"form-inline" %>: 1 retweet per week
+</label>
+<label class="radio">
+  <%=check_box_tag "levels[]", Donation::LEVELS["Bronze"], ((@campaign.levels & Donation::LEVELS["Bronze"])==Donation::LEVELS["Bronze"])%> <%=f.text_field :level_bronze, :placeholder => "Bronze", :class=>"form-inline" %>: 1 retweet per month
+</label>
+      <div class="helper">Name your donation levels and choose which ones are available when a supporter makes a donation.</div>
+    </div>
+  </div>
+<div class="form-group">
     <%=f.label :domain, :class=>"control-label col-sm-2" %>
     <div class="col-sm-10">
       <%=f.text_field :domain, :placeholder => "donateyouraccount.yourdomain.com", :class=>"form-control"%>

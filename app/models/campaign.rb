@@ -39,6 +39,9 @@ class Campaign < ActiveRecord::Base
       errors.add(:twitter_account, "Twitter account can't be changed once donations have been made'") if self.changed.include?("twitter_account_id") and (self.donations.twitter.count > 0)
       errors.add(:facebook_page_uid, "Facebook page can't be changed once donations have been made") if self.changed.include?("facebook_page_uid") and (self.donations.facebook.count > 0)
     end
+    if self.premium? and (self.levels == 0)
+      errors.add(:levels, "At least one donation level must be chosen")
+    end
   end
 
   scope :desc, -> {order("campaigns.id desc")}
@@ -76,5 +79,32 @@ class Campaign < ActiveRecord::Base
       end
     end
     found
+  end
+
+  def levels
+    return read_attribute(:levels) if read_attribute(:levels) and (read_attribute(:levels)>0)
+    return 7
+  end
+
+  def level_gold
+    return read_attribute(:level_gold) || "Gold"
+  end
+
+  def level_silver
+    return read_attribute(:level_silver) || "Silver"
+  end
+
+  def level_bronze
+    return read_attribute(:level_bronze) || "Bronze"
+  end
+
+  def levels=(lvls)
+    accumulator = 0
+    if lvls
+      lvls.each do |l|
+        accumulator += l.to_i
+      end
+    end
+    write_attribute(:levels, accumulator)
   end
 end

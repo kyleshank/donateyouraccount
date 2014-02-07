@@ -1,5 +1,5 @@
 <% unless model.errors.empty? %>
-<div class="alert alert-error">
+<div class="alert alert-danger">
   <% model.errors.full_messages.each do |e| %>
   <div><%=e%></div>
   <% end %>

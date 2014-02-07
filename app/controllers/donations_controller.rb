@@ -29,7 +29,9 @@ class DonationsController < ApplicationController
 
   def twitter
     @donation = @campaign.donations.new
-    @donation.level = Donation::LEVELS["Gold"]
+    @donation.level = Donation::LEVELS["Bronze"] if ((@campaign.levels & Donation::LEVELS["Bronze"])==Donation::LEVELS["Bronze"])
+    @donation.level = Donation::LEVELS["Silver"] if ((@campaign.levels & Donation::LEVELS["Silver"])==Donation::LEVELS["Silver"])
+    @donation.level = Donation::LEVELS["Gold"] if ((@campaign.levels & Donation::LEVELS["Gold"])==Donation::LEVELS["Gold"])
   end
 
   def twitter_create
@@ -49,7 +51,9 @@ class DonationsController < ApplicationController
 
   def facebook
     @donation = @campaign.donations.new
-    @donation.level = Donation::LEVELS["Gold"]
+    @donation.level = Donation::LEVELS["Bronze"] if ((@campaign.levels & Donation::LEVELS["Bronze"])==Donation::LEVELS["Bronze"])
+    @donation.level = Donation::LEVELS["Silver"] if ((@campaign.levels & Donation::LEVELS["Silver"])==Donation::LEVELS["Silver"])
+    @donation.level = Donation::LEVELS["Gold"] if ((@campaign.levels & Donation::LEVELS["Gold"])==Donation::LEVELS["Gold"])
   end
 
   def facebook_create
