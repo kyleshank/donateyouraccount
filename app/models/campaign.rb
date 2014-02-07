@@ -111,15 +111,26 @@ class Campaign < ActiveRecord::Base
     write_attribute(:levels, accumulator)
   end
 
-  def upgrade!(token)
+  def upgrade!(token, last4, exp_month, exp_year, type)
     errors.add(:email, "Email required") and return false if self.email.nil? or self.email.empty?
     # Create a Customer
-    customer = Stripe::Customer.create(
-      :card => token,
-      :plan => "pro",
-      :email => self.email
-    )
+    customer = nil
+    if self.customer_id.nil?
+      customer = Stripe::Customer.create(
+        :card => token,
+        :plan => "pro",
+        :email => self.email
+      )
+    else
+      customer = Stripe::Customer.retrieve(self.customer_id)
+      customer.card = token
+      customer.save
+    end
     errors.add(:customer_id, "Payment failed") and return false unless (customer and customer.id)
+    self.billing_last4 = last4
+    self.billing_exp_month = exp_month
+    self.billing_exp_year = exp_year
+    self.billing_type = type
     self.premium = true
     self.customer_id = customer.id
     save

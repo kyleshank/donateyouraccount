@@ -2,6 +2,12 @@
   <h1><%=@campaign.name%></h1>
 </div>
 <% if defined?(DYA_PAYMENTS) %>
+<% content_for :head do %>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
+</script>
+<% end %>
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Billing</h3>
@@ -9,30 +15,73 @@
   <div class="panel-body">
     <% if @campaign.premium? %>
         <p>
-          You've signed up for the <strong>Pro</strong> plan.
+          This campaign is on the <strong>Pro</strong> plan.
         </p>
         <% unless @campaign.customer_id.nil? %>
         <p>
           Your credit card will automatically be charged <strong>$5.00</strong> every month.
         </p>
+        <p>
+          <i class="fa fa-credit-card"></i> <strong><%=@campaign.billing_type%> ...<%=@campaign.billing_last4%></strong> Expiration: <strong><%=@campaign.billing_exp_month%>/<%=@campaign.billing_exp_year%></strong>
+        </p>
+        <p class="upgrade-card-link">
+          <a href="#" class="btn btn-info">Change Credit Card</a>
+        </p>
+        <div class="upgrade-card" style="display: none">
+        <p>
+                  <%= form_tag upgrade_campaign_path(@campaign), :id => "payment-form", :role=>"form", :class=> "form-horizontal" do %>
+          <span class="payment-errors"></span>
+
+          <div class="payment-row">
+            <label class="control-label">
+              <i class="fa fa-credit-card"></i>
+            </label>
+
+              <input type="text" size="20" data-stripe="number" class="form-control" placeholder="Card number"/>
+
+          </div>
+
+          <div  class="payment-row">
+                      <label class="control-label">
+                        <i class="fa fa-calendar"></i>
+                      </label>
+                          <input type="text" size="2" data-stripe="exp-month" class="form-control" placeholder="MM"/> / <input type="text" size="4" data-stripe="exp-year" class="form-control" placeholder="YYYY"/>
+                    </div>
+
+          <div  class="payment-row">
+                      <label class="control-label">
+                        <i class="fa fa-lock"></i>
+                      </label>
+                          <input type="text" size="4" data-stripe="cvc" class="form-control"  placeholder="CVC"/>
+                    </div>
+
+
+<div>
+          <button type="submit" class="btn btn-success">Update Credit Card</button>
+</div>
+        <% end %>
+      </p>
+    </div>
 <p>
-    <%= link_to "Downgrade", downgrade_campaign_path(@campaign), :method => :post, :class=>"btn btn-danger", :confirm =>"Are you sure you want to cancel your Pro plan downgrade to the Free plan?"%> to the <strong>Free</strong> plan.
+    <%= link_to "Cancel and downgrade", downgrade_campaign_path(@campaign), :method => :post, :class=>"btn btn-danger", :confirm =>"Are you sure you want to cancel your Pro plan downgrade to the Free plan?"%> to the <strong>Free</strong> plan.  This campaign will lose its <strong>Pro</strong> plan features.
     </p>
             <% end%>
     <%else%>
-<p>You are currently using the <strong>Free</strong> plan.</p>
-            <p>Upgrade to the <strong>Pro</strong> plan to rename donation levels, host your campaign on your own domain, customize your campaign page with CSS and a custom thank you page after a donation is made.</p>
+<p>This campaign is currently on the <strong>Free</strong> plan.</p>
+            <p>Upgrade this campaign to the <strong>Pro</strong> plan to rename donation levels, host it on your own domain, customize your page with CSS and have a custom thank you page after a donation is made for $5 per month.  You can downgrade and cancel anytime.</p>
 
-<% content_for :head do %>
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-<script type="text/javascript">
-Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
-</script>
-<% end %>
+
 
         <%= form_tag upgrade_campaign_path(@campaign), :id => "payment-form", :role=>"form", :class=> "form-horizontal" do %>
           <span class="payment-errors"></span>
+<div class="payment-row">
+            <label class="control-label">
+              <i class="fa fa-money"></i>
+            </label>
 
+              <strong>$5.00 every month</strong>
+
+          </div>
 <div class="payment-row">
             <label class="control-label">
               <i class="fa fa-envelope"></i>
@@ -70,7 +119,9 @@ Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
           <button type="submit" class="btn btn-success">Upgrade to Donate Your Account Pro</button>
 </div>
         <% end %>
-<script>
+
+    <%end%>
+    <script>
     var stripeResponseHandler = function(status, response) {
       var $form = $('#payment-form');
 
@@ -83,6 +134,14 @@ Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
         var token = response.id;
         // Insert the token into the form so it gets submitted to the server
         $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+        var last4 = response.card.last4;
+        $form.append($('<input type="hidden" name="last4" />').val(last4));
+        var exp_month = response.card.exp_month;
+        $form.append($('<input type="hidden" name="exp_month" />').val(exp_month));
+        var exp_year = response.card.exp_year;
+        $form.append($('<input type="hidden" name="exp_year" />').val(exp_year));
+        var type = response.card.type;
+        $form.append($('<input type="hidden" name="type" />').val(type));
         // and submit
         $form.get(0).submit();
       }
@@ -99,9 +158,14 @@ Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
         // Prevent the form from submitting with the default action
         return false;
       });
+      $(".upgrade-card-link").click(function(e){
+        e.preventDefault();
+        $(".upgrade-card").show();
+        $(this).hide();
+        return false;
+      })
     });
 </script>
-    <%end%>
   </div>
 </div>
 <% end %>
@@ -153,13 +217,13 @@ Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
     <%=f.label :levels, "Donation Levels", :class=>"control-label col-sm-2" %>
     <div class="col-sm-10">
 <label class="radio">
-  <%=check_box_tag "levels[]", Donation::LEVELS["Gold"], ((@campaign.levels & Donation::LEVELS["Gold"])==Donation::LEVELS["Gold"]) %> <%=f.text_field :level_gold, :placeholder => "Gold", :class=>"form-inline" %>: 1 retweet per day
+  <%=check_box_tag "levels[]", Donation::LEVELS["Gold"], ((@campaign.levels & Donation::LEVELS["Gold"])==Donation::LEVELS["Gold"]) %> <%=f.text_field :level_gold, :placeholder => "Gold", :class=>"form-inline" %>: 1 retweet/share per day
 </label>
 <label class="radio">
-  <%=check_box_tag "levels[]", Donation::LEVELS["Silver"], ((@campaign.levels & Donation::LEVELS["Silver"])==Donation::LEVELS["Silver"])%> <%=f.text_field :level_silver, :placeholder => "Silver", :class=>"form-inline" %>: 1 retweet per week
+  <%=check_box_tag "levels[]", Donation::LEVELS["Silver"], ((@campaign.levels & Donation::LEVELS["Silver"])==Donation::LEVELS["Silver"])%> <%=f.text_field :level_silver, :placeholder => "Silver", :class=>"form-inline" %>: 1 retweet/share per week
 </label>
 <label class="radio">
-  <%=check_box_tag "levels[]", Donation::LEVELS["Bronze"], ((@campaign.levels & Donation::LEVELS["Bronze"])==Donation::LEVELS["Bronze"])%> <%=f.text_field :level_bronze, :placeholder => "Bronze", :class=>"form-inline" %>: 1 retweet per month
+  <%=check_box_tag "levels[]", Donation::LEVELS["Bronze"], ((@campaign.levels & Donation::LEVELS["Bronze"])==Donation::LEVELS["Bronze"])%> <%=f.text_field :level_bronze, :placeholder => "Bronze", :class=>"form-inline" %>: 1 retweet/share per month
 </label>
       <div class="helper">Name your donation levels and choose which ones are available when a supporter makes a donation.</div>
     </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140207032746) do
+ActiveRecord::Schema.define(version: 20140207142326) do
 
   create_table "accounts", force: true do |t|
     t.string   "uid"
@@ -61,6 +61,10 @@ ActiveRecord::Schema.define(version: 20140207032746) do
     t.string   "level_bronze"
     t.string   "customer_id"
     t.string   "email"
+    t.string   "billing_last4"
+    t.integer  "billing_exp_month"
+    t.integer  "billing_exp_year"
+    t.string   "billing_type"
   end
 
   create_table "delayed_jobs", force: true do |t|

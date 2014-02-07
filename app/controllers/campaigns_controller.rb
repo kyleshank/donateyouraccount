@@ -117,9 +117,14 @@ class CampaignsController < ApplicationController
 
   def upgrade
     token = params[:stripeToken]
-    @campaign.email = params[:campaign][:email]
-    if @campaign.upgrade!(token)
-      flash[:success] = "You've been upgraded to Donate Your Account Pro!"
+    already_exists = !@campaign.customer_id.nil?
+    @campaign.email = params[:campaign][:email] if params[:campaign] and params[:campaign][:email]
+    if @campaign.upgrade!(token, params[:last4], params[:exp_month], params[:exp_year], params[:type])
+      if already_exists
+        flash[:success] = "Your credit card has been updated"
+      else
+        flash[:success] = "You've been upgraded to Donate Your Account Pro!"
+      end
     else
       flash[:error] = @campaign.errors.first[1]
     end
