@@ -87,15 +87,18 @@ class Campaign < ActiveRecord::Base
   end
 
   def level_gold
-    return read_attribute(:level_gold) || "Gold"
+    return read_attribute(:level_gold) if read_attribute(:level_gold) and !read_attribute(:level_gold).empty?
+    "Gold"
   end
 
   def level_silver
-    return read_attribute(:level_silver) || "Silver"
+    return read_attribute(:level_silver) if read_attribute(:level_silver) and !read_attribute(:level_silver).empty?
+    "Silver"
   end
 
   def level_bronze
-    return read_attribute(:level_bronze) || "Bronze"
+    return read_attribute(:level_bronze) if read_attribute(:level_bronze) and !read_attribute(:level_bronze).empty?
+    "Bronze"
   end
 
   def levels=(lvls)
@@ -106,5 +109,31 @@ class Campaign < ActiveRecord::Base
       end
     end
     write_attribute(:levels, accumulator)
+  end
+
+  def upgrade!(token)
+    errors.add(:email, "Email required") and return false if self.email.nil? or self.email.empty?
+    # Create a Customer
+    customer = Stripe::Customer.create(
+      :card => token,
+      :plan => "pro",
+      :email => self.email
+    )
+    errors.add(:customer_id, "Payment failed") and return false unless (customer and customer.id)
+    self.premium = true
+    self.customer_id = customer.id
+    save
+  end
+
+  def downgrade!
+    return false if self.customer_id.nil?
+    cu = Stripe::Customer.retrieve(self.customer_id)
+    if cu and cu.cancel_subscription
+      self.premium = false
+      self.customer_id = nil
+      save
+      return true
+    end
+    false
   end
 end

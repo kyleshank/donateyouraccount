@@ -42,6 +42,10 @@ Dya::Application.routes.draw do
     end
     resources :twitter_statuses
     resources :facebook_statuses
+    member do
+      post :upgrade
+      post :downgrade
+    end
   end
 
   get 'start' => "dya#start", :as => :start

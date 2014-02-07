@@ -20,7 +20,7 @@ class CampaignsController < ApplicationController
   include TwitterAccountsHelper
   
   before_filter :login_required, :except => [:show,:index]
-  before_filter :load_campaign, :only =>[:edit,:update, :destroy]
+  before_filter :load_campaign, :only =>[:edit,:update, :destroy, :upgrade, :downgrade]
 
   caches_page :show, :if => Proc.new { |c| c.request.format.js? }
 
@@ -92,7 +92,7 @@ class CampaignsController < ApplicationController
     render_not_found and return unless @campaign
 
     unless @campaign.managed_by?(current_accounts)
-      if @campaign.premium? and @campaign.domain and (request.format!="js")
+      if @campaign.premium? and @campaign.domain and !@campaign.domain.empty? and (request.format!="js")
         if (request.host != @campaign.domain) or (request.path!="/")
           redirect_to "http://#{@campaign.domain}" and return
         end
@@ -115,11 +115,29 @@ class CampaignsController < ApplicationController
     redirect_to dashboard_path
   end
 
+  def upgrade
+    token = params[:stripeToken]
+    @campaign.email = params[:campaign][:email]
+    if @campaign.upgrade!(token)
+      flash[:success] = "You've been upgraded to Donate Your Account Pro!"
+    else
+      flash[:error] = @campaign.errors.first[1]
+    end
+
+    redirect_to edit_campaign_path(@campaign)
+  end
+
+  def downgrade
+    @campaign.downgrade!
+    flash[:success] = "Your account has been downgraded back to the Free plan"
+    redirect_to edit_campaign_path(@campaign)
+  end
+
   private
 
   def campaign_params
     if @campaign and @campaign.premium?
-      params.require(:campaign).permit(:name, :permalink, :twitter_account_id, :facebook_page_uid, :description, :domain, :css, :thank_you_title, :thank_you_body, :level_gold, :level_silver, :level_bronze)
+      params.require(:campaign).permit(:name, :permalink, :twitter_account_id, :facebook_page_uid, :description, :domain, :css, :thank_you_title, :thank_you_body, :level_gold, :level_silver, :level_bronze, :email)
     else
       params.require(:campaign).permit(:name, :permalink, :twitter_account_id, :facebook_page_uid, :description)
     end

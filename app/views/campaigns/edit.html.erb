@@ -1,6 +1,110 @@
 <div class="page-header">
   <h1><%=@campaign.name%></h1>
 </div>
+<% if defined?(DYA_PAYMENTS) %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Billing</h3>
+  </div>
+  <div class="panel-body">
+    <% if @campaign.premium? %>
+        <p>
+          You've signed up for the <strong>Pro</strong> plan.
+        </p>
+        <% unless @campaign.customer_id.nil? %>
+        <p>
+          Your credit card will automatically be charged <strong>$5.00</strong> every month.
+        </p>
+<p>
+    <%= link_to "Downgrade", downgrade_campaign_path(@campaign), :method => :post, :class=>"btn btn-danger", :confirm =>"Are you sure you want to cancel your Pro plan downgrade to the Free plan?"%> to the <strong>Free</strong> plan.
+    </p>
+            <% end%>
+    <%else%>
+<p>You are currently using the <strong>Free</strong> plan.</p>
+            <p>Upgrade to the <strong>Pro</strong> plan to rename donation levels, host your campaign on your own domain, customize your campaign page with CSS and a custom thank you page after a donation is made.</p>
+
+<% content_for :head do %>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
+</script>
+<% end %>
+
+        <%= form_tag upgrade_campaign_path(@campaign), :id => "payment-form", :role=>"form", :class=> "form-horizontal" do %>
+          <span class="payment-errors"></span>
+
+<div class="payment-row">
+            <label class="control-label">
+              <i class="fa fa-envelope"></i>
+            </label>
+
+              <input type="text" size="30" name="campaign[email]" data-stripe="email" class="form-control" placeholder="Email"/>
+
+          </div>
+
+          <div class="payment-row">
+            <label class="control-label">
+              <i class="fa fa-credit-card"></i>
+            </label>
+
+              <input type="text" size="20" data-stripe="number" class="form-control" placeholder="Card number"/>
+
+          </div>
+
+          <div  class="payment-row">
+                      <label class="control-label">
+                        <i class="fa fa-calendar"></i>
+                      </label>
+                          <input type="text" size="2" data-stripe="exp-month" class="form-control" placeholder="MM"/> / <input type="text" size="4" data-stripe="exp-year" class="form-control" placeholder="YYYY"/>
+                    </div>
+
+          <div  class="payment-row">
+                      <label class="control-label">
+                        <i class="fa fa-lock"></i>
+                      </label>
+                          <input type="text" size="4" data-stripe="cvc" class="form-control"  placeholder="CVC"/>
+                    </div>
+
+
+<div>
+          <button type="submit" class="btn btn-success">Upgrade to Donate Your Account Pro</button>
+</div>
+        <% end %>
+<script>
+    var stripeResponseHandler = function(status, response) {
+      var $form = $('#payment-form');
+
+      if (response.error) {
+        // Show the errors on the form
+        $form.find('.payment-errors').text(response.error.message);
+        $form.find('button').prop('disabled', false);
+      } else {
+        // token contains id, last4, and card type
+        var token = response.id;
+        // Insert the token into the form so it gets submitted to the server
+        $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+        // and submit
+        $form.get(0).submit();
+      }
+    };
+    jQuery(function($) {
+      $('#payment-form').submit(function(event) {
+        var $form = $(this);
+
+        // Disable the submit button to prevent repeated clicks
+        $form.find('button').prop('disabled', true);
+
+        Stripe.card.createToken($form, stripeResponseHandler);
+
+        // Prevent the form from submitting with the default action
+        return false;
+      });
+    });
+</script>
+    <%end%>
+  </div>
+</div>
+<% end %>
 <%= form_for @campaign, :url => campaign_path, :method => :put, :html => {:role=>"form", :class=>"form-horizontal"} do |f|%>
 <%=render :partial => "layouts/errors", :locals => {:model => @campaign}%>
 

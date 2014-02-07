@@ -1,0 +1,1 @@
+Stripe.api_key = Rails.configuration.stripe[:secret_key] if defined?(DYA_PAYMENTS)

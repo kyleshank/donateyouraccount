@@ -1,6 +1,6 @@
-document.write('<%=raw stylesheet_link_tag("http://#{request.host_with_port}/assets/widget.base.css")%>');
+document.write('<%=raw stylesheet_link_tag("http://#{request.host_with_port}#{asset_path('widget.base.css')}")%>');
 document.write('<div id="dya_box">');
-document.write('<div id="dya_box_title"><a href="<%=raw "http://#{request.host_with_port}#{campaign_permalink_path(@campaign)}"%>"><img src="<%=raw "http://#{request.host_with_port}"%>/assets/dya_widget_title.png"/></a></div>');
+document.write('<div id="dya_box_title"><a href="<%=raw "http://#{request.host_with_port}#{campaign_permalink_path(@campaign)}"%>"><img src="<%=raw "http://#{request.host_with_port}#{asset_path('dya_widget_title.png')}"%>"/></a></div>');
 document.write('<div id="dya_box_donors">');
 <% @donors.each do |donor|%>
 document.write('<%=raw link_to(image_tag(donor.account.profile_image_url), donor.account.url, :target=>"_blank", :title => (donor.account.screen_name || donor.account.name))%>');
