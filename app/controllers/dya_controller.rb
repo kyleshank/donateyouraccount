@@ -23,7 +23,7 @@ class DyaController < ApplicationController
 
   def index
     redirect_to dashboard_path and return if logged_in?
-    @donations = Donation.select("DISTINCT(campaign_id)").order("id DESC").limit(4)
+    render :layout => false
   end
 
   def home
