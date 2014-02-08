@@ -17,6 +17,9 @@ Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
         <p>
           This campaign is on the <strong>Pro</strong> plan.
         </p>
+        <p>
+          If you have any questions or run into any issues don't hesitate to email <a href="mailto:kyle@donateyouraccount.com" class="btn btn-info"><i class="fa fa-envelope"></i> kyle@donateyouraccount.com</a>
+        </p>
         <% unless @campaign.customer_id.nil? %>
         <p>
           Your credit card will automatically be charged <strong>$5.00</strong> every month.
@@ -69,6 +72,9 @@ Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
     <%else%>
 <p>This campaign is currently on the <strong>Free</strong> plan.</p>
             <p>Upgrade this campaign to the <strong>Pro</strong> plan to rename donation levels, host it on your own domain, customize your page with CSS and have a custom thank you page after a donation is made for $5 per month.  You can downgrade and cancel anytime.</p>
+            <p>
+              <%=link_to "Learn more about Donate Your Account Pro", "/pro", :class=>"btn btn-info"%>
+            </p>
 
 
 
@@ -210,6 +216,9 @@ Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
     <%=f.label :description, :class=>"control-label col-sm-2" %>
     <div class="col-sm-10">
       <%=f.text_area :description, :rows => 4, :placeholder=>"Description", :class=>"form-control"%>
+      <% if @campaign.premium?%>
+      <div class="helper">The description can now contain any images, links or HTML you'd like.</div>
+      <%end %>
     </div>
   </div>
 <% if @campaign.premium? %>
@@ -232,7 +241,11 @@ Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
     <%=f.label :domain, :class=>"control-label col-sm-2" %>
     <div class="col-sm-10">
       <%=f.text_field :domain, :placeholder => "donateyouraccount.yourdomain.com", :class=>"form-control"%>
-      <div class="helper">Run Donate Your Account on your own domain. Add a CNAME record for a subdomain (e.g. donate.yourdomain.com) with the value <strong>donateyouraccount.com</strong>.</div>
+      <div class="helper">
+        <div>Run Donate Your Account on your own domain.</div>
+        <div>Add a CNAME record for a subdomain (e.g. donate.yourdomain.com) with the value <strong>donateyouraccount.com</strong>.</div>
+        <div>If you need help setting up the DNS CNAME record don't hesitate to email <a href="mailto:kyle@donateyouraccount.com">kyle@donateyouraccount.com</a>.</div>
+      </div>
     </div>
   </div>
   <div class="form-group">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Donate Your Account - Get your supporters to donate their Twitter and Facebook accounts</title>
+  <title>Donate Your Account PRO - Customize your campaign and get more donations</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.png" type="image/png" />
 <!-- Latest compiled and minified CSS -->
@@ -18,14 +18,12 @@
   <%= csrf_meta_tag %>
   <%=yield :head%>
 </head>
-<body class="index">
+<body class="pro">
 
 <div class="section title">
     <div class="container">
-      <%=link_to raw("<i class='fa fa-facebook-square'></i> Sign in with Facebook"), new_facebook_account_path, :class=>"pull-right hidden-xs" %>
-      <%=link_to raw("<i class='fa fa-twitter'></i>Sign in with Twitter"), new_twitter_account_path, :class=>"pull-right hidden-xs" %>
-      <h1>Donate Your Account</h1>
-      <h2>Get your supporters to donate their Twitter and Facebook accounts</h2>
+      <h1>Donate Your Account Pro</h1>
+      <h2>Customize your campaign and get more donations</h2>
     </div>
 </div>
 
@@ -34,27 +32,50 @@
       <div class="row">
         <div class="col-md-4">
           <div>
-            <i class="fa fa-twitter"></i>
-            <i class="fa fa-facebook-square"></i>
+            <i class="fa fa-globe"></i>
           </div>
           <p>
-            Supporters donate their Twitter and Facebook accounts
+            Host your campaign on your own domain (donate.yourdomain.com)
           </p>
         </div>
         <div class="col-md-4">
           <div>
-            <i class="fa fa-retweet"></i>
+            <i class="fa fa-css3"></i>
           </div>
           <p>
-            Get your message auto retweeted or shared through donated accounts
+            Customize your campaign page with full HTML and CSS support
           </p>
         </div>
         <div class="col-md-4">
           <div>
-            <i class="fa fa-bullhorn"></i>
+            <i class="fa fa-flag-checkered "></i>
           </div>
           <p>
-            Reach all of your supporters' followers and friends instantly
+            Thank your donors with a custom thank you page and keep their attention
+          </p>
+        </div>
+        <div class="col-md-4">
+          <div>
+            <i class="fa fa-star"></i>
+          </div>
+          <p>
+            Rename donation levels and manage which levels are shown
+          </p>
+        </div>
+        <div class="col-md-4">
+          <div>
+            <i class="fa fa-question-circle"></i>
+          </div>
+          <p>
+            Get direct email support for any questions or issues you have
+          </p>
+        </div>
+        <div class="col-md-4">
+          <div>
+            <i class="fa fa-smile-o"></i>
+          </div>
+          <p>
+            Pro campaigns help subsidize the cost of running the service
           </p>
         </div>
       </div>
@@ -65,8 +86,8 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <h1>Stop asking your supporters to share everything you post online.  Ask them to donate their account.</h1>
-          <div><%=link_to "Start a Campaign", "/start", :class=>"btn btn-lg btn-success"%></div>
+          <h1>Make Donate Your Account your own for just $5/month</h1>
+          <div><%=link_to "Back to Donate Your Account", request.referer || "/", :class=>"btn btn-lg btn-info"%></div>
         </div>
       </div>
     </div>
@@ -74,7 +95,7 @@
 
 <footer>
   <p>
-    This page uses an image from <a href="http://cryptome.org/info/ows-19/ows-19.htm">cryptome.org</a>.
+This page uses a <a href="http://www.flickr.com/photos/dexxus/5578283926/">photo taken by Paul Bica from Flickr</a> and uses it under the <a href="http://creativecommons.org/licenses/by/2.0/deed.en">Creative Commons Attribution 2.0 Generic License</a>.
   </p>
         <p>&copy; 2014 <a href="http://www.reactualize.com">REACTUALIZE LLC</a>. <a href="/privacy.html">Privacy Policy</a> - <a href="http://www.gnu.org/licenses/agpl.html">License</a> - <a href="http://twitter.com/donateuraccount">Twitter</a> - <a href="http://github.com/kyleshank/donateyouraccount">Source Code</a></p>
       </footer>

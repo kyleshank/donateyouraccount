@@ -51,6 +51,7 @@ Dya::Application.routes.draw do
   get 'start' => "dya#start", :as => :start
   get 'home' => "dya#home", :as => :dashboard
   get 'signout' => "dya#signout", :as => :signout
+  get 'pro' => "dya#pro", :as => :pro
 
   post 'facebook_accounts/new' => "facebook_accounts#new"
 

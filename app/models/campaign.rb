@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
+require 'resolv'
 class Campaign < ActiveRecord::Base
   has_many :donations
   has_many :statuses
@@ -41,6 +42,13 @@ class Campaign < ActiveRecord::Base
     end
     if self.premium? and (self.levels == 0)
       errors.add(:levels, "At least one donation level must be chosen")
+    end
+    if self.premium? and !self.domain.nil? and !self.domain.empty?
+      begin
+        errors.add(:domain, "#{self.domain} does not point to donateyouraccount.com. Make sure your DNS CNAME record for #{self.domain} has the value: donateyouraccount.com") unless Resolv.getaddress(self.domain)==Resolv.getaddress(DYA_DOMAIN)
+      rescue
+        errors.add(:domain, "#{self.domain} does not point to donateyouraccount.com. Make sure your DNS CNAME record for #{self.domain} has the value: donateyouraccount.com")
+      end
     end
   end
 

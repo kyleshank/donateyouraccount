@@ -34,6 +34,10 @@ class DyaController < ApplicationController
     render :layout => false
   end
 
+  def pro
+    render :layout => false
+  end
+
   def signout
     @current_twitter_account = @current_facebook_account = nil
     session.delete(:current_twitter_account)

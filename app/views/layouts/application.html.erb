@@ -7,8 +7,7 @@
 
 <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+
   <!-- Latest compiled and minified JavaScript -->
   
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -35,6 +34,7 @@
           <a class="navbar-brand" href="/"><i class='icon-flag'></i> Donate Your Account</a>
     </div>     
     <div class="collapse navbar-collapse">
+      <%=link_to "Pro", "/pro", :class=>"btn btn-info navbar-btn"%>
       <% if logged_in? %>
           <ul class="nav navbar-nav">
               <li class="dropdown">
