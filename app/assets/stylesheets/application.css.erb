@@ -318,3 +318,45 @@ body.pro{
   text-align: center;
   margin: 1em 0 1em 0;
 }
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)  {
+  .index .section.title h1{
+    font-size: 3em !important;
+  }
+  .index .section.title h2{
+    font-size: 1.5em !important;
+  }
+  .pro .section.title{
+    background-position: top;
+  }
+  .pro .section.title h1{
+    font-size: 3em !important;
+  }
+  .pro .section.title h2{
+    font-size: 1.5em !important;
+    text-shadow: 1px 1px 3px #000033;
+  }
+}
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+  .index .section.title h1{
+    font-size: 2em !important;
+  }
+  .index .section.title h2{
+    font-size: 1.5em !important;
+  } 
+  .pro .section.title{
+    background-position: bottom;
+  }
+  .pro .section.title h1{
+    font-size: 2em !important;
+  }
+  .pro .section.title h2{
+    font-size: 1em !important;
+    text-shadow: 1px 1px 3px #000033;
+  }
+}
