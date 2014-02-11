@@ -60,6 +60,7 @@ class TwitterAccountsController < ApplicationController
           @account.profile_text_color = user_info["profile_text_color"]
           @account.profile_background_tile = user_info["profile_background_tile"]
           @account.profile_use_background_image = user_info["profile_use_background_image"]
+          @account.expires_at = nil
 
           if @account.save
             self.current_twitter_account=@account
