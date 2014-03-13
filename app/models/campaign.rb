@@ -57,8 +57,9 @@ class Campaign < ActiveRecord::Base
   scope :for_accounts, -> (accounts) { where(conditions_for_accounts(accounts))}
   scope :pro, -> {where(premium: true)}
 
-  def self.random_pro
+  def self.random_pro(exclude=nil)
     pro_campaigns = Campaign.pro
+    pro_campaigns = pro_campaigns.where(["campaigns.id!=?", exclude.id]) if exclude
     r = rand(pro_campaigns.size)
     pro_campaigns[r]
   end

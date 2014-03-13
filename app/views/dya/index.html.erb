@@ -76,16 +76,9 @@
 
 <div class="pro-ad index">
 <% @cpro = Campaign.random_pro %>
-          <h1><%=image_tag(@cpro.image) if @cpro.image%><%=link_to @cpro.name, campaign_permalink_path(@cpro)%>
-<%if @cpro.twitter_account%>
-            <%=link_to raw("<i class='fa fa-twitter'></i> #{@cpro.donations.twitter.count}"), campaign_permalink_path(@cpro), class: "twitter"%>
-            <% end %>
-            <%if @cpro.facebook_account%>
-            <%=link_to raw("<i class='fa fa-facebook'></i> #{@cpro.donations.facebook.count}"), campaign_permalink_path(@cpro), class: "facebook"%>
-            <% end %>
-          </h1>
+          <h1><%=image_tag(@cpro.image) if @cpro.image%><%=link_to @cpro.name, campaign_permalink_path(@cpro)%> <%=link_to "Donate Your Account", campaign_permalink_path(@cpro), class: "btn btn-lg btn-success"%></h1>
           <p>
-<%=link_to "Go Pro", "/pro", class: "btn btn-default"%> <%=link_to "Browse Campaigns", campaigns_path, class: "btn btn-default"%>
+<%=link_to "Go Pro", "/pro", class: "btn btn-default"%> <%=link_to "Browse Campaigns", campaigns_path, class: "btn btn-default "%>
           </p>
 </div>
 
