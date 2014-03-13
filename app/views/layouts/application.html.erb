@@ -119,10 +119,6 @@
         <% @cpro = Campaign.random_pro(@campaign) %>
         <% if @cpro%>
         <div class="well pro-ad">
-          
-          <ul class="pull-right">
-            <li><%=link_to "Donate Your Account", campaign_permalink_path(@cpro), class: "btn btn-default btn-lg"%></li>
-          </ul>
           <h1><%=image_tag(@cpro.image) if @cpro.image%><%=link_to @cpro.name, campaign_permalink_path(@cpro)%></h1>
         </div>
         <div class="pro-ad-promo">
