@@ -115,6 +115,7 @@
           </div>
           <% flash.delete(:error) %>
         <% end %>
+        <% unless @campaign and @campaign.premium?%>
         <div class="well pro-ad">
           <% @cpro = Campaign.random_pro(@campaign) %>
           <ul class="pull-right">
@@ -125,6 +126,7 @@
         <div class="pro-ad-promo">
           <%=link_to "Want to see your campaign here? Go Pro.", "/pro"%>
         </div>
+        <% end %>
         <%= yield %>
     </div>
 
