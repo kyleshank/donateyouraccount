@@ -73,13 +73,31 @@
 </div>
 
 <div class="container">
+
+<div class="pro-ad index">
+<% @cpro = Campaign.random_pro %>
+          <h1><%=image_tag(@cpro.image) if @cpro.image%><%=link_to @cpro.name, campaign_permalink_path(@cpro)%>
+<%if @cpro.twitter_account%>
+            <%=link_to raw("<i class='fa fa-twitter'></i> #{@cpro.donations.twitter.count}"), campaign_permalink_path(@cpro), class: "twitter"%>
+            <% end %>
+            <%if @cpro.facebook_account%>
+            <%=link_to raw("<i class='fa fa-facebook'></i> #{@cpro.donations.facebook.count}"), campaign_permalink_path(@cpro), class: "facebook"%>
+            <% end %>
+          </h1>
+          <p>
+<%=link_to "Go Pro", "/pro", class: "btn btn-default"%> <%=link_to "Browse Campaigns", campaigns_path, class: "btn btn-default"%>
+          </p>
+</div>
+
 <footer>
 
   <p>
     This page uses an image from <a href="http://cryptome.org/info/ows-19/ows-19.htm">cryptome.org</a>.
   </p>
         <p>&copy; 2014 <a href="http://www.reactualize.com">REACTUALIZE LLC</a>. <a href="/privacy.html">Privacy Policy</a> - <a href="http://www.gnu.org/licenses/agpl.html">License</a> - <a href="http://twitter.com/donateuraccount">Twitter</a> - <a href="http://github.com/kyleshank/donateyouraccount">Source Code</a></p>
-      </footer>
+
+</footer>
+
 </div>
 
 <script type="text/javascript">

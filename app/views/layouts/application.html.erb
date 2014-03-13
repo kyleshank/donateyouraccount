@@ -115,6 +115,22 @@
           </div>
           <% flash.delete(:error) %>
         <% end %>
+        <div class="well pro-ad">
+          <% @cpro = Campaign.random_pro %>
+          <ul class="pull-right">
+            <%if @cpro.twitter_account%>
+            <li><%=link_to raw("<i class='fa fa-twitter'></i> #{@cpro.donations.twitter.count}"), campaign_permalink_path(@cpro), class: "twitter"%></li>
+            <% end %>
+            <%if @cpro.facebook_account%>
+            <li><%=link_to raw("<i class='fa fa-facebook'></i> #{@cpro.donations.facebook.count}"), campaign_permalink_path(@cpro), class: "facebook"%></li>
+            <% end %>
+            <li><%=link_to "Donate", campaign_permalink_path(@cpro), class: "btn btn-default btn-lg"%></li>
+          </ul>
+          <h1><%=image_tag(@cpro.image) if @cpro.image%><%=link_to @cpro.name, campaign_permalink_path(@cpro)%></h1>
+        </div>
+        <div class="pro-ad-promo">
+          <%=link_to "Want to see your campaign here? Go Pro.", "/pro"%>
+        </div>
         <%= yield %>
     </div>
 
