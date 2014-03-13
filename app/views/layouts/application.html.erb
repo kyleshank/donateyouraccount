@@ -116,8 +116,10 @@
           <% flash.delete(:error) %>
         <% end %>
         <% unless @campaign and @campaign.premium?%>
+        <% @cpro = Campaign.random_pro(@campaign) %>
+        <% if @cpro%>
         <div class="well pro-ad">
-          <% @cpro = Campaign.random_pro(@campaign) %>
+          
           <ul class="pull-right">
             <li><%=link_to "Donate Your Account", campaign_permalink_path(@cpro), class: "btn btn-default btn-lg"%></li>
           </ul>
@@ -126,6 +128,7 @@
         <div class="pro-ad-promo">
           <%=link_to "Want to see your campaign here? Go Pro.", "/pro"%>
         </div>
+        <% end %>
         <% end %>
         <%= yield %>
     </div>

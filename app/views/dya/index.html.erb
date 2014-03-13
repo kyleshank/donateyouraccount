@@ -73,14 +73,16 @@
 </div>
 
 <div class="container">
-
-<div class="pro-ad index">
 <% @cpro = Campaign.random_pro %>
+<% if @cpro%>
+<div class="pro-ad index">
+
           <h1><%=image_tag(@cpro.image) if @cpro.image%><%=link_to @cpro.name, campaign_permalink_path(@cpro)%> <%=link_to "Donate Your Account", campaign_permalink_path(@cpro), class: "btn btn-lg btn-success"%></h1>
           <p>
 <%=link_to "Go Pro", "/pro", class: "btn btn-default"%> <%=link_to "Browse Campaigns", campaigns_path, class: "btn btn-default "%>
           </p>
 </div>
+<% end %>
 
 <footer>
 
