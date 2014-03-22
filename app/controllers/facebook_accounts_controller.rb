@@ -25,7 +25,7 @@ class FacebookAccountsController < ApplicationController
   def new
     session[:return_to] = params[:return_to] if params[:return_to]
     if @premium_campaign
-      redirect_to "#{request.protocol}#{DYA_DOMAIN}#{request.path}?return_to=#{CGI.escape(request.original_url)}" 
+      redirect_to "#{request.protocol}#{DYA_DOMAIN}#{request.path}?return_to=#{request.original_url}" 
       return
     end
     permissions = ["share_item"]
