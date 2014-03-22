@@ -82,6 +82,7 @@ class FacebookAccountsController < ApplicationController
       @account.refresh_token = access_token.refresh_token
       @account.followers = JSON.parse(access_token.get("/me/friends").body)["data"].size
       @account.facebook_pages = JSON.parse(access_token.get("/me/accounts").body)["data"].select{|a| a["category"] != "Application"}.to_json if session[:manage_pages]=="true"
+      @account.expires_at = Time.now.utc + 60.days
       @account.expires_at = Time.now.utc + long_lived_token["expires"].to_i if long_lived_token["expires"]
 
       if @account.save

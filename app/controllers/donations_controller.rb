@@ -39,7 +39,7 @@ class DonationsController < ApplicationController
     @donation.account = current_twitter_account
     if @donation.save
       expire_page("/#{@campaign.permalink}.js")
-      if @campaign.premium? and !@campaign.thank_you_body.empty?
+      if @campaign.premium? and !(@campaign.thank_you_body || "").empty?
         redirect_to thanks_campaign_donation_path(@campaign, @donation)
       else
         redirect_to campaign_permalink_path(@campaign)
@@ -61,7 +61,7 @@ class DonationsController < ApplicationController
     @donation.account = current_facebook_account
     if @donation.save
       expire_page("/#{@campaign.permalink}.js")
-      if @campaign.premium? and !@campaign.thank_you_body.empty?
+      if @campaign.premium? and !(@campaign.thank_you_body || "").empty?
         redirect_to thanks_campaign_donation_path(@campaign, @donation)
       else
         redirect_to campaign_permalink_path(@campaign)
