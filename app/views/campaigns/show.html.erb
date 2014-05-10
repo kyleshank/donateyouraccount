@@ -73,7 +73,7 @@
 <%=render :partial => "layouts/sidebar_ad" if defined?(BANNER_AD)%>
 </div>
 
-<div class="col-md-8">
+<div class="col-md-8" style="overflow: hidden">
 
 <% if @campaign.premium? %>
 <div class="description"><%=simple_format(@campaign.description, {}, sanitize: false)%></div>
