@@ -276,3 +276,5 @@ Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
 </div>
   </div>
 <% end %>
+
+<%=button_to "Delete Campaign", campaign_path(@campaign), :method => :delete, :confirm => "Are you sure?", :class=>"btn btn-danger pull-right"%>

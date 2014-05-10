@@ -32,6 +32,8 @@ class Campaign < ActiveRecord::Base
 
   validate :validate_campaign
 
+  before_destroy :cleanup
+
   def validate_campaign
     if self.twitter_account.nil? and self.facebook_account.nil?
       errors.add(:twitter_account, "at least 1 account must be associated with a Campaign")
@@ -162,5 +164,13 @@ class Campaign < ActiveRecord::Base
       return true
     end
     false
+  end
+
+  def cleanup
+    begin
+      downgrade!
+    rescue
+    end
+    true
   end
 end
