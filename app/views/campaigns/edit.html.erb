@@ -207,6 +207,7 @@ Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
     <%=f.select :facebook_page_uid, current_facebook_account.facebook_pages.collect{|a| [a["name"], a["id"] ]}, {:include_blank=>true}, {:class=>"form-control"} %>
 <% elsif !@campaign.facebook_page_uid.blank?%>
     <%=link_to @campaign.facebook_page["name"], @campaign.facebook_page["link"], :class=> "btn btn-primary facebook", :target=>"_blank"%>
+    <p><%=link_to raw("<i class='fa fa-link'></i> Share this link with other Facebook page managers"), manage_campaign_path(@campaign), :class=> "btn btn-info", :target=>"_blank"%></p>
 <% else %>
     <%=link_to "Sign in with Facebook", new_facebook_account_path, :class=> "btn btn-primary facebook"%>
 <% end %>

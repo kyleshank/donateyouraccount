@@ -19,8 +19,8 @@
 class CampaignsController < ApplicationController
   include TwitterAccountsHelper
   
-  before_filter :login_required, :except => [:show,:index]
-  before_filter :load_campaign, :only =>[:edit,:update, :destroy, :upgrade, :downgrade]
+  before_filter :login_required, :except => [:show,:index,:manage]
+  before_filter :load_campaign, :only =>[:edit,:update, :destroy, :upgrade, :downgrade, :manage]
 
   caches_page :show, :if => Proc.new { |c| c.request.format.js? }
 
@@ -136,6 +136,10 @@ class CampaignsController < ApplicationController
     @campaign.downgrade!
     flash[:success] = "Your account has been downgraded back to the Free plan"
     redirect_to edit_campaign_path(@campaign)
+  end
+
+  def manage
+    redirect_to new_facebook_account_path(:manage_pages => "true", :return_to => edit_campaign_path(@campaign))
   end
 
   private

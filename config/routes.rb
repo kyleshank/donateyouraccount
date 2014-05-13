@@ -45,6 +45,7 @@ Dya::Application.routes.draw do
     member do
       post :upgrade
       post :downgrade
+      get :manage
     end
   end
 
