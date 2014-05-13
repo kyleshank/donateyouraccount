@@ -139,6 +139,8 @@ class CampaignsController < ApplicationController
   end
 
   def manage
+    @campaign = Campaign.where(:permalink =>params[:id]).first
+    render_not_found and return unless @campaign
     redirect_to new_facebook_account_path(:manage_pages => "true", :return_to => edit_campaign_path(@campaign))
   end
 
