@@ -20,7 +20,7 @@ class CampaignsController < ApplicationController
   include TwitterAccountsHelper
   
   before_filter :login_required, :except => [:show,:index,:manage]
-  before_filter :load_campaign, :only =>[:edit,:update, :destroy, :upgrade, :downgrade, :manage]
+  before_filter :load_campaign, :only =>[:edit,:update, :destroy, :upgrade, :downgrade]
 
   caches_page :show, :if => Proc.new { |c| c.request.format.js? }
 
