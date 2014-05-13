@@ -23,7 +23,7 @@ class FacebookAccountsController < ApplicationController
   skip_before_filter :redirect_if_campaign_domain
 
   def new
-    session[:return_to] = params[:return_to] if params[:return_to]
+    session[:return_to] = CGI.unescape(params[:return_to]) if params[:return_to]
     if @premium_campaign
       redirect_to "#{request.protocol}#{DYA_DOMAIN}#{request.path}?return_to=#{request.original_url}" 
       return
