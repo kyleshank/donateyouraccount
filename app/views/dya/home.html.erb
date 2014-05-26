@@ -4,7 +4,7 @@
 
 </div>
 <% if @donated_statuses.empty? %>
-<a href="/campaigns" class="btn btn-large">Browse Campaigns</a>
+<a href="/campaigns" class="btn btn-lg btn-default">Browse Campaigns</a>
 <%else%>
 <%=render :partial => "dya/statuses", :object => @donated_statuses%>
 <%=will_paginate @donated_statuses%>

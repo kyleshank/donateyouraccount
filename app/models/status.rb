@@ -20,6 +20,7 @@ class Status < ActiveRecord::Base
   belongs_to :campaign
   has_many :donated_statuses
   has_many :donations, :through => :donated_statuses
+  has_many :accounts, :through => :donations
 
   validates_presence_of :campaign, :uid
 
@@ -35,5 +36,9 @@ class Status < ActiveRecord::Base
 
   after_create do
     self.delay.publish
+  end
+
+  def reach
+    self.accounts.sum(:followers)
   end
 end

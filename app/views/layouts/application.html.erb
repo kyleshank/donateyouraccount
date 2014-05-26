@@ -17,6 +17,9 @@
 
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script> 
   
+  <script type="text/javascript" src="//use.typekit.net/zxr3vvc.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
   <%= csrf_meta_tag %>
   <%=yield :head%>
 </head>
@@ -31,10 +34,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/"><i class='icon-flag'></i> Donate Your Account</a>
+          <a class="navbar-brand tk-din-condensed-web" href="/"><i class='icon-dya-heart'></i> Donate <span class="red">Your</span> Account</a>
     </div>     
     <div class="collapse navbar-collapse">
-      <%=link_to "Pro", "/pro", :class=>"btn btn-info navbar-btn"%>
+      <%=link_to "Pro", "/pro", :class=>"btn btn-pro navbar-btn"%>
       <% if logged_in? %>
           <ul class="nav navbar-nav">
               <li class="dropdown">
@@ -115,23 +118,12 @@
           </div>
           <% flash.delete(:error) %>
         <% end %>
-        <% unless @campaign and @campaign.premium?%>
-        <% @cpro = Campaign.random_pro(@campaign) %>
-        <% if @cpro%>
-        <div class="well pro-ad">
-          <h1><%=image_tag(@cpro.image) if @cpro.image%><%=link_to @cpro.name, campaign_permalink_path(@cpro)%></h1>
-        </div>
-        <div class="pro-ad-promo">
-          <%=link_to "Want to see your campaign here? Go Pro.", "/pro"%>
-        </div>
-        <% end %>
-        <% end %>
         <%= yield %>
     </div>
 
       <% unless @campaign and @campaign.premium? %>
       <footer>
-        <p>&copy; 2014 <a href="http://www.reactualize.com">REACTUALIZE LLC</a>. <a href="/privacy.html">Privacy Policy</a> - <a href="http://www.gnu.org/licenses/agpl.html">License</a> - <a href="http://twitter.com/donateuraccount">Twitter</a> - <a href="http://github.com/kyleshank/donateyouraccount">Source Code</a></p>
+        <p>&copy; 2014 <a href="http://www.kyleshank.com">Kyle Shank</a>. <a href="/privacy.html">Privacy Policy</a> - <a href="http://www.gnu.org/licenses/agpl.html">License</a> - <a href="http://twitter.com/donateuraccount">Twitter</a> - <a href="http://github.com/kyleshank/donateyouraccount">Source Code</a></p>
       </footer>
       <% end %>
 

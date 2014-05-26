@@ -5,6 +5,11 @@
 body {
   padding-top: 70px;
   padding-bottom: 40px;
+  font-size: 12pt;
+}
+
+a{
+  color: #ff0000;
 }
 
 #content ul{
@@ -58,9 +63,40 @@ body {
 
 footer{
 	clear:both;
-	border-top: 1px solid #eee;
 	padding-top: 1em;
 	margin: 1em 0;
+  text-align: center;
+}
+
+.navbar-brand{
+  color: #000;
+  text-transform: uppercase;
+  font-size: 24px;
+}
+
+.navbar-brand .red{
+  color: red;
+}
+
+.icon-dya-heart{
+  width: 50px;
+  height: 50px;
+  margin-top: -15px;
+  background: url('<%=asset_path("dyaHeart50.png")%>') no-repeat;
+  display: inline-block;
+  float: left;
+  line-height: 50px;
+  margin-right: 5px;
+}
+
+.btn-pro{
+  background: red;
+  color: #fff;
+}
+
+.btn-pro:hover{
+  color: #fff;
+  background: darkred;
 }
 
 .form-signin {
@@ -133,47 +169,28 @@ footer{
 body.index{
   margin: 0;
   padding: 0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 16px;
   text-rendering: optimizelegibility;
-  background: #f0f1f3;
+  background: #fff;
+}
+
+body.index a{
+  color: red;
 }
 
 .index .section.title{
-  background: #333;
-  color: #fff;
-  background: url('<%=asset_path "crowd.jpg"%>') no-repeat;
-  background-size: cover;
-  background-position: center;
+  margin: 1em 0;
 }
 
 .index .section.title .container{
-  padding: 1em 4em;
+  background: url('<%=asset_path "dyaHeartText.png"%>') no-repeat;
+  background-position: center;
+  background-size: contain;
+  min-height: 266px;
 }
 
 .index .section.title h1{
-  text-align: center;
-  text-transform: uppercase;
-  margin: 0 !important;
-  font-weight: bold;
-  font-size: 4em;
-  padding: 2em 0 0 0;
-}
-
-.index .section.title a{
-  color: #fff;
-  padding: 0.5em;
-}
-
-.index .section.title h2{
-  margin: 0 !important;
-  text-align: center;
-  font-weight: 100;
-  padding: 1em 0 2em 0;
-}
-
-.index .section.title a i{
-  margin-right: 4px;
+  display: none;
 }
 
 .index .section.how{
@@ -206,7 +223,7 @@ body.index{
 
 .index .section.how .row .fa{
   font-size: 6em;
-  color: #333;
+  color: #000;
 }
 
 .index .section.pitch{
@@ -224,50 +241,63 @@ body.index{
   margin: 1em 0 1em 0;
 }
 
+.start-button{
+  text-align: center;
+  margin: 1em 0;
+}
+
+.start-button a{
+  font-size: 36pt;
+  padding: 0.5em;
+  background: red;
+  color: #fff !important;
+  font-weight: bold;
+  word-wrap: break-word;
+}
+
+.start-button a:hover{
+  color: #fff !important;
+  background-color: darkred;
+}
+
+.index .section.copy .container{
+  max-width: 600px;
+}
+
+.index .section.copy h1{
+  font-weight: bold;
+  line-height: 1;
+}
+.index .section.copy  p{
+  line-height: 1.1;
+  font-size: 16pt;
+}
+
+.index .sign-in{
+  text-align: center;
+}
+
 body.pro{
   margin: 0;
   padding: 0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 16px;
   text-rendering: optimizelegibility;
-  background: #f0f1f3;
+  background: #fff;
 }
 
 .pro .section.title{
-  background: #333;
-  color: #fff;
-  background: url('<%=asset_path "probg.jpg"%>') no-repeat;
-  background-size: cover;
-  background-position: center;
+  margin: 1em 0;
 }
 
 .pro .section.title .container{
-  padding: 1em 4em;
+  background: url('<%=asset_path "dyaPro.png"%>') no-repeat;
+  background-position: center;
+  background-size: contain;
+  min-height: 266px;
 }
 
 .pro .section.title h1{
-  text-align: center;
-  text-transform: uppercase;
-  margin: 0 !important;
-  font-weight: bold;
-  font-size: 4em;
-  padding: 2em 0 0 0;
-}
-
-.pro .section.title a{
-  color: #fff;
-  padding: 0.5em;
-}
-
-.pro .section.title h2{
-  margin: 0 !important;
-  text-align: center;
-  font-weight: 100;
-  padding: 1em 0 2em 0;
-}
-
-.pro .section.title a i{
-  margin-right: 4px;
+  display: none;
 }
 
 .pro .section.how{
@@ -301,11 +331,11 @@ body.pro{
 
 .pro .section.how .row .fa{
   font-size: 6em;
-  color: #333;
+  color: #000;
 }
 
 .pro .section.pitch{
-  background: #000033;
+  background: #000;
   text-align: center;
   padding: 1em 0 2em 0;
   color: #fff;

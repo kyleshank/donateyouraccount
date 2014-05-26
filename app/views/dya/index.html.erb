@@ -15,6 +15,10 @@
   <%= javascript_include_tag "application" %>
 
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script> 
+
+  <script type="text/javascript" src="//use.typekit.net/zxr3vvc.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
   <%= csrf_meta_tag %>
   <%=yield :head%>
 </head>
@@ -22,10 +26,7 @@
 
 <div class="section title">
     <div class="container">
-      <%=link_to raw("<i class='fa fa-facebook-square'></i> Sign in with Facebook"), new_facebook_account_path, :class=>"pull-right hidden-xs" %>
-      <%=link_to raw("<i class='fa fa-twitter'></i>Sign in with Twitter"), new_twitter_account_path, :class=>"pull-right hidden-xs" %>
       <h1>Donate Your Account</h1>
-      <h2>Get your supporters to donate their Twitter and Facebook accounts</h2>
     </div>
 </div>
 
@@ -61,35 +62,100 @@
     </div>
 </div>
 
-<div class="section pitch">
+<div class="section start">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <h1>Stop asking your supporters to share everything you post online.  Ask them to donate their account.</h1>
-          <div><%=link_to "Start a Campaign", "/start", :class=>"btn btn-lg btn-success"%></div>
-        </div>
+      <div class="start-button">
+        <a href="/start?return_to=<%=new_campaign_path%>" class="btn">Start accepting donations (it's free)</a>
+      </div>
+      <div class="sign-in">
+        or <a href="/start">Sign in</a>
       </div>
     </div>
 </div>
 
-<div class="container">
-<% @cpro = Campaign.random_pro %>
-<% if @cpro%>
-<div class="pro-ad index">
-
-          <h1><%=image_tag(@cpro.image) if @cpro.image%><%=link_to @cpro.name, campaign_permalink_path(@cpro)%> <%=link_to "Donate Your Account", campaign_permalink_path(@cpro), class: "btn btn-lg btn-success"%></h1>
-          <p>
-<%=link_to "Go Pro", "/pro", class: "btn btn-default"%> <%=link_to "Browse Campaigns", campaigns_path, class: "btn btn-default "%>
-          </p>
+<div class="section copy">
+  <div class="container">
+    <h1>Stop asking your supporters to share everything you post online.</h1>
+    <p>
+      Ask them to donate their account.
+    </p>
+    <p>
+      Donate Your Account lets your supporters donate their Twitter and/or Facebook account to your cause so you can automatically republish (retweet or share) your message through their accounts in the future.
+    </p>
+  </div>
 </div>
-<% end %>
+
+<div class="section copy">
+  <div class="container">
+    <h1>How it works.</h1>
+    <p>
+      You create a Campaign and ask your Supporters to donate their accounts.
+    </p>
+    <p>
+      Supporters donate their Twitter and/or Facebook accounts and decide how often your Campaign can use them.  The donation options for use are once per day, once per week or once per month.
+    </p>
+    <p>
+      Once your Campaign has gathered some donations you can publish a message.  Select an existing Campaign tweet or Campaign Facebook page post, the types of donations to utilize (daily, weekly or monthly) and hit Publish.  The donated accounts will then immediately retweet or reshare the message you selected.
+    </p>
+  </div>
+</div>
+
+<div class="section copy">
+  <div class="container">
+    <h1>Here's an example.</h1>
+    <p>
+      A non-profit organization has a Campaign with 100 Twitter donations.
+    </p>
+    <p>
+      Their big annual fundraiser starts on Monday and they need to get the word out.
+    </p>
+    <p>
+      On Monday morning the manager of the Campaign tweets a message on their organization's Twitter account.  The manager then logs into Donate Your Account, goes to publish a new message and selects the tweet that was just posted.  The manager hits Publish and their 100 donated Twitter accounts all immediately retweet the organization's tweet within the next minute potentially reaching over 20,000 people.
+    </p>
+  </div>
+</div>
+
+<div class="section copy">
+  <div class="container">
+    <h1>Customize your campaign.</h1>
+    <p>
+      Upgrade to <a href="/pro">Donate Your Account Pro</a> to get the most out of your Campaign.
+    </p>
+    <p>
+      Donate Your Account Pro allows you to host your Campaign on your own domain, customize your page with HTML and CSS, create a custom Thank-You page after a donation is made and more.  Pro also gets you email support for any issues or questions you might have.
+    </p>
+  </div>
+</div>
+
+<div class="section copy">
+  <div class="container">
+    <h1>What it means to donate your account.</h1>
+    <p>
+      When a Supporter donates their account they are granting permission to the Campaign to republish through their account at most once per day, once per week or once per month.
+    </p>
+    <p>
+      A donated Twitter account will republish by retweeting a Campaign tweet.  A donated Facebook account will republish by sharing a link to their Facebook feed based on a post made to the Campaign Facebook page.
+    </p>
+    <p>
+      Donations can be deleted at any time.
+    </p>
+  </div>
+</div>
+
+<div class="section copy">
+  <div class="container">
+    <h1>Open Source.</h1>
+    <p>
+      Donate Your Account is a Ruby on Rails application.  The source code is <a href="http://github.com/kyleshank/donateyouraccount">available on GitHub</a> and <a href="http://www.gnu.org/licenses/agpl.html">licensed under the AGPL version 3</a>.
+    </p>
+    <p>
+      Handing over the keys to your social media accounts is a big deal.  Donate Your Account is open source so anyone can see exactly how your accounts are used.
+    </p>
+  </div>
+</div>
 
 <footer>
-
-  <p>
-    This page uses an image from <a href="http://cryptome.org/info/ows-19/ows-19.htm">cryptome.org</a>.
-  </p>
-        <p>&copy; 2014 <a href="http://www.reactualize.com">REACTUALIZE LLC</a>. <a href="/privacy.html">Privacy Policy</a> - <a href="http://www.gnu.org/licenses/agpl.html">License</a> - <a href="http://twitter.com/donateuraccount">Twitter</a> - <a href="http://github.com/kyleshank/donateyouraccount">Source Code</a></p>
+        <p>&copy; 2014 <a href="http://www.kyleshank.com">Kyle Shank</a>. <a href="/privacy.html">Privacy Policy</a> - <a href="http://www.gnu.org/licenses/agpl.html">License</a> - <a href="http://twitter.com/donateuraccount">Twitter</a> - <a href="http://github.com/kyleshank/donateyouraccount">Source Code</a></p>
 
 </footer>
 

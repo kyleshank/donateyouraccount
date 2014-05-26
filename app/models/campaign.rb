@@ -58,6 +58,7 @@ class Campaign < ActiveRecord::Base
   scope :suggest_for, -> (aid) {select("DISTINCT(campaigns.id),campaigns.*").joins("LEFT JOIN donations ON donations.campaign_id = campaigns.id").where(["donations.account_id != ? AND campaigns.account_id != ?", aid, aid])}
   scope :for_accounts, -> (accounts) { where(conditions_for_accounts(accounts))}
   scope :pro, -> {where(premium: true)}
+  scope :free, -> {where(premium: false)}
 
   def self.random_pro(exclude=nil)
     pro_campaigns = Campaign.pro

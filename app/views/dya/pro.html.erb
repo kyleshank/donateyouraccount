@@ -15,6 +15,10 @@
   <%= javascript_include_tag "application" %>
 
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script> 
+
+  <script type="text/javascript" src="//use.typekit.net/zxr3vvc.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
   <%= csrf_meta_tag %>
   <%=yield :head%>
 </head>
@@ -23,21 +27,12 @@
 <div class="section title">
     <div class="container">
       <h1>Donate Your Account Pro</h1>
-      <h2>Customize your campaign and get more donations</h2>
     </div>
 </div>
 
 <div class="section how">
     <div class="container">
       <div class="row">
-        <div class="col-md-4">
-          <div>
-            <i class="fa fa-tachometer"></i>
-          </div>
-          <p>
-            Get your campaign advertised on the homepage and throughout the site
-          </p>
-        </div>
         <div class="col-md-4">
           <div>
             <i class="fa fa-globe"></i>
@@ -48,18 +43,40 @@
         </div>
         <div class="col-md-4">
           <div>
+            <i class="fa fa-flag-checkered "></i>
+          </div>
+          <p>
+            Thank your donors with a custom thank you page and keep their attention
+          </p>
+        </div>
+        <div class="col-md-4">
+          <div>
             <i class="fa fa-css3"></i>
           </div>
           <p>
             Customize your campaign page with full HTML and CSS support
           </p>
         </div>
+      </div>
+      <div class="row">
+<div class="col-md-12">
+  <div class="section start">
+    <div class="container">
+      <div class="start-button">
+        <a href="/gopro" class="btn">Upgrade to Pro for just $5 per month</a>
+      </div>
+      
+    </div>
+</div>
+</div>
+      </div>
+      <div class="row">
         <div class="col-md-4">
           <div>
-            <i class="fa fa-flag-checkered "></i>
+            <i class="fa fa-bullhorn"></i>
           </div>
           <p>
-            Thank your donors with a custom thank you page and keep their attention
+            See how many people your message will reach (aggregate count of donations followers)
           </p>
         </div>
         <div class="col-md-4">
@@ -82,23 +99,22 @@
       </div>
     </div>
 </div>
-
-<div class="section pitch">
+<div class="section how">
     <div class="container">
       <div class="row">
-        <div class="col-lg-12">
-          <h1>Make Donate Your Account your own for just $5/month</h1>
-          <div><%=link_to "Back to Donate Your Account", request.referer || "/", :class=>"btn btn-lg btn-info"%></div>
+        <div class="col-md-12">
+        <div class="sign-in">
+          <%=link_to "Back to Donate Your Account", request.referer || "/", :class=>"btn btn-lg btn-default"%>
         </div>
       </div>
     </div>
+  </div>
 </div>
+
+
 <div class="container">
 <footer>
-  <p>
-This page uses a <a href="http://www.flickr.com/photos/dexxus/5578283926/">photo taken by Paul Bica from Flickr</a> and uses it under the <a href="http://creativecommons.org/licenses/by/2.0/deed.en">Creative Commons Attribution 2.0 Generic License</a>.
-  </p>
-        <p>&copy; 2014 <a href="http://www.reactualize.com">REACTUALIZE LLC</a>. <a href="/privacy.html">Privacy Policy</a> - <a href="http://www.gnu.org/licenses/agpl.html">License</a> - <a href="http://twitter.com/donateuraccount">Twitter</a> - <a href="http://github.com/kyleshank/donateyouraccount">Source Code</a></p>
+        <p>&copy; 2014 <a href="http://www.kyleshank.com">Kyle Shank</a>. <a href="/privacy.html">Privacy Policy</a> - <a href="http://www.gnu.org/licenses/agpl.html">License</a> - <a href="http://twitter.com/donateuraccount">Twitter</a> - <a href="http://github.com/kyleshank/donateyouraccount">Source Code</a></p>
       </footer>
 </div>
 

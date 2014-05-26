@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
 class DyaController < ApplicationController
-  before_filter :login_required, :only => [:home]
+  before_filter :login_required, :only => [:home, :gopro]
   
   before_filter :redirect_if_campaign_domain, :except => [:signout]
 
@@ -36,6 +36,15 @@ class DyaController < ApplicationController
 
   def pro
     render :layout => false
+  end
+
+  def gopro
+    @campaign = Campaign.for_accounts(current_accounts).free.group("campaigns.id").first
+    if @campaign
+      redirect_to campaign_path(@campaign)
+    else
+      redirect_to dashboard_path
+    end
   end
 
   def signout
