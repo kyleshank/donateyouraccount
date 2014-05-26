@@ -54,6 +54,7 @@ Dya::Application.routes.draw do
   get 'signout' => "dya#signout", :as => :signout
   get 'pro' => "dya#pro", :as => :pro
   get 'gopro' => "dya#gopro", :as => :gopro
+  get 'brand' => "dya#brand", :as => :brand
 
   post 'facebook_accounts/new' => "facebook_accounts#new"
 
