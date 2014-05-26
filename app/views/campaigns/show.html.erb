@@ -7,7 +7,7 @@
 <% if logged_in? and !@campaign.premium? and @campaign.managed_by?(current_accounts)%>
 <div class="alert alert-info">
   <p>
-    Did you know you can upgrade your campaign to be hosted on your own domain, customize your page with CSS and have a thank you page after a donation is made?
+    Did you know you can upgrade your campaign to be hosted on your own domain, see how many people each message will reach, customize your page with CSS and have a thank you page after a donation is made?
   </p>
 <p>
               <%=link_to "Learn more about Donate Your Account Pro", "/pro", :class=>"btn btn-info"%> <%=link_to "Upgrade", edit_campaign_path(@campaign), :class=>"btn btn-primary"%> 
