@@ -69,9 +69,16 @@ class Campaign < ActiveRecord::Base
 
   def self.conditions_for_accounts(accounts)
     conds = []
+    
     accounts.each do |a|
       conds << "campaigns.#{a.class.name.underscore}_id=#{a.id}"
+      if a.is_a?(FacebookAccount)
+        a.facebook_pages.each do |fb_page|
+          conds << "campaigns.facebook_page_uid=#{fb_page['id']}"
+        end
+      end
     end
+
     conds.join(" OR ")
   end
 
