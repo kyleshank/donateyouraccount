@@ -39,8 +39,8 @@ class Status < ActiveRecord::Base
   end
 
   before_save do
-    self.data = self.data.encode("UTF-8") if self.data
-    self.body = self.body.encode("UTF-8") if self.body
+    self.data = self.data.encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '') if self.data
+    self.body = self.body.encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '') if self.body
   end
 
   def reach
