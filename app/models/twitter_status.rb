@@ -23,7 +23,7 @@ class TwitterStatus < Status
 
   before_create do |twitter_status|
     # twitter_status.data = Twitter::Client.new(:oauth_token => self.campaign.twitter_account.token, :oauth_token_secret => self.campaign.twitter_account.secret).status(twitter_status.uid).to_json
-    twitter_status.data = self.campaign.twitter_account.get_twitter_client.status(twitter_status.uid).to_json
+    twitter_status.data = self.campaign.twitter_account.get_twitter_client.status(twitter_status.uid).to_json.encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '')
   end
 
   def data

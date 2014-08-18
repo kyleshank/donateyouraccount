@@ -38,11 +38,6 @@ class Status < ActiveRecord::Base
     self.delay.publish
   end
 
-  before_save do
-    self.data = self.data.encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '') if self.data
-    self.body = self.body.encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '') if self.body
-  end
-
   def reach
     self.accounts.sum(:followers)
   end
