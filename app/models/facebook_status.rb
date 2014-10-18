@@ -24,7 +24,7 @@ class FacebookStatus < Status
   before_create :set_data
 
   def set_data
-    self.data = self.campaign.facebook_account.get("/#{self.uid}").to_json
+    self.data = self.campaign.facebook_account.get("/#{self.uid}").to_json.encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '')
   end
 
   def data
