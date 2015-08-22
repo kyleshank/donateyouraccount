@@ -259,7 +259,5 @@ TWEET
         campaign.twitter_statuses.first.publish
 
         campaign.twitter_statuses.first.donated_statuses.count.should==0
-
-        donor_account.reload.expires_at.should_not be_nil
     end
 end
