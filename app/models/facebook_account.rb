@@ -59,6 +59,7 @@ class FacebookAccount < Account
       begin
         post("/me/links", {:body => d})
       rescue OAuth2::Error => e
+        self.expiration_reason = "#{e.message}\n#{e.backtrace.join("\n")}"
         self.expires_at=Time.now
         self.save
         raise StopRetryingException.new(e)
@@ -86,7 +87,8 @@ class FacebookAccount < Account
     self.token = long_lived_token["access_token"]
     self.expires_at = Time.now.utc + long_lived_token["expires"].to_i if long_lived_token["expires"]
     self.save
-  rescue Exception
+  rescue Exception => e
+    self.expiration_reason = "#{e.message}\n#{e.backtrace.join("\n")}"
     self.expires_at=Time.now
     self.save
   end

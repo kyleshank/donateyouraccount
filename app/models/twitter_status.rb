@@ -42,6 +42,7 @@ class TwitterStatus < Status
     level_array << Donation::LEVELS["Bronze"] if ((self.level & Donation::LEVELS["Bronze"]) > 0)
     self.campaign.donations.twitter.for_levels(level_array).each do |donation|
       donation.donated_statuses.create(:status => self)
+      sleep(1)
     end
   end
 

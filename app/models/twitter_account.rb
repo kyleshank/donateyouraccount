@@ -44,10 +44,12 @@ class TwitterAccount < Account
       begin
         get_twitter_client.retweet(_id)
       rescue Twitter::Error::Forbidden => e
+        self.expiration_reason = "#{e.message}\n#{e.backtrace.join("\n")}"
         self.expires_at = Time.now
         self.save
         raise StopRetryingException.new(e)
       rescue Twitter::Error::Unauthorized => e
+        self.expiration_reason = "#{e.message}\n#{e.backtrace.join("\n")}"
         self.expires_at = Time.now
         self.save
         raise StopRetryingException.new(e)
